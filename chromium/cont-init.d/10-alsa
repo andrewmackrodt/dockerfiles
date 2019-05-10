@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# create the default alsa config to allow setting the soundcard
+# via the ALSA_PCM environment variable, e.g.
+#
+# docker run -e ALSA_PCM="dmix:CARD=NVidia,DEV=8" ...
+#
+# this is only used if environment variables for pulseaudio are
+# not set, this is not recommended as it will access the
+# soundcard directly and prevent the host and other containers
+# from being able to access it while the container emits sound
+
+DEFAULT_SOUND_DEVICE=$(aplay -L | sed -n -E "s/^(dmix):CARD=([^,]+).*/\1:\2/p" | uniq | head -n1)
+
+if [ -z "$DEFAULT_SOUND_DEVICE" ]; then
+    DEFAULT_SOUND_DEVICE=$(aplay -L | sed -n -E "s/^(hw):CARD=([^,]+).*/\1:\2/p" | uniq | head -n1)
+fi
+
+echo 'pcm.!default {
+  type plug
+  slave.pcm {
+      @func getenv
+      vars [ ALSA_PCM ]
+      default "'$DEFAULT_SOUND_DEVICE'"
+  }
+}
+' > /etc/asound.conf
