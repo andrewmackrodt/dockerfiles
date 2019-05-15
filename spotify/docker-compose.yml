@@ -1,0 +1,34 @@
+---
+version: "2.1"
+
+services:
+  spotify:
+    image: andrewmackrodt/spotify
+    privileged: true
+    network_mode: host
+    devices:
+      - /dev/snd
+    environment:
+      # host UID/GID mapping
+      - PUID=${UID:-1000}
+      - GUID=${UID:-1000}
+      # x11
+      - DISPLAY=unix$DISPLAY
+      # optional, this is the default
+      - XDG_RUNTIME_DIR=/run/user/${UID:-1000}
+    volumes:
+      # x11
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      # pulseaudio
+      - /etc/machine-id:/etc/machine-id:ro
+      - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
+      - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
+      # timezone (optional)
+      - /etc/localtime:/etc/localtime:ro
+      # spotify
+      - config:/config
+      - cache:/cache
+
+volumes:
+  config:
+  cache:
