@@ -1,4 +1,4 @@
-FROM andrewmackrodt/ubuntu-x11:18.04
+FROM andrewmackrodt/ubuntu:18.04
 
 ARG LABEL_NAME
 ARG LABEL_VERSION
@@ -28,25 +28,21 @@ ARG FIREFOX_VERSION
 # install firefox
 RUN apt-get update -qq \
  && apt-get install -qqy \
-      firefox=$FIREFOX_VERSION \
+      dbus-x11 \
+      gnome-icon-theme \
+      libcanberra-gtk3-module \
+      libgl1-mesa-dri \
+      libgl1-mesa-glx \
+      libnvidia-gl-390 \
+      pulseaudio \
  && rm -rf /var/lib/apt/lists/*
 
-# link /data to firefox config
-RUN mkdir /data \
- && chgrp adm /data \
- && chmod 2770 /data \
- && ln -s /data /home/ubuntu/.mozilla \
- && chown -h -R ubuntu:ubuntu /home/ubuntu/.mozilla
-
-# link /downloads to home
-RUN mkdir /downloads \
- && chgrp adm /downloads \
- && chmod 2770 /downloads \
- && rmdir /home/ubuntu/Downloads 2>/dev/null || true \
- && ln -s /downloads /home/ubuntu/Downloads \
- && chown -h -R ubuntu:ubuntu /home/ubuntu/Downloads
-
-ENV ENTRYPOINT0 /usr/bin/firefox
+# add ubuntu user to video/audio
+RUN adduser ubuntu video \
+ && adduser ubuntu audio \
+ && adduser ubuntu voice \
+ && adduser ubuntu pulse \
+ && adduser ubuntu pulse-access
 
 USER ubuntu
 WORKDIR /home/ubuntu

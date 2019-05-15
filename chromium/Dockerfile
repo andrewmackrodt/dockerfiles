@@ -1,4 +1,4 @@
-FROM andrewmackrodt/ubuntu:18.04
+FROM andrewmackrodt/ubuntu-x11:18.04
 
 ARG LABEL_NAME
 ARG LABEL_VERSION
@@ -29,20 +29,8 @@ ARG CHROMIUM_VERSION
 RUN apt-get update -qq \
  && apt-get install -qqy \
       chromium-browser=$CHROMIUM_VERSION \
-      libcanberra-gtk-module \
-      libgl1-mesa-dri \
-      libgl1-mesa-glx \
-      libnvidia-gl-390 \
       alsa-utils \
-      pulseaudio \
  && rm -rf /var/lib/apt/lists/*
-
-# add ubuntu user to video/audio
-RUN adduser ubuntu video \
- && adduser ubuntu audio \
- && adduser ubuntu voice \
- && adduser ubuntu pulse \
- && adduser ubuntu pulse-access
 
 # link /data to chrome config
 RUN mkdir /data \
