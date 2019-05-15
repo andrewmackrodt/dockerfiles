@@ -1,0 +1,29 @@
+#!/bin/bash
+
+NAME=$(basename "$(pwd)")
+FROM=$(sed -n -E "s/^FROM ([^# ]+).*/\1/p" Dockerfile)
+
+getVersion() {
+    docker run -i --rm --user root --entrypoint=/bin/sh "$FROM" <<'EOF'
+        apt-get update -qq
+        apt-cache show firefox | grep Version | head -n1 | awk '{ print $2 }'
+EOF
+}
+
+FIREFOX_VERSION=$(getVersion)
+RELEASE_VERSION=$(echo "$FIREFOX_VERSION" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+
+release() {
+    echo "release=$RELEASE_VERSION"
+    echo "tag=$NAME-$RELEASE_VERSION"
+}
+
+env() {
+    echo "FIREFOX_VERSION=$FIREFOX_VERSION"
+    echo "RELEASE_VERSION=$RELEASE_VERSION"
+}
+
+configure () {
+    release > .release
+    env > .release.env
+}

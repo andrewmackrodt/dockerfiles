@@ -2,8 +2,8 @@
 version: "2.1"
 
 services:
-  chromium:
-    image: andrewmackrodt/chromium
+  firefox:
+    image: andrewmackrodt/firefox
     privileged: true
     network_mode: host
     devices:
@@ -16,8 +16,6 @@ services:
       - DISPLAY=unix$DISPLAY
       # optional, this is the default
       - XDG_RUNTIME_DIR=/run/user/${UID:-1000}
-      # optional, required if pulseaudio not configured
-      - ALSA_PCM=${ALSA_PCM:-dmix:CARD=NVidia,DEV=8}
     volumes:
       # x11
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
@@ -27,12 +25,11 @@ services:
       - /etc/machine-id:/etc/machine-id:ro
       - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
       - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
-      # dbus (optional, less errors in output when provided)
-      - /run/dbus:/run/dbus:ro
-      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+      # dconf (optional, less errors in output when provided)
+      - /run/user/${UID:-1000}/dconf:/run/user/${UID:-1000}/dconf
       # timezone (optional)
       - /etc/localtime:/etc/localtime:ro
-      # chromium
+      # firefox
       - $HOME/Downloads:/downloads
       - data:/data
 
