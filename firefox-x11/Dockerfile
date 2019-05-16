@@ -46,6 +46,15 @@ RUN mkdir /downloads \
  && ln -s /downloads /home/ubuntu/Downloads \
  && chown -h -R ubuntu:ubuntu /home/ubuntu/Downloads
 
+# copy files to container
+COPY cont-init.d /etc/cont-init.d
+
+# configure s6
+ENV S6_ENABLE 1
+ENV S6_KILL_GRACETIME 10000
+ENV S6_LOGGING 1
+ENV S6_SERVICES_GRACETIME 1000
+
 ENV ENTRYPOINT0 /usr/bin/firefox
 
 USER ubuntu

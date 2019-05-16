@@ -6,10 +6,8 @@ Corporation.
 
 ## Features
 
-* NVidia GPU acceleration[^1]
+* NVidia GPU acceleration
 * Audio via pulseaudio
-
-[^1]: Set `layers.acceleration.force-enabled = true` via `about:config`
 
 ## Usage
 

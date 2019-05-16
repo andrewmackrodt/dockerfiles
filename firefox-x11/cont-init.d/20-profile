@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# abort if profiles.ini exists
+if [ -f /data/firefox/profiles.ini ]; then
+    exit
+fi
+
+# restart as ubuntu user
+if [ $(id -u) = 0 ]; then
+    exec s6-setuidgid ubuntu "$0"
+fi
+
+set -e
+
+CONTAINER_ID_SHORT=$(awk -F':' '$2 == "pids" { print $3 }' /proc/1/cgroup \
+    | awk -F'/' '{ print $3 }' \
+    | sed -E "s/^(.{8}).*/\1/")
+
+PROFILE_NAME=$CONTAINER_ID_SHORT.default
+
+# create profile directory
+mkdir -p "/data/firefox/$PROFILE_NAME"
+
+# create profiles.ini
+tee /data/firefox/profiles.ini >/dev/null<<EOF
+[General]
+StartWithLastProfile=1
+
+[Profile0]
+Name=default
+IsRelative=1
+Path=$PROFILE_NAME
+Default=1
+
+EOF
+
+# set default user preferences
+tee -a "/data/firefox/$PROFILE_NAME/user.js" >/dev/null<<EOF
+user_pref("general.autoScroll", true);
+user_pref("layers.acceleration.force-enabled", true);
+EOF
