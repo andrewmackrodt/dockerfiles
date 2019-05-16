@@ -1,4 +1,4 @@
-# [andrewmackrodt/docker-chromium](https://github.com/andrewmackrodt/dockerfiles/tree/master/chromium)
+# [andrewmackrodt/docker-chromium-x11](https://github.com/andrewmackrodt/dockerfiles/tree/master/chromium-x11)
 
 [Chromium](https://www.chromium.org/Home) is an open-source browser project that aims
 to build a safer, faster, and more stable way for all Internet users to
@@ -36,7 +36,7 @@ docker create \
   -v /run/dbus:/run/dbus:ro \
   -v /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro \
   -v /etc/localtime:/etc/localtime:ro \
-  andrewmackrodt/chromium
+  andrewmackrodt/chromium-x11
 ```
 
 ## Parameters

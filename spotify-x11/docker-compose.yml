@@ -2,8 +2,8 @@
 version: "2.1"
 
 services:
-  firefox:
-    image: andrewmackrodt/firefox
+  spotify:
+    image: andrewmackrodt/spotify-x11
     privileged: true
     network_mode: host
     devices:
@@ -19,19 +19,16 @@ services:
     volumes:
       # x11
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
-      # runtime
-      - /dev/shm:/dev/shm
       # pulseaudio
       - /etc/machine-id:/etc/machine-id:ro
       - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
       - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
-      # dconf (optional, less errors in output when provided)
-      - /run/user/${UID:-1000}/dconf:/run/user/${UID:-1000}/dconf
       # timezone (optional)
       - /etc/localtime:/etc/localtime:ro
-      # firefox
-      - $HOME/Downloads:/downloads
-      - data:/data
+      # spotify
+      - config:/config
+      - cache:/cache
 
 volumes:
-  data:
+  config:
+  cache:

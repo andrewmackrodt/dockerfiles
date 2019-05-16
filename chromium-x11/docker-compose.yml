@@ -2,8 +2,8 @@
 version: "2.1"
 
 services:
-  spotify:
-    image: andrewmackrodt/spotify
+  chromium:
+    image: andrewmackrodt/chromium-x11
     privileged: true
     network_mode: host
     devices:
@@ -16,19 +16,25 @@ services:
       - DISPLAY=unix$DISPLAY
       # optional, this is the default
       - XDG_RUNTIME_DIR=/run/user/${UID:-1000}
+      # optional, required if pulseaudio not configured
+      - ALSA_PCM=${ALSA_PCM:-dmix:CARD=NVidia,DEV=8}
     volumes:
       # x11
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      # runtime
+      - /dev/shm:/dev/shm
       # pulseaudio
       - /etc/machine-id:/etc/machine-id:ro
       - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
       - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
+      # dbus (optional, less errors in output when provided)
+      - /run/dbus:/run/dbus:ro
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
       # timezone (optional)
       - /etc/localtime:/etc/localtime:ro
-      # spotify
-      - config:/config
-      - cache:/cache
+      # chromium
+      - $HOME/Downloads:/downloads
+      - data:/data
 
 volumes:
-  config:
-  cache:
+  data:

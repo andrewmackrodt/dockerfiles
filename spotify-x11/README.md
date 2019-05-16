@@ -1,4 +1,4 @@
-# [andrewmackrodt/docker-spotify](https://github.com/andrewmackrodt/dockerfiles/tree/master/spotify)
+# [andrewmackrodt/docker-spotify-x11](https://github.com/andrewmackrodt/dockerfiles/tree/master/spotify-x11)
 
 [Spotify](https://www.spotify.com/)  is a digital music service that gives you
 access to millions of songs.
@@ -29,7 +29,7 @@ docker create \
   -v $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro \
   -v /run/user/$(id -u)/pulse:/run/user/$(id -u)/pulse:ro \
   -v /etc/localtime:/etc/localtime:ro \
-  andrewmackrodt/spotify
+  andrewmackrodt/spotify-x11
 ```
 
 ## Parameters

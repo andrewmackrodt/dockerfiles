@@ -1,4 +1,4 @@
-# [andrewmackrodt/docker-firefox](https://github.com/andrewmackrodt/dockerfiles/tree/master/firefox)
+# [andrewmackrodt/docker-firefox-x11](https://github.com/andrewmackrodt/dockerfiles/tree/master/firefox-x11)
 
 [Firefox](https://www.mozilla.org/en-GB/firefox/new/) is a free and open-source
 web browser developed by the Mozilla Foundation and its subsidiary, Mozilla
@@ -36,7 +36,7 @@ docker create \
   -v /run/user/$(id -u)/pulse:/run/user/$(id -u)/pulse:ro \
   -v /run/user/$(id -u)/dconf:/run/user/$(id -u)/dconf \
   -v /etc/localtime:/etc/localtime:ro \
-  andrewmackrodt/firefox
+  andrewmackrodt/firefox-x11
 ```
 
 ## Parameters
