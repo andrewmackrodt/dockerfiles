@@ -29,6 +29,7 @@ ARG FIREFOX_VERSION
 RUN apt-get update -qq \
  && apt-get install -qqy \
       firefox=$FIREFOX_VERSION \
+      libavcodec57 \
  && rm -rf /var/lib/apt/lists/*
 
 # link /data to firefox config
