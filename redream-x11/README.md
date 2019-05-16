@@ -26,6 +26,7 @@ docker create \
   -e PUID=$(id -u) \
   -e PGID=$(id -g) \
   -e DISPLAY=unix$DISPLAY \
+  -e XDG_RUNTIME_DIR=/run/user/$(id -u) \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
   -v /etc/machine-id:/etc/machine-id:ro \
   -v $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro \

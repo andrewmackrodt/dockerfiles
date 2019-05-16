@@ -13,6 +13,8 @@ services:
       - GUID=${UID:-1000}
       # x11
       - DISPLAY=unix$DISPLAY
+      # optional, this is the default
+      - XDG_RUNTIME_DIR=/run/user/${UID:-1000}
     volumes:
       # x11
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
