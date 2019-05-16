@@ -31,6 +31,7 @@ GPU_DEVICES=$( \
 docker volume create --name chromium
 
 # create the container
+docker create \
   --name chromium \
   --cap-add SYS_ADMIN \
   --security-opt apparmor:unconfined \

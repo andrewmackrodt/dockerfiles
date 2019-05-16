@@ -33,6 +33,7 @@ docker volume create --name firefox
 docker create \
   --name firefox \
   --net host \
+  --device /dev/input \
   --device /dev/snd \
   $GPU_DEVICES \
   -v $HOME/Downloads:/downloads \
