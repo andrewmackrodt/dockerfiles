@@ -1,0 +1,37 @@
+#!/bin/sh
+
+if [ ! -f /data/firefox/profiles.ini ]; then
+    CONTAINER_ID_SHORT=$(awk -F':' '$2 == "pids" { print $3 }' /proc/1/cgroup \
+        | awk -F'/' '{ print $3 }' \
+        | sed -E "s/^(.{8}).*/\1/")
+
+    PROFILE_NAME=$CONTAINER_ID_SHORT.default
+
+    # create profile directory
+    mkdir -p "/data/firefox/$PROFILE_NAME"
+
+    # create profiles.ini
+    tee /data/firefox/profiles.ini >/dev/null<<EOF
+[General]
+StartWithLastProfile=1
+
+[Profile0]
+Name=default
+IsRelative=1
+Path=$PROFILE_NAME
+Default=1
+
+EOF
+
+    # set default user preferences
+    tee -a "/data/firefox/$PROFILE_NAME/user.js" >/dev/null<<EOF
+user_pref("general.autoScroll", true);
+user_pref("layers.acceleration.force-enabled", true);
+EOF
+fi
+
+# ensure XDG_RUNTIME_DIR is writeable
+sudo chown $(id -u):$(id -g) "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+# start firefox
+exec $(which firefox) "$@"

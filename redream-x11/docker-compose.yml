@@ -4,8 +4,15 @@ version: "2.1"
 services:
   redream:
     image: andrewmackrodt/redream-x11
+
+    # privileged is set for convenience, gpu devices should be explicitly
+    # defined under devices instead,
+    # e.g. /dev/dri or /dev/nvidia0 and /dev/nvidiactl
     privileged: true
+
+    network_mode: host
     devices:
+      - /dev/input
       - /dev/snd
     environment:
       # host UID/GID mapping

@@ -6,22 +6,38 @@ experience the web.
 
 ## Image Features
 
-* NVidia GPU acceleration
-* Audio via pulseaudio (shared)
-* Audio via alsa (exclusive)
+* OpenGL acceleration (Mesa DRI/GLX and NVidia)
+* Audio via PulseAudio
+* Audio via ALSA (fallback)
+* Controller support (tested with wireless DS4 over Bluetooth)
 
 ## Usage
 
 ### docker
 
 ```
+# detect gpu devices to pass through
+GPU_DEVICES=$( \
+    echo "$( \
+        find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl)' \
+            | grep --color=never '.' \
+          || echo '/dev/dri'\
+      )" \
+      | sed -E "s/^/--device /" \
+  )
+
+
+# create the data volume
 docker volume create --name chromium
 
-docker create \
+# create the container
   --name chromium \
-  --privileged \
+  --cap-add SYS_ADMIN \
+  --security-opt apparmor:unconfined \
   --net host \
+  --device /dev/input \
   --device /dev/snd \
+  $GPU_DEVICES \
   -v $HOME/Downloads:/downloads \
   -v chromium:/data \
   -e PUID=$(id -u) \
@@ -33,8 +49,9 @@ docker create \
   -v /etc/machine-id:/etc/machine-id:ro \
   -v $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro \
   -v /run/user/$(id -u)/pulse:/run/user/$(id -u)/pulse:ro \
-  -v /run/dbus:/run/dbus:ro \
   -v /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro \
+  -v /run/dbus:/run/dbus:ro \
+  -v /run/udev/data:/run/udev/data:ro \
   -v /etc/localtime:/etc/localtime:ro \
   andrewmackrodt/chromium-x11
 ```

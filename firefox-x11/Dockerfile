@@ -47,15 +47,9 @@ RUN mkdir /downloads \
  && chown -h -R ubuntu:ubuntu /home/ubuntu/Downloads
 
 # copy files to container
-COPY cont-init.d /etc/cont-init.d
+COPY firefox-bootstrap /usr/local/bin/firefox-bootstrap
 
-# configure s6
-ENV S6_ENABLE 1
-ENV S6_KILL_GRACETIME 10000
-ENV S6_LOGGING 1
-ENV S6_SERVICES_GRACETIME 1000
-
-ENV ENTRYPOINT0 /usr/bin/firefox
+ENV ENTRYPOINT0 /usr/local/bin/firefox-bootstrap
 
 USER ubuntu
 WORKDIR /home/ubuntu

@@ -4,7 +4,12 @@ version: "2.1"
 services:
   firefox:
     image: andrewmackrodt/firefox-x11
+
+    # privileged is set for convenience, gpu devices should be explicitly
+    # defined under devices instead,
+    # e.g. /dev/dri or /dev/nvidia0 and /dev/nvidiactl
     privileged: true
+
     network_mode: host
     devices:
       - /dev/snd
@@ -25,8 +30,10 @@ services:
       - /etc/machine-id:/etc/machine-id:ro
       - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
       - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
-      # dconf (optional, less errors in output when provided)
-      - /run/user/${UID:-1000}/dconf:/run/user/${UID:-1000}/dconf
+      # dbus - gamepad support
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+      - /run/dbus:/run/dbus:ro
+      - /run/udev/data:/run/udev/data:ro
       # timezone (optional)
       - /etc/localtime:/etc/localtime:ro
       # firefox

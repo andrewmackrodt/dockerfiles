@@ -4,9 +4,19 @@ version: "2.1"
 services:
   chromium:
     image: andrewmackrodt/chromium-x11
+
+    # privileged is set for convenience, gpu devices should be explicitly
+    # defined under devices instead,
+    # e.g. /dev/dri or /dev/nvidia0 and /dev/nvidiactl
     privileged: true
+
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
     network_mode: host
     devices:
+      - /dev/input
       - /dev/snd
     environment:
       # host UID/GID mapping
@@ -27,9 +37,10 @@ services:
       - /etc/machine-id:/etc/machine-id:ro
       - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
       - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
-      # dbus (optional, less errors in output when provided)
-      - /run/dbus:/run/dbus:ro
+      # dbus - gamepad support
       - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+      - /run/dbus:/run/dbus:ro
+      - /run/udev/data:/run/udev/data:ro
       # timezone (optional)
       - /etc/localtime:/etc/localtime:ro
       # chromium

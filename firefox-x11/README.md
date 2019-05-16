@@ -6,21 +6,35 @@ Corporation.
 
 ## Features
 
-* NVidia GPU acceleration
-* Audio via pulseaudio
+* OpenGL acceleration (Mesa DRI/GLX and NVidia)
+* Audio via PulseAudio
+* Controller support (tested with wireless DS4 over Bluetooth)
 
 ## Usage
 
 ### docker
 
 ```
+# detect gpu devices to pass through
+GPU_DEVICES=$( \
+    echo "$( \
+        find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl)' \
+            | grep --color=never '.' \
+          || echo '/dev/dri'\
+      )" \
+      | sed -E "s/^/--device /" \
+  )
+
+
+# create the data volume
 docker volume create --name firefox
 
+# create the container
 docker create \
   --name firefox \
-  --privileged \
   --net host \
   --device /dev/snd \
+  $GPU_DEVICES \
   -v $HOME/Downloads:/downloads \
   -v firefox:/data \
   -e PUID=$(id -u) \
@@ -32,7 +46,9 @@ docker create \
   -v /etc/machine-id:/etc/machine-id:ro \
   -v $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro \
   -v /run/user/$(id -u)/pulse:/run/user/$(id -u)/pulse:ro \
-  -v /run/user/$(id -u)/dconf:/run/user/$(id -u)/dconf \
+  -v /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro \
+  -v /run/dbus:/run/dbus:ro \
+  -v /run/udev/data:/run/udev/data:ro \
   -v /etc/localtime:/etc/localtime:ro \
   andrewmackrodt/firefox-x11
 ```

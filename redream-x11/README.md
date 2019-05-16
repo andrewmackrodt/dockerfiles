@@ -5,7 +5,7 @@ enabling you to play your favorite Dreamcast games in high-definition.
 
 ## Features
 
-* NVidia GPU acceleration
+* OpenGL acceleration (Mesa DRI/GLX and NVidia)
 * Audio via PulseAudio
 * Controller support (tested with wireless DS4 over Bluetooth)
 
@@ -14,10 +14,23 @@ enabling you to play your favorite Dreamcast games in high-definition.
 ### docker
 
 ```
+# detect gpu devices to pass through
+GPU_DEVICES=$( \
+    echo "$( \
+        find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl)' \
+            | grep --color=never '.' \
+          || echo '/dev/dri'\
+      )" \
+      | sed -E "s/^/--device /" \
+  )
+
+# create the container
 docker create \
   --name redream \
-  --privileged \
+  --net host \
+  --device /dev/input \
   --device /dev/snd \
+  $GPU_DEVICES \
   -v $HOME/Games/Dreamcast:/games:ro \
   -v $HOME/.redream/saves:/saves \
   -v $HOME/.redream/config:/config \

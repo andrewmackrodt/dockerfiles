@@ -30,6 +30,7 @@ RUN apt-get update -qq \
  && apt-get install -qqy \
       chromium-browser=$CHROMIUM_VERSION \
       alsa-utils \
+      notify-osd \
  && rm -rf /var/lib/apt/lists/*
 
 # link /data to chrome config
@@ -49,15 +50,9 @@ RUN mkdir /downloads \
  && chown -h -R ubuntu:ubuntu /home/ubuntu/Downloads
 
 # copy files to container
-COPY cont-init.d /etc/cont-init.d
+COPY chromium-bootstrap /usr/local/bin/chromium-bootstrap
 
-# configure s6
-ENV S6_ENABLE 1
-ENV S6_KILL_GRACETIME 10000
-ENV S6_LOGGING 1
-ENV S6_SERVICES_GRACETIME 1000
-
-ENV ENTRYPOINT0 /usr/bin/chromium-browser
+ENV ENTRYPOINT0 /usr/local/bin/chromium-bootstrap
 
 USER ubuntu
 WORKDIR /home/ubuntu

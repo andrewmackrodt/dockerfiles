@@ -3,18 +3,32 @@
 [Spotify](https://www.spotify.com/)  is a digital music service that gives you
 access to millions of songs.
 
+## Features
+
+* OpenGL acceleration (Mesa DRI/GLX and NVidia)
+* Audio via PulseAudio
+
 ## Usage
 
 ### docker
 
-Note: `--privileged` is only required to pass through GPU acceleration.
-
 ```
+# detect gpu devices to pass through
+GPU_DEVICES=$( \
+    echo "$( \
+        find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl)' \
+            | grep --color=never '.' \
+          || echo '/dev/dri'\
+      )" \
+      | sed -E "s/^/--device /" \
+  )
+
+# create the container
 docker create \
   --name spotify \
-  --privileged \
   --net host \
   --device /dev/snd \
+  $GPU_DEVICES \
   -v $HOME/.config/spotify:/config \
   -v $HOME/.cache/spotify:/cache \
   -e PUID=$(id -u) \
