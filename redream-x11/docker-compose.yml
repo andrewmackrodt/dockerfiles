@@ -1,0 +1,30 @@
+---
+version: "2.1"
+
+services:
+  redream:
+    image: andrewmackrodt/redream-x11
+    privileged: true
+    devices:
+      - /dev/snd
+    environment:
+      # host UID/GID mapping
+      - PUID=${UID:-1000}
+      - GUID=${UID:-1000}
+      # x11
+      - DISPLAY=unix$DISPLAY
+    volumes:
+      # x11
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      # pulseaudio
+      - /etc/machine-id:/etc/machine-id:ro
+      - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
+      - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
+      # timezone (optional)
+      - /etc/localtime:/etc/localtime:ro
+      # redream
+      - $HOME/Games/Dreamcast:/games:ro
+      - $HOME/.redream/saves:/saves
+      - $HOME/.redream/config:/config
+      - $HOME/.redream/bios:/bios
+      - $HOME/.redream/cache:/cache

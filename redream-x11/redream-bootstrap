@@ -1,0 +1,57 @@
+#!/bin/sh
+
+mklinks() {
+    for f in $2; do
+        VOL_PATH=$1/$f
+        APP_PATH=/opt/redream/$f
+
+        if [ -f "$VOL_PATH" ]; then
+            # create a symlink to the volume file in redream dir
+            ln -fns "$VOL_PATH" "$APP_PATH"
+
+        elif [ -f "$APP_PATH" ]; then
+            # return if the volume is readonly
+            if [ "${3:-}" = "ro" ]; then
+                return
+            fi
+
+            # if the file exists in redream dir either move it
+            # to the volume location and create a symlink, or
+            # delete existing symlinks where the volume file
+            # has been deleted or we will get errors, e.g. if
+            # boot.bin or flash.bin is not a valid file
+
+            if [ -L "$APP_PATH" ]; then
+                # delete old symlinks
+                rm "$APP_PATH"
+            else
+                # move file to volume dir and create a symlink
+                mv "$APP_PATH" "$VOL_PATH"
+                ln -s "$VOL_PATH" "$APP_PATH"
+            fi
+        fi
+
+    done
+}
+
+# fix file permissions
+sudo chown -R $(id -u):$(id -g) /saves /config /bios /cache
+
+# set the game directory
+if [ ! -f /config/redream.cfg ]; then
+    echo "gamedir: /games;" > /config/redream.cfg
+fi
+
+# link volumes to redream dir
+mklinks /saves "vmu0.bin vmu1.bin vmu2.bin vmu3.bin"
+mklinks /config "redream.cfg redream.key"
+mklinks /bios "boot.bin flash.bin" ro
+
+$(which redream) "$@"
+EXIT_CODE=$?
+
+# copy variable data to volumes, e.g. on first run
+mklinks /saves "vmu0.bin vmu1.bin vmu2.bin vmu3.bin"
+mklinks /config "redream.cfg redream.key"
+
+exit $?

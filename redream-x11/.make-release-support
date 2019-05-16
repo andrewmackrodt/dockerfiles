@@ -1,0 +1,45 @@
+#!/bin/bash
+
+NAME=$(basename "$(pwd)")
+FROM=$(sed -n -E "s/^FROM ([^# ]+).*/\1/p" Dockerfile)
+
+getDownloadLinks() {
+    docker run -i --rm --user root --entrypoint=/bin/sh "$FROM" <<'EOF'
+        wget -qO- \
+            --save-cookies cookies.txt \
+            --keep-session-cookies \
+            "https://redream.io/register" >/dev/null
+
+        wget -qO- \
+            --header "Referrer: https://redream.io/register" \
+            --max-redirect 0 \
+            --load-cookies cookies.txt \
+            "https://redream.io/download" >download.html
+
+        rm cookies.txt
+
+        sed -n -E 's/.*?href="([^"]*redream.x86_64-linux[^"]+)".*?/\1/gp' download.html | uniq
+EOF
+}
+
+DOWNLOAD_LINKS=$(getDownloadLinks)
+STABLE_LINK=$(echo "$DOWNLOAD_LINKS" | head -n1)
+LATEST_LINK=$(echo "$DOWNLOAD_LINKS" | head -n2 | tail -n1)
+
+REDREAM_VERSION=$(echo "$LATEST_LINK" | sed -E 's/.+?linux-v(.+?)\.tar\.gz/\1/')
+RELEASE_VERSION=$(echo "$REDREAM_VERSION" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]+)(-([0-9]+))?.*/\1-r\3/' | sed -E 's/-r$//')
+
+release() {
+    echo "release=$RELEASE_VERSION"
+    echo "tag=$NAME-$RELEASE_VERSION"
+}
+
+env() {
+    echo "REDREAM_VERSION=$REDREAM_VERSION"
+    echo "RELEASE_VERSION=$RELEASE_VERSION"
+}
+
+configure () {
+    release > .release
+    env > .release.env
+}
