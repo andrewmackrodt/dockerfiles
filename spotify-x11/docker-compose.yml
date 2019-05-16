@@ -26,8 +26,8 @@ services:
       # timezone (optional)
       - /etc/localtime:/etc/localtime:ro
       # spotify
-      - config:/config
-      - cache:/cache
+      - $HOME/.config/spotify:/config
+      - $HOME/.cache/spotify:/cache
 
 volumes:
   config:

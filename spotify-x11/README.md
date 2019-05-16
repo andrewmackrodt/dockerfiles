@@ -10,16 +10,13 @@ access to millions of songs.
 Note: `--privileged` is only required to pass through GPU acceleration.
 
 ```
-docker volume create --name spotify_config
-docker volume create --name spotify_cache
-
 docker create \
   --name spotify \
   --privileged \
   --net host \
   --device /dev/snd \
-  -v spotify_config:/config \
-  -v spotify_cache:/cache \
+  -v $HOME/.config/spotify:/config \
+  -v $HOME/.cache/spotify:/cache \
   -e PUID=$(id -u) \
   -e PGID=$(id -g) \
   -e DISPLAY=unix$DISPLAY \
