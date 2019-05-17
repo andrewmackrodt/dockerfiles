@@ -1,0 +1,139 @@
+#!/bin/sh
+
+# fix file permissions
+sudo chown -R $(id -u):$(id -g) /bios /data /plugins
+
+try_fetch_bios() {
+    # abort if /bios contains any *.bin files
+    if [ "$(ls /bios/*.bin 2>/dev/null | wc -l)" != "0" ]; then
+        return
+    fi
+
+    echo "[WARN] No BIOS files found in /bios" >&2
+
+    # abort if not explicitly told to fetch bios files
+    if [ -z "${BIOS_ZIP:-}" ]; then
+        return
+    fi
+
+    echo "[WARN] BIOS files will be downloaded from $BIOS_ZIP" >&2
+    echo "[WARN] Sleeping for 5 seconds, press CTRL+C now to abort ..." >&2
+    sleep 5
+
+    wget -qO- "$BIOS_ZIP" > /tmp/ps2_bios.zip
+
+    # verify checksum
+    if [ ! -z "${BIOS_CHECKSUM:-}" ]; then
+        checksum=$(sha256sum -b /tmp/ps2_bios.zip | awk '{ print $1 }')
+
+        if [ "$checksum" != "e5b98f79e84d434b44fe4dab6b0e7823772d32744249a8fb9fb2288d0b354b21" ]; then
+            echo "[ERR] Checksum mismatch /tmp/ps2_bios.zip $checksum" >&2
+            rm -f /tmp/ps2_bios.zip 2>/dev/null
+
+            return
+        fi
+    fi
+
+    unzip -Lnq /tmp/ps2_bios.zip -d /bios
+    rm -f /tmp/ps2_bios.zip 2>/dev/null
+
+    echo "[WARN] BIOS files downloaded" >&2
+}
+
+# download bios files if /bios is empty and $ALLOW_BIOS_DOWNLOAD === 1
+try_fetch_bios
+
+# PCSX2-reg defaults
+if [ ! -f /data/PCSX2-reg.ini ]; then
+    tee /data/PCSX2-reg.ini >/dev/null<<EOF
+SettingsFolder=/data/inis
+RunWizard=0
+UseDefaultSettingsFolder=disabled
+
+EOF
+fi
+
+mkdir -p /data/inis
+
+# PCSX2_ui defaults
+if [ ! -f /data/inis/PCSX2_ui.ini ]; then
+    tee /data/inis/PCSX2_ui.ini >/dev/null<<EOF
+[Folders]
+Bios=/bios
+Snapshots=/data/snaps
+Savestates=/data/sstates
+MemoryCards=/data/memcards
+Logs=/data/logs
+Cheats=/data/cheats
+CheatsWS=/data/cheats_ws
+PluginsFolder=/plugins
+RunIso=/games
+RunELF=/games
+UseDefaultBios=disabled
+UseDefaultSnapshots=disabled
+UseDefaultSavestates=disabled
+UseDefaultMemoryCards=disabled
+UseDefaultLogs=disabled
+UseDefaultCheats=disabled
+UseDefaultCheatsWS=disabled
+UseDefaultPluginsFolder=disabled
+[Filenames]
+GS=/plugins/libGSdx-SSE4.so
+PAD=/plugins/libonepad.so
+SPU2=/plugins/libspu2x-2.0.0.so
+CDVD=/plugins/libCDVDnull.so
+USB=/plugins/libUSBnull-0.7.0.so
+FW=/plugins/libFWnull-0.7.0.so
+DEV9=/plugins/libdev9ghzdrk-0.4.so
+BIOS=
+
+EOF
+fi
+
+# spu2-x defaults
+if [ ! -f /data/inis/spu2-x.ini ]; then
+    tee /data/inis/spu2-x.ini >/dev/null<<EOF
+[OUTPUT]
+Output_Module=SDLAudio
+
+EOF
+fi
+
+# copy default plugins, the user may have added a volume mount
+# with custom plugins which don't include the defaults
+IFS="
+"
+for f in $(ls /usr/lib/games/PCSX2); do
+    vol_path="/plugins/$f"
+    src_path="/usr/lib/games/PCSX2/$f"
+
+    if [ ! -f "$vol_path" ]; then
+        cp "$src_path" "$vol_path"
+    fi
+done
+
+# automatically use bios with the latest timestamp if not set
+if grep -qE "^BIOS=$" /data/inis/PCSX2_ui.ini; then
+    bios=$(cd /bios; ls -1t *.bin 2>/dev/null | head -n1)
+
+    if [ ! -z "$bios" ]; then
+        echo "[WARN] BIOS is not set defaulting to $bios" >&2
+        sed -i -E "s/^BIOS=/BIOS=$bios/" /data/inis/PCSX2_ui.ini
+    else
+        echo "[ERR] PCSX2 will not function without a BIOS" >&2
+    fi
+fi
+
+# generate locale
+LANG_CODE=$(echo "${LANG:-en_US.UTF-8}" | sed -E "s/\..*//")
+[ ! -z "${LANG-}" ] || unset LANG
+
+if ! locale -a 2>/dev/null | grep -qE "^$LANG_CODE"; then
+    sudo locale-gen "$LANG_CODE"
+fi
+
+# ensure XDG_RUNTIME_DIR is writeable
+sudo chown $(id -u):$(id -g) "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+# start PCSX2
+exec dbus-launch "$(which PCSX2)" "$@"

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+NAME=$(basename "$(pwd)")
+FROM=andrewmackrodt/$NAME
+
+getVersion() {
+    docker run -i --rm --user root --entrypoint=/bin/sh "$FROM" <<'EOF'
+        apt-get update -qq
+        apt-cache show pcsx2-unstable | grep Version | head -n1 | awk '{ print $2 }'
+EOF
+}
+
+PCSX2_VERSION=$(getVersion)
+
+RELEASE_VERSION=$( \
+    echo "$PCSX2_VERSION" \
+      | sed -E 's/^([0-9]+:)?([0-9]+\.[0-9]+\.[0-9]+)(~git20([0-9]+))?.*/\2-r\4/' \
+      | sed -E 's/-r$//') \
+  )
+
+release() {
+    echo "release=$RELEASE_VERSION"
+    echo "tag=$NAME-$RELEASE_VERSION"
+}
+
+env() {
+    echo "PCSX2_VERSION=$PCSX2_VERSION"
+    echo "RELEASE_VERSION=$RELEASE_VERSION"
+}
+
+configure () {
+    release > .release
+    env > .release.env
+}
+
+configure
