@@ -25,15 +25,17 @@ WORKDIR /root
 ARG DEBIAN_FRONTEND=noninteractive
 
 # install x11 packages
-RUN apt-get update -qq \
+RUN dpkg --add-architecture i386 \
+ && apt-get update -qq \
  && apt-get install -qqy \
-      dbus-x11 \
-      gnome-icon-theme \
-      libcanberra-gtk3-module \
-      libgl1-mesa-dri \
-      libgl1-mesa-glx \
-      libnvidia-gl-390 \
-      pulseaudio \
+      dbus-x11:i386 \
+      gnome-icon-theme:i386 \
+      libcanberra-gtk-module:i386 \
+      libcanberra-gtk3-module:i386 \
+      libgl1-mesa-dri:i386 \
+      libgl1-mesa-glx:i386 \
+      libnvidia-gl-390:i386 \
+      pulseaudio:i386 \
  && rm -rf /var/lib/apt/lists/*
 
 # add ubuntu user to video/audio
