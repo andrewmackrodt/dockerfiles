@@ -12,6 +12,15 @@ Corporation.
 
 ## Usage
 
+**Security Notice:** the provided config creates a container with the security
+option `apparmor:unconfined`. This is required for D-Bus to communicate with
+the host for certain operations, e.g. updating the global menu in Unity. If this
+is not required, modify the command to remove the security option and remove
+the `$XDG_RUNTIME_DIR/bus` volume mount.
+
+Video acceleration, audio and gamepad support will function regardless of the
+above settings.
+
 ### docker
 
 ```
@@ -31,6 +40,7 @@ XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 # create the container
 docker create \
   --name firefox \
+  --security-opt apparmor:unconfined \
   --net host \
   --device /dev/input \
   --device /dev/snd \

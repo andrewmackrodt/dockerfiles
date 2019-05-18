@@ -11,6 +11,8 @@ services:
     privileged: true
 
     network_mode: host
+    security_opt:
+      - apparmor:unconfined
     devices:
       - /dev/input
       - /dev/snd
