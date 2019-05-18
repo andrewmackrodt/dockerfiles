@@ -26,7 +26,7 @@ try_fetch_bios() {
     if [ ! -z "${BIOS_CHECKSUM:-}" ]; then
         checksum=$(sha256sum -b /tmp/ps2_bios.zip | awk '{ print $1 }')
 
-        if [ "$checksum" != "e5b98f79e84d434b44fe4dab6b0e7823772d32744249a8fb9fb2288d0b354b21" ]; then
+        if [ "$checksum" != "$BIOS_CHECKSUM" ]; then
             echo "[ERR] Checksum mismatch /tmp/ps2_bios.zip $checksum" >&2
             rm -f /tmp/ps2_bios.zip 2>/dev/null
 
