@@ -7,7 +7,7 @@ services:
 
     # privileged is set for convenience, gpu devices should be explicitly
     # defined under devices instead,
-    # e.g. /dev/dri or /dev/nvidia0 and /dev/nvidiactl
+    # e.g. /dev/dri or /dev/nvidia0, /dev/nvidiactl and /dev/nvidia-modeset
     privileged: true
 
     network_mode: host

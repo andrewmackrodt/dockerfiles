@@ -38,7 +38,7 @@ BIOS files should be placed in `/bios`, e.g.
 # detect gpu devices to pass through
 GPU_DEVICES=$( \
     echo "$( \
-        find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl)' \
+        find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl|-modeset)' \
             | grep --color=never '.' \
           || echo '/dev/dri'\
       )" \
@@ -57,13 +57,12 @@ docker create \
   -v $HOME/.pcsx2/data:/data \
   -v $HOME/.pcsx2/bios:/bios \
   -v $HOME/.pcsx2/plugins:/plugins \
-  -e LANG=$(locale | sed -n -E "s/^LANG=([^.]+).*/\1/p") \
   -e BIOS_ZIP=${BIOS_ZIP:-} \
   -e BIOS_CHECKSUM=${BIOS_CHECKSUM:-} \
   -e PUID=$(id -u) \
   -e PGID=$(id -g) \
   -e DISPLAY=unix$DISPLAY \
-  -e XDG_RUNTIME_DIR=/run/user/$(id -u) \
+  -e LANG=${LANG:-en_US.UTF-8} \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
   -v /etc/machine-id:/etc/machine-id:ro \
   -v $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro \
@@ -79,7 +78,7 @@ docker create \
 | `-e PUID=1000` | The user id, recommended: `$(id -u)` |
 | `-e PGID=1000` | The group id, recommended: `$(id -g)` |
 | `-e TZ=UTC` | The timezone, e.g. "Europe/London" |
-| `-e LANG=en_US` | The language to use, e.g. "de_DE" |
+| `-e LANG=en_US.UTF-8` | The language to use, e.g. "de_DE" |
 | `-e BIOS_ZIP=` | URL to the zip file containing BIOS file(s) |
 | `-e BIOS_CHECKSUM=` | SHA-256 used to verify the zip file |
 | `-v /games` | PCSX2 games directory |

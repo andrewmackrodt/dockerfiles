@@ -1,7 +1,16 @@
 #!/bin/sh
 
-# fix file permissions
-sudo chown -R $(id -u):$(id -g) /bios /data /plugins
+# export XDG_RUNTIME_DIR
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+# generate locale
+export LANG=${LANG:-en_US.UTF-8}
+if ! locale -a 2>/dev/null | sed "s/.utf/.UTF-/" | grep -q "$LANG"; then
+    sudo locale-gen "$(echo "$LANG" | sed -E "s/\..*//")" "$LANG"
+fi
+
+# make directories writeable
+sudo chown $(id -u):$(id -g) /bios /data /plugins "$XDG_RUNTIME_DIR"
 
 try_fetch_bios() {
     # abort if /bios contains any *.bin files
@@ -124,16 +133,5 @@ if grep -qE "^BIOS=$" /data/inis/PCSX2_ui.ini; then
     fi
 fi
 
-# generate locale
-LANG_CODE=$(echo "${LANG:-en_US.UTF-8}" | sed -E "s/\..*//")
-[ ! -z "${LANG-}" ] || unset LANG
-
-if ! locale -a 2>/dev/null | grep -qE "^$LANG_CODE"; then
-    sudo locale-gen "$LANG_CODE"
-fi
-
-# ensure XDG_RUNTIME_DIR is writeable
-sudo chown $(id -u):$(id -g) "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
-
 # start PCSX2
-exec dbus-launch "$(which PCSX2)" "$@"
+exec "$(which PCSX2)" "$@"
