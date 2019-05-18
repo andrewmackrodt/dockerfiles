@@ -1,5 +1,17 @@
 #!/bin/sh
 
+# export XDG_RUNTIME_DIR
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+# export DBUS_SESSION_BUS_ADDRESS
+if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+fi
+
+# make directories writeable
+sudo chown $(id -u):$(id -g) /data /downloads "$XDG_RUNTIME_DIR"
+
+# create the default profile
 if [ ! -f /data/firefox/profiles.ini ]; then
     CONTAINER_ID_SHORT=$(awk -F':' '$2 == "pids" { print $3 }' /proc/1/cgroup \
         | awk -F'/' '{ print $3 }' \
@@ -24,14 +36,14 @@ Default=1
 EOF
 
     # set default user preferences
-    tee -a "/data/firefox/$PROFILE_NAME/user.js" >/dev/null<<EOF
-user_pref("general.autoScroll", true);
-user_pref("layers.acceleration.force-enabled", true);
-EOF
+    USER_FILE="/data/firefox/$PROFILE_NAME/user.js"
+    echo 'user_pref("general.autoScroll", true);' >> "$USER_FILE"
+
+    # force open gl if nvidia card detected (fragile)
+    if ls /dev/nvidiactl 2>/dev/null | grep -q "."; then
+        echo 'user_pref("layers.acceleration.force-enabled", true);' >> "$USER_FILE"
+    fi
 fi
 
-# ensure XDG_RUNTIME_DIR is writeable
-sudo chown $(id -u):$(id -g) "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
-
 # start firefox
-exec $(which firefox) "$@"
+exec "$(which firefox)" "$@"

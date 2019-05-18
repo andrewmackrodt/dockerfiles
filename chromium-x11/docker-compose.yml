@@ -24,28 +24,24 @@ services:
       - GUID=${UID:-1000}
       # x11
       - DISPLAY=unix$DISPLAY
-      # optional, this is the default
-      - XDG_RUNTIME_DIR=/run/user/${UID:-1000}
-      # optional, required if pulseaudio not configured
-      - ALSA_PCM=${ALSA_PCM:-dmix:CARD=NVidia,DEV=8}
+      # locale
+      - LANG=${LANG:-en_US.UTF-8}
     volumes:
       # x11
       - /tmp/.X11-unix:/tmp/.X11-unix:ro
       # runtime
       - /dev/shm:/dev/shm
       # pulseaudio
-      - /etc/machine-id:/etc/machine-id:ro
       - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
+      - /etc/machine-id:/etc/machine-id:ro
       - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
-      # dbus - gamepad support
-      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+      # dbus
+      - /run/user/${UID:-1000}/bus:/run/user/${UID:-1000}/bus:ro
       - /run/dbus:/run/dbus:ro
       - /run/udev/data:/run/udev/data:ro
-      # timezone (optional)
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+      # timezone
       - /etc/localtime:/etc/localtime:ro
       # chromium
       - $HOME/Downloads:/downloads
-      - data:/data
-
-volumes:
-  data:
+      - $HOME/.config/chromium:/data

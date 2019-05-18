@@ -30,6 +30,7 @@ RUN apt-get update -qq \
  && apt-get install -qqy \
       chromium-browser=$CHROMIUM_VERSION \
       alsa-utils \
+      locales \
       notify-osd \
  && rm -rf /var/lib/apt/lists/*
 

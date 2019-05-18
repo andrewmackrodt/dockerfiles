@@ -1,5 +1,22 @@
 #!/bin/sh
 
+# export XDG_RUNTIME_DIR
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+# export DBUS_SESSION_BUS_ADDRESS
+if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+fi
+
+# generate locale
+export LANG=${LANG:-en_US.UTF-8}
+if ! locale -a 2>/dev/null | sed "s/.utf/.UTF-/" | grep -q "$LANG"; then
+    sudo locale-gen "$(echo "$LANG" | sed -E "s/\..*//")" "$LANG"
+fi
+
+# make directories writeable
+sudo chown $(id -u):$(id -g) /data /downloads "$XDG_RUNTIME_DIR"
+
 # create the default alsa config to allow setting the soundcard
 # via the ALSA_PCM environment variable, e.g.
 #
@@ -32,8 +49,6 @@ pcm.!default {
 EOF
 }
 
-
-
 # create a dummy machine-id based on the container id to reduce
 # errors when running chromium, this is not a real machine id
 # and will not work with pulseaudio on the host, machine-id
@@ -57,12 +72,9 @@ set_machine_id() {
     fi
 }
 
-# configure alsa fallback if pulseaudio fails
+# configure alsa fallback
 configure_alsa
 set_machine_id
 
-# ensure XDG_RUNTIME_DIR is writeable
-sudo chown $(id -u):$(id -g) "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
-
 # start chromium
-exec dbus-launch "$(which chromium-browser)" "$@"
+exec "$(which chromium-browser)" "$@"

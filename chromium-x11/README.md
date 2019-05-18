@@ -26,9 +26,8 @@ GPU_DEVICES=$( \
       | sed -E "s/^/--device /" \
   )
 
-
-# create the data volume
-docker volume create --name chromium
+# get the xdg runtime dir
+XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 
 # create the container
 docker create \
@@ -40,16 +39,17 @@ docker create \
   --device /dev/snd \
   $GPU_DEVICES \
   -v $HOME/Downloads:/downloads \
-  -v chromium:/data \
+  -v $HOME/.config/chromium:/data \
   -e PUID=$(id -u) \
   -e PGID=$(id -g) \
   -e DISPLAY=unix$DISPLAY \
-  -e XDG_RUNTIME_DIR=/run/user/$(id -u) \
+  -e LANG=${LANG:-en_US.UTF-8} \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
   -v /dev/shm:/dev/shm \
-  -v /etc/machine-id:/etc/machine-id:ro \
   -v $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro \
-  -v /run/user/$(id -u)/pulse:/run/user/$(id -u)/pulse:ro \
+  -v /etc/machine-id:/etc/machine-id:ro \
+  -v $XDG_RUNTIME_DIR/pulse:$XDG_RUNTIME_DIR/pulse:ro \
+  -v $XDG_RUNTIME_DIR/bus:$XDG_RUNTIME_DIR/bus:ro \
   -v /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro \
   -v /run/dbus:/run/dbus:ro \
   -v /run/udev/data:/run/udev/data:ro \
@@ -64,6 +64,7 @@ docker create \
 | `-e PUID=1000` | The user id, recommended: `$(id -u)` |
 | `-e PGID=1000` | The group id, recommended: `$(id -g)` |
 | `-e TZ=UTC` | The timezone, e.g. "Europe/London" |
+| `-e LANG=en_US.UTF-8` | The language to use, e.g. "de_DE" |
 | `-e ALSA_PCM=<device>` | The ALSA device, e.g. "dmix:CARD=NVidia,DEV=8", see `aplay -L` |
 | `-v /data` | Chromium data |
 | `-v /downloads` | Chromium download directory |
