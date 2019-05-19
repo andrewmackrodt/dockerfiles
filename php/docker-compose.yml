@@ -1,0 +1,13 @@
+---
+version: "2.1"
+
+services:
+  php:
+    image: andrewmackrodt/php
+    environment:
+      # host UID/GID mapping
+      - PUID=${UID:-1000}
+      - GUID=${UID:-1000}
+    volumes:
+      # timezone
+      - /etc/localtime:/etc/localtime:ro
