@@ -29,6 +29,7 @@ RUN apt-get update -qq \
  && apt-get install -qqy \
       dbus-x11 \
       gnome-icon-theme \
+      libcanberra-gtk-module \
       libcanberra-gtk3-module \
       libgl1-mesa-dri \
       libgl1-mesa-glx \
