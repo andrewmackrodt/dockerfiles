@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# abort if TZ is empty or tzdata not installed
+if [ -z "${TZ:-}" -o ! -f /usr/share/zoneinfo/UTC ]; then
+    exit
+fi
+
+zone_file="/usr/share/zoneinfo/$TZ"
+
+# abort if the zone file does not exist
+if [ ! -f "$zone_file" ]; then
+    echo "ERROR: time zone file not found: $TZ" >&2
+
+    exit 1
+fi
+
+# set the time zone
+if [ "${ENTRYPOINT_DEBUG:-0}" = "1" ]; then
+    echo "DEBUG: Updating time zone file $zone_file -> /etc/localtime"
+fi
+
+ln -fns "$zone_file" /etc/localtime

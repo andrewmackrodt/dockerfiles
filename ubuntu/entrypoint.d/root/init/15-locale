@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# abort if LANG is empty or locales not installed
+if [ -z "${LANG:-}" -o $(which locale-gen >/dev/null; echo $?) -ne 0 ]; then
+    exit
+fi
+
+# generate locales
+if [ "${ENTRYPOINT_DEBUG:-0}" = "1" ]; then
+    locale-gen "$LANG"
+else
+    locale-gen "$LANG" >/dev/null
+fi

@@ -1,0 +1,2 @@
+Scripts in this directory will be run as the ubuntu user on init, i.e. during
+container creation, scripts are NOT run any other time.

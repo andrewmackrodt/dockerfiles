@@ -1,0 +1,1 @@
+Scripts in this directory will be run as the root user every time the container is started.

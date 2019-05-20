@@ -61,6 +61,7 @@ RUN set -ex \
 RUN /bin/echo -e "# Allow members of group adm to execute any command\n%adm ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/passwordless
 
 # copy files to the container
+COPY entrypoint.d /etc/entrypoint.d
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 # create the ubuntu user

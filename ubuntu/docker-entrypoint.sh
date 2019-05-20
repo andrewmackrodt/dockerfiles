@@ -1,13 +1,15 @@
 #!/bin/sh
 
+# backup environment variables
+if [ ! -f /tmp/docker-entrypoint.env ]; then
+    env > /tmp/docker-entrypoint.env
+fi
+
 ############################################################
 # restart as root
 ############################################################
 
 if [ "$(id -u)" != "0" ]; then
-    # backup environment variables
-    env > "/tmp/docker-entrypoint.env"
-
     # detect init system to use if pid 1
     # i.e. the container was not started as root user
     if [ $$ = 1 ]; then
@@ -20,118 +22,67 @@ if [ "$(id -u)" != "0" ]; then
         set -- "$0" "$@"
     fi
 
-    exec sudo -E "$@"
+    exec sudo -EH "$@"
 fi
 
+ADM_USER=ubuntu
+
+
 ############################################################
-# functions
+# run entrypoint scripts
 ############################################################
 
-set_timezone () {
-    if [ -z "${TZ:-}" ]; then
-        return
-    fi
+run_entrypoint_scripts () {
+    local path=/etc/entrypoint.d
 
-    local zone_file="/usr/share/zoneinfo/$TZ"
-
-    if [ -f "$zone_file" ]; then
-        ln -fns "$zone_file" /etc/localtime
-        echo "$TZ" > /etc/timezone
+    if [ -z "${2:-}" ]; then
+        path="$path/root/$1"
     else
-        echo "ERR unknown timezone '$TZ'" >&2
-    fi
-}
-
-set_uidgid () {
-    # existing container user details
-    ADM_PASSWD=$(grep -E "^$ADM_USER:" /etc/passwd)
-    ADM_UID=$(echo "$ADM_PASSWD" | cut -d':' -f3)
-    ADM_GID=$(echo "$ADM_PASSWD" | cut -d':' -f4)
-    ADM_HOME=$(echo "$ADM_PASSWD" | cut -d':' -f6)
-
-    PUID="${PUID:-$ADM_UID}"
-
-    # PUID user details
-    PUID_PASSWD=$(grep -E ":x:$PUID:" /etc/passwd | head -n1)
-    PUID_USER=$(echo "$PUID_PASSWD" | cut -d':' -f1)
-    PUID_GID=$(echo "$PUID_PASSWD" | cut -d':' -f4)
-    PUID_HOME=$(echo "$PUID_PASSWD" | cut -d':' -f6)
-
-    PGID="${PGID:-${PUID_GID:-$ADM_GID}}"
-
-    # update pgid
-    if [ "$PGID" != "$ADM_GID" ]; then
-        set_gid
+        path="$path/user/$1"
     fi
 
-    # update puid and add to puid user groups
-    if [ "$PUID" != "$ADM_UID" ]; then
-        set_uid
-    fi
-}
+    local scripts="$(find "$path" -maxdepth 1 -type f -not -name '.*')"
 
-get_adm_user () {
-    echo $(awk -F':' '{ print $3, $1 }' /etc/passwd \
-        | sort -n \
-        | grep -E "\b($(awk -F':' '$1 == "adm" { print $4 }' /etc/group | tr ',' '|'))\b" \
-        | tail -n1 \
-        | awk '{ print $2 }')
-}
-
-set_gid () {
-    # replace container gid with pgid in /etc/passwd and /etc/group
-    sed -i -E "s/^($ADM_USER:x:[^:]+):[^:]+:/\1:$PGID:/" /etc/passwd
-    sed -i -E "s/^($ADM_USER:x):[^:]+:/\1:$PGID:/" /etc/group
-
-    # update file gid
-
-    local exclude_mounts="$( \
-      mount \
-        | sed -n -E "s#^[^ ]+ on ($ADM_HOME.+?) type.+#\\1#p" \
-        | sed -E "s#.+#-not -path '\\0' -not -path '\\0/*'#" \
-        | tr $"\n" " " \
-    )"
-
-    eval find "$ADM_HOME" $exclude_mounts -print0 | xargs -0 -r chgrp "$PGID"
-}
-
-set_uid () {
-    # replace container uid with puid in /etc/passwd
-    sed -i -E "s/^($ADM_USER:x):[^:]+:/\1:$PUID:/" /etc/passwd
-
-    # update container user home and groups if existing user with puid
-    # otherwise update file permissions to puid
-    if [ ! -z "$PUID_PASSWD" ]; then
-        # add container user to all groups containing puid user
-        sed -i -E "s/([:,]$PUID_USER\b)/\1,$ADM_USER/" /etc/group
-
-        # update container user home if uid user is different
-        if [ ! -z "$PUID_HOME" ]; then
-            # create puid home if it doesn't exist
-            if [ ! -d "$PUID_HOME" ]; then
-                mkdir -p "$PUID_HOME"
-                chown "$PUID:$PUID_GID" "$PUID_HOME"
-            fi
+    for f in $scripts; do
+        if [ -z "${2:-}" ]; then
+            # run root script
+            "$f"
+        else
+            # run user script
+            gosu "$2" "$f"
         fi
-    fi
-
-    # update file uid
-
-    local exclude_mounts="$( \
-      mount \
-        | sed -n -E "s#^[^ ]+ on ($ADM_HOME.+?) type.+#\\1#p" \
-        | sed -E "s#.+#-not -path '\\0' -not -path '\\0/*'#" \
-        | tr $"\n" " " \
-    )"
-
-    eval find "$ADM_HOME" $exclude_mounts -print0 | xargs -0 -r chown "$PUID"
+    done
 }
 
-############################################################
-# continue as root
-############################################################
+if [ ! -f /var/local/entrypoint.lock ]; then
+    run_entrypoint_scripts 'init'
+fi
 
-ADM_USER=$(get_adm_user)
+run_entrypoint_scripts 'start'
+
+# run user scripts in a subshell to restore the original environment
+{
+    if [ -f '/tmp/docker-entrypoint.env' ]; then
+        eval $(env | cut -d'=' -f1 | grep -v 'PATH' | xargs echo unset)
+        eval $(sed -E 's/^/export /' '/tmp/docker-entrypoint.env')
+    fi
+
+    if [ ! -f /var/local/entrypoint.lock ]; then
+        run_entrypoint_scripts 'init' "$ADM_USER"
+    fi
+
+    run_entrypoint_scripts 'start' "$ADM_USER"
+}
+
+# create the entrypoint lock file to prevent running init tasks
+if [ ! -f /var/local/entrypoint.lock ]; then
+    date +'%s' > /var/local/entrypoint.lock
+fi
+
+
+############################################################
+# set secondary entrypoint
+############################################################
 
 # detect the secondary entrypoint if $1 is empty or "-"
 if echo "${1:--}" | grep -q -E "^-"; then
@@ -146,11 +97,11 @@ if echo "${1:--}" | grep -q -E "^-"; then
     set -- "$program" "$@"
 fi
 
-# configure the environment
-set_timezone
-set_uidgid
 
-# detect init system to use if pid 1, i.e. the container was started as root
+############################################################
+# set init system (if container not started as root)
+############################################################
+
 if [ $$ = 1 ]; then
     if [ "${S6_ENABLE:-0}" = "0" ]; then
         # switch to adm user before exec tini
@@ -167,11 +118,16 @@ else
     set -- gosu "$ADM_USER" "$@"
 fi
 
+
+############################################################
+# restore environment and step down user
+############################################################
+
 # restore env variables
-if [ -f "/tmp/docker-entrypoint.env" ]; then
-    eval $(env | cut -d"=" -f1 | grep -v "PATH" | xargs echo unset)
-    eval $(sed -E "s/^/export /" "/tmp/docker-entrypoint.env")
-    rm "/tmp/docker-entrypoint.env"
+if [ -f '/tmp/docker-entrypoint.env' ]; then
+    eval $(env | cut -d'=' -f1 | grep -v 'PATH' | xargs echo unset)
+    eval $(sed -E 's/^/export /' '/tmp/docker-entrypoint.env')
+    rm '/tmp/docker-entrypoint.env'
 fi
 
 exec "$@"
