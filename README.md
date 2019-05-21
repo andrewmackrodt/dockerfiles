@@ -36,8 +36,9 @@ entrypoint (defined by environment variable `ENTRYPOINT0`) or user command.
 Under normal operation PID 1 will be the `sudo` command which invokes the init
 system. In my testing, signal processing propagates correctly to the `tini` or
 `s6-overlay` processes which are the only other top-level processes. However, it
-is also possible (and recommended) to start the container with the option
-`--user root` which will make the init process PID 1.
+is also possible to start the container with the option `--user root` which will
+make the init process PID 1. Note that `docker exec` will run as `root` if this
+option is specified.
 
 ```
 $ docker run --rm andrewmackrodt/ubuntu -c "id -a; date; ps faux"
@@ -90,4 +91,4 @@ Container specific parameters which should not be overridden at runtime.
 | Parameter | Function |
 | --- | --- |
 | `ENTRYPOINT0=` | Executed after `docker-entrypoint.sh` if `CMD` is empty or begins with "-" |
-| `S6_ENABLE=0` | Set to non-zero to use `s6-overlay` as the init system |
+| `S6_ENABLE=0` | <p>`s6-overlay` init configuration:</p><ul><li>0: disabled</li><li>1: always</li><li>2: `CMD` is empty</li></ul> |

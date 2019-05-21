@@ -10,19 +10,7 @@ fi
 ############################################################
 
 if [ "$(id -u)" != "0" ]; then
-    # detect init system to use if pid 1
-    # i.e. the container was not started as root user
-    if [ $$ = 1 ]; then
-        if [ "${S6_ENABLE:-0}" = "0" ]; then
-            set -- tini -s -g "$0" -- "$@"
-        else
-            set -- /init "$0" "$@"
-        fi
-    else
-        set -- "$0" "$@"
-    fi
-
-    exec sudo -EH "$@"
+    exec sudo -EH "$0" "$@"
 fi
 
 ADM_USER=ubuntu
@@ -61,10 +49,10 @@ fi
 run_entrypoint_scripts 'start'
 
 # run user scripts in a subshell to restore the original environment
-{
+(
     if [ -f '/tmp/docker-entrypoint.env' ]; then
         eval $(env | cut -d'=' -f1 | grep -v 'PATH' | xargs echo unset)
-        eval $(sed -E 's/^/export /' '/tmp/docker-entrypoint.env')
+        eval $(sed -E 's/^/export /' '/tmp/docker-entrypoint.env' | sed -E 's/=(.+)/="\1"/')
     fi
 
     if [ ! -f /var/local/entrypoint.lock ]; then
@@ -72,7 +60,7 @@ run_entrypoint_scripts 'start'
     fi
 
     run_entrypoint_scripts 'start' "$ADM_USER"
-}
+)
 
 # create the entrypoint lock file to prevent running init tasks
 if [ ! -f /var/local/entrypoint.lock ]; then
@@ -85,37 +73,42 @@ fi
 ############################################################
 
 # detect the secondary entrypoint if $1 is empty or "-"
-if echo "${1:--}" | grep -q -E "^-"; then
-    # detect image specific entrypoint
-    program=${ENTRYPOINT0:-}
+if echo "${1:--}" | grep -qE '^-'; then
+    if [ ! -z "${ENTRYPOINT0:-}" ]; then
+        # remove first argument if --, e.g. command is `docker run chdman -- createcd ...`
+        # -- is needed to avoid overriding the entrypoint
+        if [ "$1" = '--' ]; then
+            shift
+        fi
 
-    if [ -z "$program" ]; then
-        # fallback to user shell
-        program=$(awk -F':' '$1 == "'$ADM_USER'" { print $7 }' /etc/passwd)
+        # do not wrap ENTRYPOINT0 in quotes, it can be many args
+        set -- $ENTRYPOINT0 "$@"
     fi
-
-    set -- "$program" "$@"
 fi
 
 
 ############################################################
-# set init system (if container not started as root)
+# set init system
 ############################################################
 
-if [ $$ = 1 ]; then
-    if [ "${S6_ENABLE:-0}" = "0" ]; then
-        # switch to adm user before exec tini
-        # tini does not start services so does not need root
-        program=$1; shift
-        set -- gosu "$ADM_USER" tini "$program" -- "$@"
-    else
-        # switch to adm user after exec s6-overlay
-        # s6 starts services and assumes root
-        set -- /init gosu "$ADM_USER" "$@"
-    fi
+if [ \
+        "${S6_ENABLE:-0}" -eq 1 \
+        -o "${S6_ENABLE:-0}" -eq 2 -a $# -eq 0 \
+ ]; then
+    # switch to adm user after exec s6-overlay
+    # only if arg count > 0
+    [ $# -eq 0 ] || set -- gosu "$ADM_USER" "$@"
+    set -- /init "$@"
 else
-    # just switch the user if not pid 1, e.g. container started as non root
-    set -- gosu "$ADM_USER" "$@"
+    # fallback to user shell if no ENTRYPOINT0 and no CMD
+    if [ $# -eq 0 ]; then
+        ADM_SHELL=$(awk -F':' '$1 == "'$ADM_USER'" { print $7 }' /etc/passwd)
+
+        set -- "$ADM_SHELL" "$@"
+    fi
+
+    # switch to adm user after exec tini
+    set -- tini -s -g gosu -- "$ADM_USER" "$@"
 fi
 
 
@@ -126,7 +119,7 @@ fi
 # restore env variables
 if [ -f '/tmp/docker-entrypoint.env' ]; then
     eval $(env | cut -d'=' -f1 | grep -v 'PATH' | xargs echo unset)
-    eval $(sed -E 's/^/export /' '/tmp/docker-entrypoint.env')
+    eval $(sed -E 's/^/export /' '/tmp/docker-entrypoint.env' | sed -E 's/=(.+)/="\1"/')
     rm '/tmp/docker-entrypoint.env'
 fi
 

@@ -103,8 +103,6 @@ set_uid () {
 
 # set PUID and PGID from mounts if empty
 if [ -z "${PUID:-}" -o -z "${PGID:-}" ]; then
-    echo "WARN: PUID or PGID is empty" >&2
-
     detect_uid_gid_from_mounts
 fi
 
