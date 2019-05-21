@@ -11,6 +11,7 @@ build:
 	cd nodejs; make build
 	cd nodejs-chromium; make build
 	cd php; make build
+	cd apache2; make build
 
 push:
 	cd ubuntu; make push
@@ -25,3 +26,4 @@ push:
 	cd nodejs; make push
 	cd nodejs-chromium; make push
 	cd php; make push
+	cd apache2; make push
