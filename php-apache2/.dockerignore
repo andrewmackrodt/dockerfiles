@@ -1,0 +1,5 @@
+Makefile
+README.md
+docker-compose*.yml
+*.env
+.release*

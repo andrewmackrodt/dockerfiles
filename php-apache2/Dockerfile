@@ -1,4 +1,4 @@
-FROM andrewmackrodt/ubuntu:18.04
+FROM andrewmackrodt/php
 
 ARG LABEL_NAME
 ARG LABEL_VERSION
@@ -23,7 +23,7 @@ USER root
 WORKDIR /root
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG APACHE_VERSION
+ARG PHP_VERSION
 
 # add ondrej/apache2 repository
 RUN apt-get update -qq \
@@ -37,8 +37,10 @@ RUN apt-get update -qq \
 # install apache packages
 RUN apt-get update -qq \
  && apt-get install -qqy \
-      apache2=$APACHE_VERSION \
+      apache2 \
       apache2-utils \
+      libapache2-mod-php$PHP_VERSION \
+ && phpdismod xdebug \
  && rm -rf /var/lib/apt/lists/*
 
 # enable modules
@@ -67,6 +69,10 @@ COPY services.d /etc/services.d
 EXPOSE 80
 EXPOSE 443
 
+# unset ENTRYPOINT0, we want s6-overlay to run the apache daemon
+ENV ENTRYPOINT0=""
+
+# start services unless CMD is non empty
 ENV S6_ENABLE 2
 
 USER ubuntu

@@ -1,0 +1,12 @@
+---
+version: "2.1"
+
+services:
+  php-apache2:
+    image: andrewmackrodt/php-apache2
+    ports:
+      - 8080:80
+      - 8443:443
+    volumes:
+      - $HOME/Public:/var/www/html:ro
+      - /etc/localtime:/etc/localtime:ro
