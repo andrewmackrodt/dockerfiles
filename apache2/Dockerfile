@@ -41,8 +41,31 @@ RUN apt-get update -qq \
       apache2-utils \
  && rm -rf /var/lib/apt/lists/*
 
+# enable modules
+RUN a2enmod rewrite \
+ && a2enmod headers \
+ && a2enmod ssl
+
+# configure /var/www
+RUN perl -0777 -i \
+  -pe 's#(<Directory /var/www/?>[^<]+AllowOverride)[ \t]+None#\1 All#;' \
+  -pe 's#(<Directory /var/www/?>[^<]+Options[^\n]*)\bIndexes\b#\1#;' \
+  /etc/apache2/apache2.conf
+
+# pipe logs to stdout/stderr
+RUN sed -ri \
+  -e 's#(^[ \t]*(Custom|Transfer)Log)[ \t]+[^ \t]+#\1 /proc/self/fd/1#' \
+  -e 's#(^[ \t]*ErrorLog)[ \t]+[^ \t]+#\1 /proc/self/fd/2#' \
+  /etc/apache2/conf-available/other-vhosts-access-log.conf \
+  /etc/apache2/sites-available/000-default.conf \
+  /etc/apache2/sites-available/default-ssl.conf \
+  /etc/apache2/apache2.conf
+
 # copy files to container
 COPY services.d /etc/services.d
+
+EXPOSE 80
+EXPOSE 443
 
 ENV S6_ENABLE 2
 
