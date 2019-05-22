@@ -14,7 +14,7 @@ FIREFOX_VERSION=$(getVersion)
 
 RELEASE_VERSION=$( \
     echo "$FIREFOX_VERSION" \
-      | sed -E 's/^([0-9]+:)?([0-9]+\.[0-9]+\.[0-9]+)(\+build([0-9]+))?.*/\2-r\4/' \
+      | sed -E 's/^([0-9]+:)?(([0-9]+\.){1,2}[0-9]+)(\+build([0-9]+))?.*/\2-r\5/' \
       | sed -E 's/-r$//' \
   )
 
