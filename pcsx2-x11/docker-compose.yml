@@ -19,7 +19,7 @@ services:
     environment:
       # host UID/GID mapping
       - PUID=${UID:-1000}
-      - GUID=${UID:-1000}
+      - PGID=${UID:-1000}
       # x11
       - DISPLAY=unix$DISPLAY
       # locale
