@@ -28,4 +28,4 @@ push:
 	cd nodejs-chromium; make push
 	cd apache2; make push
 	cd php; make push
-	cd php-apache2; make build
+	cd php-apache2; make push
