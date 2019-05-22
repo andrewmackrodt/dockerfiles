@@ -65,6 +65,7 @@ RUN sed -ri \
 
 # copy files to container
 COPY services.d /etc/services.d
+COPY entrypoint.d /etc/entrypoint.d
 
 EXPOSE 80
 EXPOSE 443

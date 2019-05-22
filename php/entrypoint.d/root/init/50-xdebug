@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ "${XDEBUG_ENABLE:-}" = "1" ]; then
+    phpenmod xdebug
+fi

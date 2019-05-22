@@ -74,6 +74,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && chmod 0775 /usr/local/bin/composer*
 
 # copy xdebug config
+COPY entrypoint.d /etc/entrypoint.d
 COPY xdebug.ini /etc/php/$PHP_VERSION/mods-available/xdebug.ini
 
 # disable xdebug
