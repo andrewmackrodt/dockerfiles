@@ -40,6 +40,7 @@ RUN apt-get update -qq \
       apache2 \
       apache2-utils \
       libapache2-mod-php$PHP_VERSION \
+      python3-certbot-apache \
  && phpdismod xdebug \
  && rm -rf /var/lib/apt/lists/*
 

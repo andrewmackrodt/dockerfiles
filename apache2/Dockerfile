@@ -39,6 +39,7 @@ RUN apt-get update -qq \
  && apt-get install -qqy \
       apache2=$APACHE_VERSION \
       apache2-utils \
+      python3-certbot-apache \
  && rm -rf /var/lib/apt/lists/*
 
 # enable modules
