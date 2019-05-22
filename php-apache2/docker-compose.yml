@@ -7,6 +7,14 @@ services:
     ports:
       - 8080:80
       - 8443:443
+    environment:
+      - LETS_ENCRYPT_EMAIL=you@example.com
+      - LETS_ENCRYPT_STAGING=0
+      - LETS_ENCRYPT_DOMAINS=97e0973.ngrok.io
     volumes:
       - $HOME/Public:/var/www/html:ro
+      - certs:/etc/letsencrypt/live
       - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  certs:

@@ -65,6 +65,7 @@ RUN sed -ri \
   /etc/apache2/apache2.conf
 
 # copy files to container
+COPY cont-init.d /etc/cont-init.d
 COPY services.d /etc/services.d
 COPY entrypoint.d /etc/entrypoint.d
 
