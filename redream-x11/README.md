@@ -44,6 +44,7 @@ docker create \
   -v /etc/machine-id:/etc/machine-id:ro \
   -v $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro \
   -v /run/user/$(id -u)/pulse:/run/user/$(id -u)/pulse:ro \
+  -v /run/udev/data:/run/udev/data:ro \
   -v /etc/localtime:/etc/localtime:ro \
   andrewmackrodt/redream-x11
 ```

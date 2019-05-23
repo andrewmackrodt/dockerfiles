@@ -29,6 +29,8 @@ services:
       - /etc/machine-id:/etc/machine-id:ro
       - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
       - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
+      # udev
+      - /run/udev/data:/run/udev/data:ro
       # timezone (optional)
       - /etc/localtime:/etc/localtime:ro
       # redream
