@@ -27,7 +27,7 @@ ARG SPOTIFY_VERSION
 
 # add spotify repository
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       software-properties-common \
       gnupg \
  && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys A87FF9DF48BF1C90 \
@@ -39,7 +39,7 @@ RUN apt-get update -qq \
 
 # install spotify
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       spotify-client=$SPOTIFY_VERSION \
  && rm -rf /var/lib/apt/lists/*
 

@@ -27,7 +27,7 @@ ARG PHP_VERSION
 
 # add ondrej/php repository
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       software-properties-common \
  && add-apt-repository -y ppa:ondrej/php \
  && apt-get purge -qqy --auto-remove \
@@ -36,7 +36,7 @@ RUN apt-get update -qq \
 
 # install php packages
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       php${PHP_VERSION}-bcmath \
       php${PHP_VERSION}-bz2 \
       php${PHP_VERSION}-cli \

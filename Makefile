@@ -6,6 +6,7 @@ build:
 	cd firefox-x11; make build
 	cd spotify-x11; make build
 	cd redream-x11; make build
+	cd dolphin-emu-x11; make build
 	cd pcsx2-x11; make build
 	cd buildpack-deps; make build
 	cd nodejs; make build
@@ -22,6 +23,7 @@ push:
 	cd firefox-x11; make push
 	cd spotify-x11; make push
 	cd redream-x11; make push
+	cd dolphin-emu-x11; make push
 	cd pcsx2-x11; make push
 	cd buildpack-deps; make push
 	cd nodejs; make push

@@ -27,7 +27,7 @@ ARG APACHE_VERSION
 
 # add ondrej/apache2 repository
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       software-properties-common \
  && add-apt-repository -y ppa:ondrej/apache2 \
  && apt-get purge -qqy --auto-remove \
@@ -36,7 +36,7 @@ RUN apt-get update -qq \
 
 # install apache packages
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       apache2=$APACHE_VERSION \
       apache2-utils \
       python3-certbot-apache \

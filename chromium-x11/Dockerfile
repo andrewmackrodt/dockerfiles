@@ -27,7 +27,7 @@ ARG CHROMIUM_VERSION
 
 # install chromium
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       chromium-browser=$CHROMIUM_VERSION \
       alsa-utils \
       locales \

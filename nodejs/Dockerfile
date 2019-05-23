@@ -26,7 +26,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN set -ex \
  && wget -q -O- https://deb.nodesource.com/setup_10.x | bash - \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       nodejs=10.15.3-1nodesource1 \
  && rm -rf /var/lib/apt/lists/*
 

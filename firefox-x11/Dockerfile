@@ -27,7 +27,7 @@ ARG FIREFOX_VERSION
 
 # install firefox
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       firefox=$FIREFOX_VERSION \
       libavcodec57 \
  && rm -rf /var/lib/apt/lists/*

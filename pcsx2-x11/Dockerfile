@@ -27,7 +27,7 @@ ARG PCSX2_VERSION
 
 # add PCSX2 repository
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       software-properties-common \
  && add-apt-repository -y ppa:pcsx2-team/pcsx2-daily \
  && apt-get purge -qqy --auto-remove \
@@ -36,10 +36,11 @@ RUN apt-get update -qq \
 
 # install PCSX2
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       pcsx2-unstable=$PCSX2_VERSION \
       libcap2-bin \
       locales \
+      rtkit \
       unzip \
  && rm -rf /var/lib/apt/lists/*
 

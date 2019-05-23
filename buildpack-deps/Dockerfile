@@ -28,7 +28,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # @see https://github.com/docker-library/buildpack-deps/blob/ff09b5c/bionic/Dockerfile
 RUN set -ex \
  && apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       autoconf \
       automake \
       bzip2 \

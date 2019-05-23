@@ -26,7 +26,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN set -ex \
  && apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       chromium-browser \
  && rm -rf /var/lib/apt/lists/*
 

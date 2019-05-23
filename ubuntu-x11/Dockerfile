@@ -26,7 +26,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # install x11 packages
 RUN apt-get update -qq \
- && apt-get install -qqy \
+ && apt-get install -qqy --no-install-recommends \
       dbus-x11 \
       gnome-icon-theme \
       libcanberra-gtk-module \
@@ -34,15 +34,15 @@ RUN apt-get update -qq \
       libgl1-mesa-dri \
       libgl1-mesa-glx \
       libnvidia-gl-390 \
+      rtkit \
       pulseaudio \
  && rm -rf /var/lib/apt/lists/*
 
-# add ubuntu user to video/audio
-RUN adduser ubuntu video \
- && adduser ubuntu audio \
- && adduser ubuntu voice \
- && adduser ubuntu pulse \
- && adduser ubuntu pulse-access
+# add ubuntu user to multimedia
+RUN for group in video audio voice pulse rtkit \
+     ; do \
+         adduser ubuntu $group ; \
+     done
 
 USER ubuntu
 WORKDIR /home/ubuntu
