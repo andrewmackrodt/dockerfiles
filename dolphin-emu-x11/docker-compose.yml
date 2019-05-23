@@ -1,0 +1,44 @@
+---
+version: "2.1"
+
+services:
+  dolphin-emu:
+    image: andrewmackrodt/dolphin-emu-x11
+
+    # privileged is set for convenience, gpu devices should be explicitly
+    # defined under devices instead,
+    # e.g. /dev/dri or /dev/nvidia0, /dev/nvidiactl and /dev/nvidia-modeset
+    privileged: true
+
+    network_mode: host
+    security_opt:
+      - apparmor:unconfined
+    shm_size: 128M
+    devices:
+      - /dev/input
+      - /dev/snd
+    environment:
+      # host UID/GID mapping
+      - PUID=${UID:-1000}
+      - PGID=${UID:-1000}
+      # x11
+      - DISPLAY=unix$DISPLAY
+    volumes:
+      # x11
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      # pulseaudio
+      - /etc/machine-id:/etc/machine-id:ro
+      - /run/user/${UID:-1000}/pulse:/run/user/${UID:-1000}/pulse:ro
+      - $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro
+      # dbus
+      - /run/user/${UID:-1000}/bus:/run/user/${UID:-1000}/bus:ro
+      - /run/dbus:/run/dbus:ro
+      - /run/udev/data:/run/udev/data:ro
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+      # timezone (optional)
+      - /etc/localtime:/etc/localtime:ro
+      # dolphin-emu
+      - $HOME/.dolphin-emu/Config:/config
+      - $HOME/.dolphin-emu:/data
+      - $HOME/Games/GameCube:/gc:ro
+      - $HOME/Games/Wii:/wii:ro

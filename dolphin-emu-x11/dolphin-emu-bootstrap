@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# export XDG_RUNTIME_DIR
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+# fix file permissions
+sudo chown $(id -u):$(id -g) "$XDG_RUNTIME_DIR" "$HOME/.config" "$HOME/.local"
+sudo chown -R $(id -u):$(id -g) /config /data
+
+# set the game directory
+if [ ! -f /config/Dolphin.ini ]; then
+    tee /config/Dolphin.ini >/dev/null<<EOF
+[General]
+ISOPaths = 2
+RecursiveISOPaths = True
+ISOPath0 = /gc
+ISOPath1 = /wii
+UseGameCovers = True
+UseDiscordPresence = False
+[Interface]
+PauseOnFocusLost = True
+[Core]
+EnableCheats = True
+[Input]
+BackgroundInput = True
+[DSP]
+Backend = Pulse
+
+EOF
+fi
+
+exec "$(which dolphin-emu)" "$@"
