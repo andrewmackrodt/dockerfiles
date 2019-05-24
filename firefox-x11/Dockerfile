@@ -30,6 +30,7 @@ RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       firefox=$FIREFOX_VERSION \
       libavcodec57 \
+      libdbusmenu-gtk3-4 \
  && rm -rf /var/lib/apt/lists/*
 
 # link /data to firefox config
