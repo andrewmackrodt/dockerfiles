@@ -50,7 +50,13 @@ RUN mkdir /downloads \
 # copy files to container
 COPY firefox-bootstrap /usr/local/bin/firefox-bootstrap
 
-ENV ENTRYPOINT0 /usr/local/bin/firefox-bootstrap
-
+# stepdown to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
+
+# export volumes
+VOLUME /data
+VOLUME /downloads
+
+# set the secondary entrypoint
+ENV ENTRYPOINT0 /usr/local/bin/firefox-bootstrap

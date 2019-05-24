@@ -53,7 +53,13 @@ RUN mkdir /downloads \
 # copy files to container
 COPY chromium-bootstrap /usr/local/bin/chromium-bootstrap
 
-ENV ENTRYPOINT0 /usr/local/bin/chromium-bootstrap
-
+# stepdown to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
+
+# export volumes
+VOLUME /data
+VOLUME /downloads
+
+# set the secondary entrypoint
+ENV ENTRYPOINT0 /usr/local/bin/chromium-bootstrap

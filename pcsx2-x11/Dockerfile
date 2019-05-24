@@ -60,8 +60,7 @@ RUN ln -s /usr/games/PCSX2 /usr/local/bin/PCSX2
 # copy files to container
 COPY pcsx2-bootstrap /usr/local/bin/pcsx2-bootstrap
 
-ENV ENTRYPOINT0 /usr/local/bin/pcsx2-bootstrap
-
+# stepdown to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
 
@@ -71,3 +70,11 @@ RUN mkdir /home/ubuntu/.config \
 
 # create .local/share for recently-used.xbel
 RUN mkdir -p /home/ubuntu/.local/share
+
+# export volumes
+VOLUME /data
+VOLUME /bios
+VOLUME /plugins
+
+# set the secondary entrypoint
+ENV ENTRYPOINT0 /usr/local/bin/pcsx2-bootstrap

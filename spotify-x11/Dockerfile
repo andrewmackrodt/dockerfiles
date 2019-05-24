@@ -57,7 +57,16 @@ RUN mkdir /cache /home/ubuntu/.cache \
  && ln -s /cache /home/ubuntu/.cache/spotify \
  && chown -h -R ubuntu:ubuntu /home/ubuntu/.cache
 
-ENV ENTRYPOINT0 /usr/bin/spotify
+# copy files to container
+COPY spotify-bootstrap /usr/local/bin/spotify-bootstrap
 
+# stepdown to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
+
+# export volumes
+VOLUME /config
+VOLUME /cache
+
+# set the secondary entrypoint
+ENV ENTRYPOINT0 /usr/local/bin/spotify-bootstrap

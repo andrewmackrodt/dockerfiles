@@ -53,8 +53,7 @@ RUN ln -s /usr/games/dolphin-emu /usr/local/bin/dolphin-emu
 # copy files to container
 COPY dolphin-emu-bootstrap /usr/local/bin/dolphin-emu-bootstrap
 
-ENV ENTRYPOINT0 /usr/local/bin/dolphin-emu-bootstrap
-
+# stepdown to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
 
@@ -65,3 +64,10 @@ RUN mkdir -p /home/ubuntu/.config \
 # link /data
 RUN mkdir -p /home/ubuntu/.local/share \
  && ln -s /data /home/ubuntu/.local/share/dolphin-emu
+
+# export volumes
+VOLUME /config
+VOLUME /data
+
+# set the secondary entrypoint
+ENV ENTRYPOINT0 /usr/local/bin/dolphin-emu-bootstrap

@@ -47,7 +47,15 @@ RUN ln -s /cache /opt/redream/cache
 # copy files to container
 COPY redream-bootstrap /usr/local/bin/redream-bootstrap
 
-ENV ENTRYPOINT0 /usr/local/bin/redream-bootstrap
-
+# stepdown to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
+
+# export volumes
+VOLUME /saves
+VOLUME /config
+VOLUME /bios
+VOLUME /cache
+
+# set the secondary entrypoint
+ENV ENTRYPOINT0 /usr/local/bin/redream-bootstrap
