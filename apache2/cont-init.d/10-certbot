@@ -1,0 +1,102 @@
+#!/usr/bin/with-contenv sh
+
+# abort if no domains specified
+if [ -z "${LETS_ENCRYPT_DOMAINS:-}" ]; then
+    exit 0
+fi
+
+if [ -z "${LETS_ENCRYPT_EMAIL:-}" ]; then
+    echo 'Certbot.ERROR: LETSENCRYPT_EMAIL is not set' >&2
+    # sleep so the user has time to investigate
+    sleep 5
+    # exit with error code
+    exit 1
+fi
+
+# run in background to wait until apache is started
+{
+    for i in $(seq 1 5); do
+        running=$(ps x | grep '[s]bin/apache2' | wc -l)
+
+        if [ "$running" -ge 2 ]; then
+            # use staging?
+            if [ "${LETS_ENCRYPT_STAGING:-0}" -eq 1 ]; then
+                echo "Certbot.INFO: Using Let's Encrypt Staging Environment" >&2
+                staging='--staging'
+            else
+                staging=''
+            fi
+
+
+            ####################################################################
+            # detect if we need to request new certificates
+            ####################################################################
+
+            requested=$(echo "$LETS_ENCRYPT_DOMAINS" | tr ',' $'\n' | sort | uniq)
+            available=$(find /etc/letsencrypt/live -mindepth 1 -maxdepth 1 -type d | sed -E 's#^.+/##')
+            missing=$( { echo "$requested"; echo "$requested"; echo "$available"; } | sort | uniq -c | awk '$1 == "2" { print $2 }')
+            renewable=$( { echo "$requested"; echo "$available"; } | sort | uniq -c | awk '$1 == "2" { print $2 }')
+
+            # install missing certificates, i.e. part of
+            # $LETS_ENCRYPT_DOMAINS but not on disk
+            if [ ! -z "$missing" ]; then
+                echo "Certbot.INFO: Requesting and installing new certificates ..." >&2
+
+                # print command for debug
+                echo Certbot.DEBUG: \
+                    certbot run -n \
+                        $staging \
+                        --agree-tos \
+                        --apache \
+                        --email "$LETS_ENCRYPT_EMAIL" \
+                        -d $(echo "$missing" | tr $'\n' ',' | sed -E 's/,$//')
+
+                # execute the command
+                certbot run -n \
+                    $staging \
+                    --agree-tos \
+                    --apache \
+                    --email "$LETS_ENCRYPT_EMAIL" \
+                    -d $(echo "$missing" | tr $'\n' ',' | sed -E 's/,$//')
+            fi
+
+
+            ####################################################################
+            # execute the certonly command
+            ####################################################################
+
+            if [ ! -z "$renewable" ]; then
+                echo "Certbot.INFO: Renewing certificates near expiry ..." >&2
+
+                # print command for debug
+                echo Certbot.DEBUG: \
+                    certbot certonly -n \
+                        $staging \
+                        --agree-tos \
+                        --apache \
+                        --email "$LETS_ENCRYPT_EMAIL" \
+                        -d $(echo "$renewable" | tr $'\n' ',' | sed -E 's/,$//')
+
+                # execute the command
+                certbot certonly -n \
+                    $staging \
+                    --agree-tos \
+                    --apache \
+                    --email "$LETS_ENCRYPT_EMAIL" \
+                    -d $(echo "$renewable" | tr $'\n' ',' | sed -E 's/,$//')
+            fi
+
+            # exit with success
+            exit 0
+
+        else
+            echo 'Certbot.INFO: Waiting for Apache to be ready' >&2
+            sleep 1
+        fi
+
+    done
+
+    # exit, error caused by time timeout
+    echo 'Certbot.ERROR: Timeout' >&2
+    exit 2
+} &

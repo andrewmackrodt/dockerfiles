@@ -49,6 +49,18 @@ RUN a2enmod rewrite \
  && a2enmod headers \
  && a2enmod ssl
 
+# trust proxies from default docker subnet
+RUN { \
+      echo '# trust proxies from default docker subnet' ; \
+      echo '<IfModule mod_remoteip.c>' ; \
+      echo '    RemoteIPHeader X-Forwarded-For' ; \
+      echo '    RemoteIPTrustedProxy 172.17.0.0/12' ; \
+      echo '</IfModule>' ; \
+      echo '' ; \
+    } \
+      > /etc/apache2/mods-available/remoteip.conf \
+ && a2enmod remoteip
+
 # configure /var/www
 RUN perl -0777 -i \
   -pe 's#(<Directory /var/www/?>[^<]+AllowOverride)[ \t]+None#\1 All#;' \
@@ -69,14 +81,19 @@ COPY cont-init.d /etc/cont-init.d
 COPY services.d /etc/services.d
 COPY entrypoint.d /etc/entrypoint.d
 
-EXPOSE 80
-EXPOSE 443
+# stepdown to the ubuntu user
+USER ubuntu
+WORKDIR /home/ubuntu
 
 # unset ENTRYPOINT0, we want s6-overlay to run the apache daemon
-ENV ENTRYPOINT0=""
+ENV ENTRYPOINT0=''
 
 # start services unless CMD is non empty
 ENV S6_ENABLE 2
 
-USER ubuntu
-WORKDIR /home/ubuntu
+# expose ports
+EXPOSE 80
+EXPOSE 443
+
+# export volumes
+VOLUME /etc/letsencrypt/live

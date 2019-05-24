@@ -1,4 +1,4 @@
-#$(shell . "$(CURDIR)/.make-release-support" ; configure )
+$(shell . "$(CURDIR)/.make-release-support" ; configure )
 
 include $(CURDIR)/.release.env
 

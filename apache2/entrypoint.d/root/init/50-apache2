@@ -1,0 +1,6 @@
+#!/bin/sh
+
+APACHE2_USER=www-data
+
+# duplicate ubuntu user UID into www-data user
+sed -i -E "s/^($APACHE2_USER:x):[^:]+:/\1:$(id -u ubuntu):/" /etc/passwd
