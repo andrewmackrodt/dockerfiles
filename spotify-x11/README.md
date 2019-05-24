@@ -5,8 +5,14 @@ access to millions of songs.
 
 ## Features
 
-* OpenGL acceleration (Mesa DRI/GLX and NVidia)
+* OpenGL acceleration (Mesa DRI/GLX and NVidia †)
 * Audio via PulseAudio
+
+† libnvidia-gl-390 is installed, see [here][gist] if you have a different
+proprietary NVidia driver installed on how to mount the correct drivers to
+the container without requiring an image rebuild.
+
+[gist]: https://gist.github.com/andrewmackrodt/e5f9eaf63c9296db73901796bc46a3f8
 
 ## Usage
 
