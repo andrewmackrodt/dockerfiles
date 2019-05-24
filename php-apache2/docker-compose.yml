@@ -12,7 +12,7 @@ services:
       - LETS_ENCRYPT_STAGING=0
       - LETS_ENCRYPT_DOMAINS=97e0973.ngrok.io
     volumes:
-      - $HOME/Public:/var/www/html:ro
+      - $HOME/public_html:/var/www/html:ro
       - certs:/etc/letsencrypt/live
       - /etc/localtime:/etc/localtime:ro
 
