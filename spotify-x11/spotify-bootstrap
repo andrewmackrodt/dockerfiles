@@ -11,3 +11,5 @@ fi
 
 # make directories writeable
 sudo chown $(id -u):$(id -g) /config /cache "$XDG_RUNTIME_DIR"
+
+exec "$(which spotify)" "$@"

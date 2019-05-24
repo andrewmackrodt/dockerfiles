@@ -40,11 +40,13 @@ docker create \
   -e PUID=$(id -u) \
   -e PGID=$(id -g) \
   -e DISPLAY=unix$DISPLAY \
-  -e XDG_RUNTIME_DIR=/run/user/$(id -u) \
   -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
   -v /etc/machine-id:/etc/machine-id:ro \
   -v $HOME/.config/pulse:/home/ubuntu/.config/pulse:ro \
   -v /run/user/$(id -u)/pulse:/run/user/$(id -u)/pulse:ro \
+  -v $XDG_RUNTIME_DIR/bus:$XDG_RUNTIME_DIR/bus:ro \
+  -v /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro \
+  -v /run/dbus:/run/dbus:ro \
   -v /etc/localtime:/etc/localtime:ro \
   andrewmackrodt/spotify-x11
 ```
