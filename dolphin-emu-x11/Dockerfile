@@ -34,7 +34,19 @@ RUN apt-get update -qq \
       software-properties-common \
  && rm -rf /var/lib/apt/lists/*
 
-# install DOLPHIN_EMU
+# install dependencies
+RUN apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends \
+      $( \
+          apt-cache show dolphin-emu-master \
+            | sed -nE 's/Depends: //p' \
+            | tr ',' $'\n' \
+            | awk '{ print $1 }' \
+            | grep . \
+        ) \
+ && rm -rf /var/lib/apt/lists/*
+
+# install dolphin-emu
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       dolphin-emu-master=$DOLPHIN_EMU_VERSION \

@@ -34,14 +34,25 @@ RUN apt-get update -qq \
       software-properties-common \
  && rm -rf /var/lib/apt/lists/*
 
-# install PCSX2
+# install dependencies
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
-      pcsx2-unstable=$PCSX2_VERSION \
+      $( \
+          apt-cache show pcsx2-unstable \
+            | sed -nE 's/Depends: //p' \
+            | tr ',' $'\n' \
+            | awk '{ print $1 }' \
+            | grep . \
+        ) \
       libcap2-bin \
       locales \
       rtkit \
       unzip \
+ && rm -rf /var/lib/apt/lists/*
+
+# install PCSX2
+RUN apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends pcsx2-unstable=$PCSX2_VERSION \
  && rm -rf /var/lib/apt/lists/*
 
 # add ubuntu user to rtkit to access input devices
