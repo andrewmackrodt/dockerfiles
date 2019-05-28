@@ -1,5 +1,6 @@
 Makefile
 README.md
+configure
 docker-compose*.yml
 *.env
-.release*
+*.properties

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+configure() {
+    rm -f build.properties
+    if [ -f configure ]; then
+        ./configure
+    fi
+    if [ -f static.properties ]; then
+        cat static.properties >> build.properties
+    fi
+}
+
+getBuildArgs() {
+    if [ ! -f build.properties ]; then
+        return
+    fi
+
+    grep . build.properties | sed -E 's/(.+)/--build-arg "\1"/' | tr $'\n' ' '
+}
+
+getVcsRef() {
+    local exclude=
+
+    if [ -f .dockerignore ]; then
+        exclude=$(cat .dockerignore | sed -E 's/(.+)/":(exclude)\1"/')
+    fi
+
+    eval git log --format=%h $exclude . | head -n1
+}
+
+getVersion() {
+    (. build.properties && echo "$VERSION")
+}
+
+getVersionMajorMinor() {
+    getVersion | sed -E 's/^([^.]+\.[^.]+).*/\1/'
+}
+
+getVersionMajor() {
+    getVersion | sed -E 's/^([^.]+).*/\1/'
+}

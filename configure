@@ -1,0 +1,14 @@
+#!/bin/bash
+IFS=$'\n\t'
+
+. ./.make-support
+
+scripts=$(find . -mindepth 2 -maxdepth 2 -type f -name Dockerfile | sort)
+
+for s in $scripts; do
+    ( \
+        cd "$(dirname "$s")" \
+            && echo "configure $(basename "$PWD") ..." \
+            && configure \
+      )
+done

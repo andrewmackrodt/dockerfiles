@@ -84,6 +84,14 @@ docker run --rm -it \
 
 ## Development
 
+### Build and Push
+
+```
+./configure
+make
+make push
+```
+
 ### Parameters
 
 Container specific parameters which should not be overridden at runtime.

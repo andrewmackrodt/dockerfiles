@@ -1,9 +1,7 @@
-FROM andrewmackrodt/buildpack-deps:18.04
+FROM andrewmackrodt/buildpack-deps
 
 ARG LABEL_NAME
-ARG LABEL_VERSION
-ARG LABEL_DESCRIPTION
-ARG LABEL_BUILD_DATE
+ARG VERSION
 ARG LABEL_USAGE
 ARG LABEL_VENDOR
 ARG LABEL_VCS_URL
@@ -11,8 +9,6 @@ ARG LABEL_VCS_REF
 
 LABEL org.label-schema.name="$LABEL_NAME" \
   org.label-schema.version="$LABEL_VERSION" \
-  org.label-schema.description="$LABEL_DESCRIPTION" \
-  org.label-schema.build-date="$LABEL_BUILD_DATE" \
   org.label-schema.usage="$LABEL_USAGE" \
   org.label-schema.vendor="$LABEL_VENDOR" \
   org.label-schema.vcs-url="$LABEL_VCS_URL" \
@@ -23,11 +19,13 @@ USER root
 WORKDIR /root
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG NODEJS_VERSION
+ARG NODEJS_MAJOR_VERSION
 
 RUN set -ex \
- && wget -q -O- https://deb.nodesource.com/setup_10.x | bash - \
+ && wget -q -O- https://deb.nodesource.com/setup_${NODEJS_MAJOR_VERSION}.x | bash - \
  && apt-get install -qqy --no-install-recommends \
-      nodejs=10.15.3-1nodesource1 \
+      nodejs=$NODEJS_VERSION \
  && rm -rf /var/lib/apt/lists/*
 
 ENV ENTRYPOINT0 /usr/bin/node

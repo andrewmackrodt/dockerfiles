@@ -1,9 +1,7 @@
-FROM andrewmackrodt/nodejs:10.15.3
+FROM andrewmackrodt/nodejs
 
 ARG LABEL_NAME
-ARG LABEL_VERSION
-ARG LABEL_DESCRIPTION
-ARG LABEL_BUILD_DATE
+ARG VERSION
 ARG LABEL_USAGE
 ARG LABEL_VENDOR
 ARG LABEL_VCS_URL
@@ -11,8 +9,6 @@ ARG LABEL_VCS_REF
 
 LABEL org.label-schema.name="$LABEL_NAME" \
   org.label-schema.version="$LABEL_VERSION" \
-  org.label-schema.description="$LABEL_DESCRIPTION" \
-  org.label-schema.build-date="$LABEL_BUILD_DATE" \
   org.label-schema.usage="$LABEL_USAGE" \
   org.label-schema.vendor="$LABEL_VENDOR" \
   org.label-schema.vcs-url="$LABEL_VCS_URL" \

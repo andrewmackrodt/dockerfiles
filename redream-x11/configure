@@ -1,6 +1,5 @@
 #!/bin/bash
 
-NAME=$(basename "$(pwd)")
 FROM=$(sed -n -E "s/^FROM ([^# ]+).*/\1/p" Dockerfile)
 
 getDownloadLinks() {
@@ -22,24 +21,16 @@ getDownloadLinks() {
 EOF
 }
 
-DOWNLOAD_LINKS=$(getDownloadLinks)
-STABLE_LINK=$(echo "$DOWNLOAD_LINKS" | head -n1)
-LATEST_LINK=$(echo "$DOWNLOAD_LINKS" | head -n2 | tail -n1)
+getProperties() {
+    local downloadLinks=$(getDownloadLinks)
+    local stableLink=$(echo "$downloadLinks" | head -n1)
+    local latestLink=$(echo "$downloadLinks" | head -n2 | tail -n1)
 
-REDREAM_VERSION=$(echo "$LATEST_LINK" | sed -E 's/.+?linux-v(.+?)\.tar\.gz/\1/')
-RELEASE_VERSION=$(echo "$REDREAM_VERSION" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]+)(-([0-9]+))?.*/\1-r\3/' | sed -E 's/-r$//')
+    local REDREAM_VERSION=$(echo "$latestLink" | sed -E 's/.+linux-v([^"'"'"']+)\.tar\.gz/\1/')
+    local VERSION=$(echo "$REDREAM_VERSION" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]+)(-([0-9]+))?.*/\1-r\3/' | sed -E 's/-r$//')
 
-release() {
-    echo "release=$RELEASE_VERSION"
-    echo "tag=$NAME-$RELEASE_VERSION"
-}
-
-env() {
     echo "REDREAM_VERSION=$REDREAM_VERSION"
-    echo "RELEASE_VERSION=$RELEASE_VERSION"
+    echo "VERSION=$VERSION"
 }
 
-configure () {
-    release > .release
-    env > .release.env
-}
+getProperties > build.properties

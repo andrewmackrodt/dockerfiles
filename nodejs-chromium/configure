@@ -1,0 +1,15 @@
+#!/bin/bash
+
+FROM=$(sed -n -E "s/^FROM ([^# ]+).*/\1/p" Dockerfile)
+
+getBaseVersion() {
+    docker run --rm "$FROM" -v | head -n1
+}
+
+getProperties() {
+    local VERSION=$(getBaseVersion | sed -E 's/^v//')
+
+    echo "VERSION=$VERSION"
+}
+
+getProperties > build.properties
