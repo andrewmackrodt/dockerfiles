@@ -21,13 +21,24 @@ WORKDIR /root
 ARG DEBIAN_FRONTEND=noninteractive
 ARG CHROMIUM_VERSION
 
-# install chromium
+# install dependencies
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
-      chromium-browser=$CHROMIUM_VERSION \
+      $( \
+          apt-cache show chromium-browser \
+            | sed -nE 's/Depends: //p' \
+            | tr ',' $'\n' \
+            | awk '{ print $1 }' \
+            | grep . \
+        ) \
       alsa-utils \
       locales \
       notify-osd \
+ && rm -rf /var/lib/apt/lists/*
+
+# install chromium
+RUN apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends chromium-browser=$CHROMIUM_VERSION \
  && rm -rf /var/lib/apt/lists/*
 
 # link /data to chrome config

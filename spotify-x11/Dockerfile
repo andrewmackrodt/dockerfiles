@@ -33,10 +33,21 @@ RUN apt-get update -qq \
       gnupg \
  && rm -rf /var/lib/apt/lists/*
 
-# install spotify
+# install dependencies
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
-      spotify-client=$SPOTIFY_VERSION \
+      $( \
+          apt-cache show spotify-client \
+            | sed -nE 's/Depends: //p' \
+            | tr ',' $'\n' \
+            | awk '{ print $1 }' \
+            | grep . \
+        ) \
+ && rm -rf /var/lib/apt/lists/*
+
+# install spotify-client
+RUN apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends spotify-client=$SPOTIFY_VERSION \
  && rm -rf /var/lib/apt/lists/*
 
 # link /config to spotify config

@@ -20,10 +20,21 @@ WORKDIR /root
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN set -ex \
- && apt-get update -qq \
+# install dependencies
+RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
-      chromium-browser \
+      $( \
+          apt-cache show chromium-browser \
+            | sed -nE 's/Depends: //p' \
+            | tr ',' $'\n' \
+            | awk '{ print $1 }' \
+            | grep . \
+        ) \
+ && rm -rf /var/lib/apt/lists/*
+
+# install chromium-browser
+RUN apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends chromium-browser \
  && rm -rf /var/lib/apt/lists/*
 
 ENV CHROME_BIN /usr/bin/chromium-browser

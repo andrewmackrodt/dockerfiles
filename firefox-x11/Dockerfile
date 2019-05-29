@@ -21,12 +21,23 @@ WORKDIR /root
 ARG DEBIAN_FRONTEND=noninteractive
 ARG FIREFOX_VERSION
 
-# install firefox
+# install dependencies
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
-      firefox=$FIREFOX_VERSION \
+      $( \
+          apt-cache show firefox \
+            | sed -nE 's/Depends: //p' \
+            | tr ',' $'\n' \
+            | awk '{ print $1 }' \
+            | grep . \
+        ) \
       libavcodec57 \
       libdbusmenu-gtk3-4 \
+ && rm -rf /var/lib/apt/lists/*
+
+# install firefox
+RUN apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends firefox=$FIREFOX_VERSION \
  && rm -rf /var/lib/apt/lists/*
 
 # link /data to firefox config
