@@ -34,5 +34,6 @@ USER ubuntu
 WORKDIR /home/ubuntu
 
 RUN npm config set prefix $HOME/node_modules
-
 RUN npm install -g yarn
+
+ENV PATH /home/ubuntu/node_modules/bin:$PATH
