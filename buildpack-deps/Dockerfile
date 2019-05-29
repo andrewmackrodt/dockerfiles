@@ -66,12 +66,21 @@ RUN set -ex \
       unzip \
       xz-utils \
       zlib1g-dev \
-      nasm \
       ca-certificates \
       curl \
       git \
-      wget \
+      jq \
+      nasm \
+      rsync \
  && rm -rf /var/lib/apt/lists/*
+
+# add yq
+RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+ && wget -qO /tmp/release.json "https://api.github.com/repos/mikefarah/yq/releases/latest" \
+ && grep -E '"browser_download_url":.+linux.*'$ARCH'' /tmp/release.json | grep -v -E ".(asc|sig)" | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
+ && wget -qO /usr/local/bin/yq "$(cat /tmp/release.txt)" \
+ && chmod +x /usr/local/bin/yq \
+ && rm -f /tmp/release.*
 
 USER ubuntu
 WORKDIR /home/ubuntu
