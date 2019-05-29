@@ -2,24 +2,32 @@
 
 FROM=andrewmackrodt/$(basename "$(pwd)")
 
-getLatestVersion() {
-    docker run -i --rm --user root --entrypoint=/bin/sh "$FROM" <<'EOF'
-        apt-get update -qq
-        apt-cache show php7.3 | grep Version | head -n1 | awk '{ print $2 }'
+getLatestVersions() {
+    docker run -i --rm \
+        --user root \
+        --entrypoint=/bin/sh \
+        -e "versions=$(yq -r '.build.versions[]' build.yml)" \
+        "$FROM" <<'EOF'
+            apt-get update -qq
+            for v in $versions; do
+                echo -n "$v:"
+                apt-cache show "php${v}" \
+                    | grep Version \
+                    | head -n1 \
+                    | awk '{ print $2 }' \
+                    | sed -E 's/^([0-9]+:)?([0-9]+\.[0-9]+(\.[0-9]+)?)(-([0-9]+))?.*/\2-r\5/' \
+                    | sed -E 's/-r$//'
+            done
 EOF
 }
 
-getProperties() {
-    local VERSION=$( \
-        getLatestVersion \
-          | sed -E 's/^([0-9]+:)?([0-9]+\.[0-9]+(\.[0-9]+)?)(-([0-9]+))?.*/\2-r\5/' \
-          | sed -E 's/-r$//' \
-      )
+for v in $(getLatestVersions); do
+    php_version=$(echo "$v" | cut -f1 -d':')
+    version=$(echo "$v" | cut -f2 -d':')
 
-    local PHP_VERSION=$(echo "$VERSION" | sed -E "s/^([0-9]+\.[0-9]+).*/\1/")
-
-    echo "PHP_VERSION=$PHP_VERSION"
-    echo "VERSION=$VERSION"
-}
-
-getProperties > build.properties
+    {
+      echo "PHP_VERSION=$php_version"
+      echo "VERSION=$version"
+    } \
+      > "build${php_version}.properties"
+done

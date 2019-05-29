@@ -1,21 +1,110 @@
 #!/bin/bash
 
-configure() {
-    rm -f build.properties
-    if [ -f configure ]; then
-        ./configure
-    fi
-    if [ -f static.properties ]; then
-        cat static.properties >> build.properties
+dockerBuild() {
+    updateBuildProperties
+
+    local versions=$(ls -1 build*.properties | sort -V)
+    local latest=$(echo "$versions" | tail -n1)
+    local isLatest
+
+    for properties in $versions; do
+        if [ "$properties" = "$latest" ]; then
+            isLatest=1
+        else
+            isLatest=0
+        fi
+        setEnvironment "$properties"
+        set -x
+        docker build \
+            $(getBuildArgs "$properties") \
+            --build-arg "LABEL_NAME=$NAME" \
+            --build-arg "LABEL_USAGE=https://$VCS_HOST/$VENDOR/$VCS_NAME/tree/master/$NAME" \
+            --build-arg "LABEL_VENDOR=$VENDOR" \
+            --build-arg "LABEL_VCS_URL=$VCS_URL" \
+            --build-arg "LABEL_VCS_REF=$VCS_REF" \
+            $(getBuildTags "$isLatest") \
+            "$DOCKER_BUILD_CONTEXT" \
+            -f "$DOCKER_FILE_PATH"
+        set +x
+    done
+}
+
+dockerPush() {
+    local versions=$(ls -1 build*.properties | sort -V)
+    local latest=$(echo "$versions" | tail -n1)
+    local version
+
+    for properties in $versions; do
+        setEnvironment "$properties"
+        docker push "$IMAGE:$VERSION"
+        if [ "${TAG_MAJOR:-false}" = "true" ]; then
+            docker push "$IMAGE:$(echo "$VERSION" | sed -E 's/^([^.]+).*/\1/')"
+        fi
+        if [ "${TAG_MINOR:-false}" = "true" ]; then
+            docker push "$IMAGE:$(echo "$VERSION" | sed -E 's/^([^.]+\.[^.]+).*/\1/')"
+        fi
+        if [ "$properties" = "$latest" ]; then
+            docker push "$IMAGE:latest"
+        fi
+    done
+}
+
+setEnvironment() {
+    # registry defaults
+    REGISTRY_HOST=${REGISTRY_HOST:-docker.io}
+    VENDOR=${VENDOR:-$(whoami)}
+
+    # image defaults
+    NAME=${NAME:-$(basename "$(pwd)")}
+    IMAGE=${IMAGE:-$REGISTRY_HOST/$VENDOR/$NAME}
+
+    # dockerfile defaults
+    DOCKER_BUILD_CONTEXT=${DOCKER_BUILD_CONTEXT:-.}
+    DOCKER_FILE_PATH=${DOCKER_FILE_PATH:-Dockerfile}
+
+    # vcs defaults
+    VCS_NAME=${VCS_NAME:-$(basename "$(dirname "${BASH_SOURCE[0]}")")}
+    VCS_HOST=${VCS_HOST:-github.com}
+    VCS_URL=${VCS_URL:-https://$VCS_HOST/$VENDOR/$VCS_NAME}
+    VCS_REF=${VCS_REF:-$(getVcsRef)}
+
+    setVersion "${1:-}"
+}
+
+setVersion() {
+    local properties=${1:-build.properties}
+
+    if [ -f "$properties" ]; then
+        VERSION=$(sed -nE 's/^VERSION=(.+)/\1/p' "$properties" | sed -E 's/"//g' | sed -E "s/'//g")
     fi
 }
 
 getBuildArgs() {
-    if [ ! -f build.properties ]; then
-        return
+    local properties=${1:-build.properties} && . "$properties"
+
+    if [ -f "$properties" ]; then
+        grep . "$properties" | sed -E 's/(.+)/--build-arg \1/' | tr $'\n' ' '
+    fi
+}
+
+getBuildTags() {
+    echo " -t ${IMAGE}:${VERSION}"
+
+    if [ "${TAG_MAJOR:-false}" = "true" ]; then
+        local version=$(echo "$VERSION" | sed -E 's/^([^.]+).*/\1/')
+
+        echo " -t ${IMAGE}:${version}"
     fi
 
-    grep . build.properties | sed -E 's/(.+)/--build-arg "\1"/' | tr $'\n' ' '
+    if [ "${TAG_MINOR:-false}" = "true" ]; then
+        local version=$(echo "$VERSION" | sed -E 's/^([^.]+\.[^.]+).*/\1/')
+
+        echo " -t ${IMAGE}:${version}"
+    fi
+
+    if [ "${1:-0}" = "1" ]; then
+        echo " -t ${IMAGE}:latest"
+    fi
 }
 
 getVcsRef() {
@@ -28,14 +117,10 @@ getVcsRef() {
     eval git log --format=%h $exclude . | head -n1
 }
 
-getVersion() {
-    (. build.properties && echo "$VERSION")
-}
+updateBuildProperties() {
+    rm -f build*.properties
 
-getVersionMajorMinor() {
-    getVersion | sed -E 's/^([^.]+\.[^.]+).*/\1/'
-}
-
-getVersionMajor() {
-    getVersion | sed -E 's/^([^.]+).*/\1/'
+    if [ -f configure ]; then
+        ./configure
+    fi
 }

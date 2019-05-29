@@ -23,7 +23,7 @@ ARG NODEJS_VERSION
 ARG NODEJS_MAJOR_VERSION
 
 RUN set -ex \
- && wget -q -O- https://deb.nodesource.com/setup_${NODEJS_MAJOR_VERSION}.x | bash - \
+ && wget -qO- "https://deb.nodesource.com/setup_${NODEJS_MAJOR_VERSION}" | bash - \
  && apt-get install -qqy --no-install-recommends \
       nodejs=$NODEJS_VERSION \
  && rm -rf /var/lib/apt/lists/*

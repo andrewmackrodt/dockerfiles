@@ -33,6 +33,11 @@ RUN apt-get update -qq \
 # install php packages
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
+      $( \
+          if [ "${PHP_VERSION}" = "$(/bin/echo -e "${PHP_VERSION}\n7.1" | sort -V | head -n1)" ]; then \
+            echo php${PHP_VERSION}-mcrypt ; \
+          fi \
+        ) \
       php${PHP_VERSION}-bcmath \
       php${PHP_VERSION}-bz2 \
       php${PHP_VERSION}-cli \
