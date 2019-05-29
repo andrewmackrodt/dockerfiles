@@ -41,9 +41,12 @@ pre-push:
 
 do-push:
 	# export environment
+	export REGISTRY_HOST="$(REGISTRY_HOST)" ; \
 	export IMAGE="$(IMAGE)" ; \
+	export NAME="$(NAME)" ; \
 	export TAG_MAJOR="$(TAG_MAJOR)" ; \
 	export TAG_MINOR="$(TAG_MINOR)" ; \
+	export VENDOR="$(VENDOR)" ; \
 	\
 	# import shell helper \
 	. $(SUPPORT_FUNCTIONS) ; \
