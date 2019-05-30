@@ -2,21 +2,33 @@
 
 [Node.js](https://nodejs.org/) is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
-## Features
+<small>Links: [Docker Hub][repository] | [Dockerfile][dockerfile]</small>
 
-[PHP 7.3](https://www.php.net/releases/7_3_0.php) and the latest version of
-[composer](https://getcomposer.org/) as of the image build date.
+[repository]: https://cloud.docker.com/repository/docker/andrewmackrodt/nodejs
+[dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/nodejs/Dockerfile
 
-**Extensions:**
-- Core: `cli`, `common`, `dev`, `readline`, `json`, `curl`
-- Compression: `bz2`, `zip`
-- Database: `mysql`, `pgsql`, `sqlite3`, `memcached`, `redis`
-- Debug: `xdebug`\*
-- Math: `bcmath`, `gmp`
-- Performance: `igbinary`, `opcache`
-- Other: `gd`, `imap`, `intl`, `mbstring`, `soap`, `xml`, `xsl`
+## Versions
 
-\* xdebug is only enabled if the environment variable `XDEBUG_ENABLE=1`.
+The `Current` major Node.js (v12) is tagged as `latest`. `LTS` and `Maintenance` images are also provided:
+
+- `andrewmackrodt/nodejs:8` Maintenance (end-of-life: 2019-12-31)
+- `andrewmackrodt/nodejs:10` LTS (maintenance start: 2020-04-01)
+- `andrewmackrodt/nodejs:12` Current (LTS start: 2019-10-22)
+
+All images are bundled with [npm](https://www.npmjs.com/) and [yarn](https://yarnpkg.com/).
+
+**Update Schedule**
+
+Images are built nightly and images will be updated as new `major.minor.patch-release`
+packages of Node.js are released. It's possible to pull a specific tag, e.g.
+`docker pull andrewmackrodt/nodejs:10.16.0-r1`, see [Docker Hub][hub] for a list of
+supported tags.
+
+[hub]: https://hub.docker.com/r/andrewmackrodt/nodejs/tags
+
+**Removal Policy**
+
+Old tags are subject to removal periodically without notice.
 
 ## Usage
 
@@ -36,6 +48,14 @@ docker run --rm -it \
   -v $PWD:/app \
   -w /app \
   andrewmackrodt/nodejs npm install
+
+# run yarn install in the current directory
+docker run --rm -it \
+  -e PUID=$(id -u) \
+  -e PGID=$(id -g) \
+  -v $PWD:/app \
+  -w /app \
+  andrewmackrodt/nodejs yarn install
 ```
 
 ## Parameters

@@ -4,21 +4,47 @@
 especially suited to web development. Fast, flexible and pragmatic, PHP powers
 everything from your blog to the most popular websites in the world.
 
+<small>Links: [Docker Hub][repository] | [Dockerfile][dockerfile]</small>
+
+[repository]: https://cloud.docker.com/repository/docker/andrewmackrodt/php
+[dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/php/Dockerfile
+
+## Versions
+
+PHP `7.3` is tagged as `latest`. Images for versions `5.6`, `7.0`, `7.1` and `7.2` are also provided:
+
+- <strike>`andrewmackrodt/php:5.6` Legacy (end-of-life: 2018-12-31)</strike>
+- <strike>`andrewmackrodt/php:7.0` Legacy (end-of-life: 2018-12-03)</strike>
+- `andrewmackrodt/php:7.1` Supported (end-of-life: 2019-12-01)
+- `andrewmackrodt/php:7.2` Supported (end-of-life: 2020-11-30)
+- `andrewmackrodt/php:7.3` Latest (end-of-life: 2021-12-06)
+
+**Update Schedule**
+
+Images are built nightly and images will be updated as new `major.minor.patch-release`
+packages of PHP are released. It's possible to pull a specific tag, e.g.
+`docker pull andrewmackrodt/php:7.3.5-r1`, see [Docker Hub][hub] for a list of
+supported tags.
+
+[hub]: https://hub.docker.com/r/andrewmackrodt/php/tags
+
+**Removal Policy**
+
+Old tags are subject to removal periodically without notice.
+
 ## Features
 
-[PHP 7.3](https://www.php.net/releases/7_3_0.php) and the latest version of
-[composer](https://getcomposer.org/) as of the image build date.
+All images include [composer](https://getcomposer.org/).
 
 **Extensions:**
 - Core: `cli`, `common`, `dev`, `readline`, `json`, `curl`
 - Compression: `bz2`, `zip`
 - Database: `mysql`, `pgsql`, `sqlite3`, `memcached`, `redis`
-- Debug: `xdebug`\*
+- Debug: <em>`xdebug (set env.XDEBUG_ENABLE=1)`</em>
 - Math: `bcmath`, `gmp`
 - Performance: `igbinary`, `opcache`
 - Other: `gd`, `imap`, `intl`, `mbstring`, `soap`, `xml`, `xsl`
-
-\* xdebug is only enabled if the environment variable `XDEBUG_ENABLE=1`.
+- Legacy: <em>`mcrypt (PHP <= 7.1)`</em>
 
 ## Usage
 
