@@ -4,6 +4,7 @@ build:
 	cd php-apache2; make build
 	cd apache2; make build
 	cd buildpack-deps; make build
+	cd buildpack-dind; make build
 	cd nodejs; make build
 	cd nodejs-chromium; make build
 	cd ubuntu-x11; make build
@@ -21,6 +22,7 @@ push:
 	cd php-apache2; make push
 	cd apache2; make push
 	cd buildpack-deps; make push
+	cd buildpack-dind; make push
 	cd nodejs; make push
 	cd nodejs-chromium; make push
 	cd ubuntu-x11; make push
@@ -38,6 +40,7 @@ clean:
 	cd php-apache2; make clean
 	cd apache2; make clean
 	cd buildpack-deps; make clean
+	cd buildpack-dind; make clean
 	cd nodejs; make clean
 	cd nodejs-chromium; make clean
 	cd ubuntu-x11; make clean
