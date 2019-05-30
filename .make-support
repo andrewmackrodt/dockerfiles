@@ -1,9 +1,124 @@
 #!/bin/bash
 
-dockerBuild() {
-    updateBuildProperties
+log() {
+    local severity=${2:-}
+    local prefix=
+    local color=
+    local exitCode=${3:-}
 
-    local versions=$(ls -1 build*.properties | sort -V)
+    # detect severity based on input string, this is not an accurate way to
+    # determine the real severity of the input message but can be useful when
+    # viewing the output on the terminal due to color highlighting
+    if [[ -z "$severity" ]] && [[ ! -z "${1:-}" ]]; then
+        if echo "$1" \
+                | grep -qEi "fatal|crit|emerg|error|fail|invalid|illegal|can(no|')?t|impossible|abort" \
+                | grep -E '^[^#;]'; then
+            severity='ERROR'
+        elif echo "$1" \
+                | grep -qEi 'warn' \
+                | grep -E '^[^#;]'; then
+            severity='WARN'
+        elif echo "$1" \
+                | grep -qEi 'success|complete|(add|creat|updat|delet|sav|install|fetch|remove|purg)(ing|ed)|exec' \
+                | grep -E '^[^#;]'; then
+            severity='INFO'
+        fi
+    fi
+
+    case "$severity" in
+        INFO)
+            prefix='INFO:'
+            color='\033[34m'
+        ;;
+        WARN)
+            prefix='WARN:'
+            color='\033[33m'
+        ;;
+        ERROR)
+            prefix='ERROR:'
+            color='\033[31m'
+        ;;
+        FATAL)
+            prefix='FATAL:'
+            color='\033[41;39m'
+
+            if [ -z "${exitCode:-}" ]; then
+                exitCode=255
+            fi
+        ;;
+        DEBUG | *)
+            prefix='DEBUG:'
+            color='\033[90m'
+    esac
+
+    if [ -z "${HOSTNAME:-}" ]; then
+        HOSTNAME=$(hostname 2>/dev/null || echo 'local')
+    fi
+
+    # print from argument
+    if [ ! -z "${1:-}" ]; then
+        # set terminal color
+        echo -ne "$color" >&2
+
+        # print the message
+        date=$(date +'%Y-%d-%m %H:%M:%S')
+        message="[$date] $HOSTNAME.$prefix ${1:-}"
+
+        echo "$message" | tee -a build.log >&2
+
+        # reset terminal color
+        echo -ne '\033[0m' >&2
+    fi
+
+    # print from stdin
+    if [ ! -t 0 ]; then
+        while read -r line; do
+            log "$line" "${2:-}" "${3:-}"
+        done
+
+        return
+    fi
+
+    # exit if exit code is set
+    if [ ! -z "${exitCode:-}" ]; then
+        exit "$exitCode"
+    fi
+}
+
+debug() {
+    log "${1:-}" 'DEBUG' "${2:-}"
+}
+
+info() {
+    log "${1:-}" 'INFO' "${2:-}"
+}
+
+warn() {
+    log "${1:-}" 'WARN' "${2:-}"
+}
+
+error() {
+    log "${1:-}" 'ERROR' "${2:-}"
+}
+
+fatal() {
+    log "${1:-}" 'FATAL' "${2:-}"
+}
+
+dockerBuild() {
+    versions=$(ls -1 build*.properties 2>/dev/null | sort -V)
+
+    if [ -z "$versions" ]; then
+        createBuildProperties
+        versions=$(ls -1 build*.properties 2>/dev/null | sort -V)
+
+        if [ -z "$versions" ]; then
+            fatal 'no build.properties file(s)'
+        fi
+    else
+        debug 'using existing build.properties file(s)'
+    fi
+
     local latest=$(echo "$versions" | tail -n1)
     local isLatest
 
@@ -14,18 +129,24 @@ dockerBuild() {
             isLatest=0
         fi
         setEnvironment "$properties"
-        set -x
-        docker build \
-            $(getBuildArgs "$properties") \
-            --build-arg "LABEL_NAME=$NAME" \
-            --build-arg "LABEL_USAGE=https://$VCS_HOST/$VENDOR/$VCS_NAME/tree/master/$NAME" \
-            --build-arg "LABEL_VENDOR=$VENDOR" \
-            --build-arg "LABEL_VCS_URL=$VCS_URL" \
-            --build-arg "LABEL_VCS_REF=$VCS_REF" \
-            $(getBuildTags "$isLatest") \
-            "$DOCKER_BUILD_CONTEXT" \
-            -f "$DOCKER_FILE_PATH"
-        set +x
+        {
+            local args=$(getBuildArgs "$properties")
+            local tags=$(getBuildTags "$isLatest")
+
+            set -x
+            docker build \
+                $args \
+                --build-arg "LABEL_NAME=$NAME" \
+                --build-arg "LABEL_USAGE=https://$VCS_HOST/$VENDOR/$VCS_NAME/tree/master/$NAME" \
+                --build-arg "LABEL_VENDOR=$VENDOR" \
+                --build-arg "LABEL_VCS_URL=$VCS_URL" \
+                --build-arg "LABEL_VCS_REF=$VCS_REF" \
+                $tags \
+                "$DOCKER_BUILD_CONTEXT" \
+                -f "$DOCKER_FILE_PATH"
+            set +x
+        } \
+            2>&1 | log
     done
 }
 
@@ -110,17 +231,29 @@ getBuildTags() {
 getVcsRef() {
     local exclude=
 
+    debug 'determining git ref ...'
+
     if [ -f .dockerignore ]; then
         exclude=$(cat .dockerignore | sed -E 's/(.+)/":(exclude)\1"/')
+
+        debug "git log exclude: $(echo "$exclude" | tr $'\n' ' ')"
+    else
+        debug 'skipping exclusions: no .dockerignore'
     fi
 
-    eval git log --format=%h $exclude . | head -n1
+    local ref=$(eval git log --format=%h $exclude . | head -n1)
+
+    debug "git ref: $ref"
+
+    echo "$ref"
 }
 
-updateBuildProperties() {
-    rm -f build*.properties
-
+createBuildProperties() {
     if [ -f configure ]; then
-        ./configure
+        debug 'running ./configure ...'
+
+        ./configure 2>&1 | log
+    else
+        fatal 'file not found: ./configure'
     fi
 }

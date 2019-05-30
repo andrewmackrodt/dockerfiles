@@ -2,11 +2,29 @@
 
 FROM=andrewmackrodt/$(basename "$(pwd)")
 
+parseBuildVersions() {
+    if yq --help | grep -q kislyuk; then
+        yq -r '.build.versions[]' "$1"
+    else
+        yq r "$1" 'build.versions[*]'
+    fi
+}
+
 getLatestVersions() {
+    local versions=$(parseBuildVersions 'build.yml' | sed -E 's/^ *- |"//g')
+
+    if [ -z "$versions" ]; then
+        echo 'failed to parse build.yml' >&2
+
+        exit 255
+    fi
+
+    echo 'getting latest php versions ...' >&2
+
     docker run -i --rm \
         --user root \
         --entrypoint=/bin/sh \
-        -e "versions=$(yq r build.yml build.versions[*] | sed -E 's/^ *- |"//g')" \
+        -e "versions=$versions" \
         "$FROM" <<'EOF'
             apt-get update -qq
             for v in $versions; do
@@ -21,7 +39,13 @@ getLatestVersions() {
 EOF
 }
 
-for v in $(getLatestVersions); do
+versions=$(getLatestVersions)
+
+if [ -z "$versions" ]; then
+    exit 255
+fi
+
+for v in $versions; do
     php_version=$(echo "$v" | cut -f1 -d':')
     version=$(echo "$v" | cut -f2 -d':')
 

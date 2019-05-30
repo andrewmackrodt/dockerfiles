@@ -1,5 +1,8 @@
 TAG_MAJOR=true
 
+# define default action, implemented in Makefile.mk
+build:
+
 pre-push:
 	docker tag andrewmackrodt/nodejs:8 andrewmackrodt/nodejs:maintenance
 	docker tag andrewmackrodt/nodejs:10 andrewmackrodt/nodejs:lts

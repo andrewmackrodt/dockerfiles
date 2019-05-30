@@ -2,7 +2,17 @@
 
 FROM=$(sed -n -E "s/^FROM ([^# ]+).*/\1/p" Dockerfile)
 
+parseBuildVersions() {
+    if yq --help | grep -q kislyuk; then
+        yq -r '.build.versions[]' "$1"
+    else
+        yq r "$1" 'build.versions[*]'
+    fi
+}
+
 getLatestVersion() {
+    echo 'getting latest nodejs release for $1 ...' >&2
+
     docker run -i --rm \
         --user root \
         --entrypoint=/bin/sh \
@@ -16,7 +26,15 @@ getLatestVersion() {
 EOF
 }
 
-for v in $(yq r build.yml build.versions[*] | sed -E 's/^ *- |"//g'); do
+versions=$(parseBuildVersions 'build.yml' | sed -E 's/^ *- |"//g')
+
+if [ -z "$versions" ]; then
+    echo 'failed to parse build.yml' >&2
+
+    exit 255
+fi
+
+for v in $versions; do
     nodejs_version=$(getLatestVersion "$v")
     nodejs_major_version=$v
     version=$( \
@@ -24,6 +42,12 @@ for v in $(yq r build.yml build.versions[*] | sed -E 's/^ *- |"//g'); do
             | sed -E 's/^([0-9]+:)?([0-9]+(\.[0-9]+)*)(-([0-9]+))?.*/\2-r\5/' \
             | sed -E 's/-r$//' \
       )
+
+    if [ -z "$version" ]; then
+        echo "failed to determine version from $nodejs_version" >&2
+
+        exit 255
+    fi
 
     {
       echo "NODEJS_VERSION=$nodejs_version"

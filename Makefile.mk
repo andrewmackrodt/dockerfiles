@@ -13,8 +13,7 @@ build: pre-build do-build post-build
 pre-build:
 
 do-build:
-	# export environment
-	export DOCKER_BUILD_CONTEXT="$(DOCKER_BUILD_CONTEXT)" ; \
+	@export DOCKER_BUILD_CONTEXT="$(DOCKER_BUILD_CONTEXT)" ; \
 	export DOCKER_FILE_PATH="$(DOCKER_FILE_PATH)" ; \
 	export IMAGE="$(IMAGE)" ; \
 	export NAME="$(NAME)" ; \
@@ -27,10 +26,8 @@ do-build:
 	export VCS_REF="$(VCS_REF)" ; \
 	export VENDOR="$(VENDOR)" ; \
 	\
-	# import shell helper \
 	. $(SUPPORT_FUNCTIONS) ; \
 	\
-	# execute docker build \
 	dockerBuild ; \
 
 post-build:
@@ -40,7 +37,6 @@ push: pre-push do-push post-push
 pre-push:
 
 do-push:
-	# export environment
 	export REGISTRY_HOST="$(REGISTRY_HOST)" ; \
 	export IMAGE="$(IMAGE)" ; \
 	export NAME="$(NAME)" ; \
@@ -48,13 +44,11 @@ do-push:
 	export TAG_MINOR="$(TAG_MINOR)" ; \
 	export VENDOR="$(VENDOR)" ; \
 	\
-	# import shell helper \
 	. $(SUPPORT_FUNCTIONS) ; \
 	\
-	# execute docker push \
 	dockerPush ; \
 
 post-push:
 
 clean:
-	rm -f build*.properties
+	rm -f build*.log build*.properties
