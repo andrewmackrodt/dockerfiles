@@ -11,16 +11,16 @@ log() {
     # viewing the output on the terminal due to color highlighting
     if [[ -z "$severity" ]] && [[ ! -z "${1:-}" ]]; then
         if echo "$1" \
-                | grep -qEi "fatal|crit|emerg|error|fail|invalid|illegal|can(no|')?t|impossible|abort" \
-                | grep -E '^[^#;]'; then
+                | grep -E '^[^#;]' \
+                | grep -qEi "fatal|crit|emerg|error|fail|invalid|illegal|can(no|')?t|impossible|abort"; then
             severity='ERROR'
         elif echo "$1" \
-                | grep -qEi 'warn' \
-                | grep -E '^[^#;]'; then
+                | grep -E '^[^#;]' \
+                | grep -qEi 'warn'; then
             severity='WARN'
         elif echo "$1" \
-                | grep -qEi 'success|complete|(add|creat|updat|delet|sav|install|fetch|remove|purg)(ing|ed)|exec' \
-                | grep -E '^[^#;]'; then
+                | grep -E '^[^#;]' \
+                | grep -qEi 'success|complete|(add|creat|updat|delet|sav|install|fetch|remove|purg)(ing|ed)|exec'; then
             severity='INFO'
         fi
     fi
