@@ -26,10 +26,12 @@ RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       $( \
           apt-cache show chromium-browser \
-            | sed -nE 's/Depends: //p' \
+            | sed -nE 's/^Depends: //p' \
             | tr ',' $'\n' \
             | awk '{ print $1 }' \
             | grep . \
+            | sort \
+            | uniq \
         ) \
       alsa-utils \
       locales \
