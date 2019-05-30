@@ -1,13 +1,22 @@
 # [andrewmackrodt/docker-php](https://github.com/andrewmackrodt/dockerfiles/tree/master/php)
 
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fphp)][status]
+[![License](https://img.shields.io/github/license/andrewmackrodt/dockerfiles.svg?color=blue&style=flat-square)][license]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/php.svg?style=flat-square)][pulls]
+[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/php.svg)][layers]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/php/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/php.svg?style=flat-square)][version]
+
+[status]: https://jenkins.mackrodt.io/job/dockerfiles/job/php/
+[license]: https://github.com/andrewmackrodt/dockerfiles/blob/master/LICENSE
+[pulls]: https://cloud.docker.com/repository/docker/andrewmackrodt/php
+[layers]: https://microbadger.com/images/andrewmackrodt/php
+[dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/php/Dockerfile
+[version]: https://hub.docker.com/r/andrewmackrodt/php/tags
+
 [PHP](https://php.net/) is a popular general-purpose scripting language that is
 especially suited to web development. Fast, flexible and pragmatic, PHP powers
 everything from your blog to the most popular websites in the world.
-
-<small>Links: [Docker Hub][repository] | [Dockerfile][dockerfile]</small>
-
-[repository]: https://cloud.docker.com/repository/docker/andrewmackrodt/php
-[dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/php/Dockerfile
 
 ## Versions
 

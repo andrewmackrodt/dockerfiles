@@ -1,5 +1,19 @@
 # [andrewmackrodt/docker-pcsx2-x11](https://github.com/andrewmackrodt/dockerfiles/tree/master/pcsx2-x11)
 
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fpcsx2-x11)][status]
+[![License](https://img.shields.io/github/license/andrewmackrodt/dockerfiles.svg?color=blue&style=flat-square)][license]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/pcsx2-x11.svg?style=flat-square)][pulls]
+[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/pcsx2-x11.svg)][layers]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/pcsx2-x11/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/pcsx2-x11.svg?style=flat-square)][version]
+
+[status]: https://jenkins.mackrodt.io/job/dockerfiles/job/pcsx2-x11/
+[license]: https://github.com/andrewmackrodt/dockerfiles/blob/master/LICENSE
+[pulls]: https://cloud.docker.com/repository/docker/andrewmackrodt/pcsx2-x11
+[layers]: https://microbadger.com/images/andrewmackrodt/pcsx2-x11
+[dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/pcsx2-x11/Dockerfile
+[version]: https://hub.docker.com/r/andrewmackrodt/pcsx2-x11/tags
+
 [PCSX2](https://pcsx2.net/) is a free and open-source PlayStation 2 (PS2)
 emulator. Its purpose is to emulate the PS2's hardware, using a combination
 of MIPS CPU Interpreters, Recompilers and a Virtual Machine which manages

@@ -1,11 +1,20 @@
 # [andrewmackrodt/docker-nodejs](https://github.com/andrewmackrodt/dockerfiles/tree/master/nodejs)
 
-[Node.js](https://nodejs.org/) is a JavaScript runtime built on Chrome's V8 JavaScript engine.
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fnodejs)][status]
+[![License](https://img.shields.io/github/license/andrewmackrodt/dockerfiles.svg?color=blue&style=flat-square)][license]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/nodejs.svg?style=flat-square)][pulls]
+[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/nodejs.svg)][layers]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/nodejs/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/nodejs.svg?style=flat-square)][version]
 
-<small>Links: [Docker Hub][repository] | [Dockerfile][dockerfile]</small>
-
-[repository]: https://cloud.docker.com/repository/docker/andrewmackrodt/nodejs
+[status]: https://jenkins.mackrodt.io/job/dockerfiles/job/nodejs/
+[license]: https://github.com/andrewmackrodt/dockerfiles/blob/master/LICENSE
+[pulls]: https://cloud.docker.com/repository/docker/andrewmackrodt/nodejs
+[layers]: https://microbadger.com/images/andrewmackrodt/nodejs
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/nodejs/Dockerfile
+[version]: https://hub.docker.com/r/andrewmackrodt/nodejs/tags
+
+[Node.js](https://nodejs.org/) is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
 ## Versions
 
