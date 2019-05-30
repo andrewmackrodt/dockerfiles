@@ -6,7 +6,7 @@ getLatestVersions() {
     docker run -i --rm \
         --user root \
         --entrypoint=/bin/sh \
-        -e "versions=$(yq -r '.build.versions[]' build.yml)" \
+        -e "versions=$(yq r build.yml build.versions[*] | sed -E 's/^ *- |"//g')" \
         "$FROM" <<'EOF'
             apt-get update -qq
             for v in $versions; do

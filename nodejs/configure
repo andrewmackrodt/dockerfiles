@@ -16,7 +16,7 @@ getLatestVersion() {
 EOF
 }
 
-for v in $(yq -r '.build.versions[]' build.yml); do
+for v in $(yq r build.yml build.versions[*] | sed -E 's/^ *- |"//g'); do
     nodejs_version=$(getLatestVersion "$v")
     nodejs_major_version=$v
     version=$( \
