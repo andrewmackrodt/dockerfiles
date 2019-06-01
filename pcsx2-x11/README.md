@@ -1,10 +1,10 @@
 # [andrewmackrodt/docker-pcsx2-x11](https://github.com/andrewmackrodt/dockerfiles/tree/master/pcsx2-x11)
 
-[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fpcsx2-x11)][status]
-[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/pcsx2-x11.svg?style=flat-square)][pulls]
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fpcsx2-x11)][status]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/pcsx2-x11.svg)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/pcsx2-x11.svg)][layers]
-[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/pcsx2-x11/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/pcsx2-x11.svg?style=flat-square)][version]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/pcsx2-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/pcsx2-x11.svg)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/pcsx2-x11/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/pcsx2-x11

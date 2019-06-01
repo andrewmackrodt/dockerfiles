@@ -1,10 +1,10 @@
 # [andrewmackrodt/docker-chromium-x11](https://github.com/andrewmackrodt/dockerfiles/tree/master/chromium-x11)
 
-[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fchromium-x11)][status]
-[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/chromium-x11.svg?style=flat-square)][pulls]
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fchromium-x11)][status]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/chromium-x11.svg)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/chromium-x11.svg)][layers]
-[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/chromium-x11/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/chromium-x11.svg?style=flat-square)][version]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/chromium-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/chromium-x11.svg)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/chromium-x11/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/chromium-x11

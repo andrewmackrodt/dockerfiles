@@ -1,10 +1,10 @@
 # [andrewmackrodt/docker-nodejs](https://github.com/andrewmackrodt/dockerfiles/tree/master/nodejs)
 
-[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fnodejs)][status]
-[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/nodejs.svg?style=flat-square)][pulls]
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fnodejs)][status]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/nodejs.svg)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/nodejs.svg)][layers]
-[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/nodejs/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/nodejs.svg?style=flat-square)][version]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/nodejs/Dockerfile.svg?label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/nodejs.svg)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/nodejs/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/nodejs

@@ -1,10 +1,10 @@
 # [andrewmackrodt/docker-php-apache2](https://github.com/andrewmackrodt/dockerfiles/tree/master/php-apache2)
 
-[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fphp-apache2)][status]
-[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/php-apache2.svg?style=flat-square)][pulls]
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fphp-apache2)][status]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/php-apache2.svg)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/php-apache2.svg)][layers]
-[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/php-apache2/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/php-apache2.svg?style=flat-square)][version]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/php-apache2/Dockerfile.svg?label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/php-apache2.svg)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/php-apache2/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/php-apache2

@@ -1,10 +1,10 @@
 # [andrewmackrodt/docker-php](https://github.com/andrewmackrodt/dockerfiles/tree/master/php)
 
-[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fphp)][status]
-[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/php.svg?style=flat-square)][pulls]
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fphp)][status]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/php.svg)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/php.svg)][layers]
-[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/php/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/php.svg?style=flat-square)][version]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/php/Dockerfile.svg?label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/php.svg)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/php/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/php

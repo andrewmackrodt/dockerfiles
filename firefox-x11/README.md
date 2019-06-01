@@ -1,10 +1,10 @@
 # [andrewmackrodt/docker-firefox-x11](https://github.com/andrewmackrodt/dockerfiles/tree/master/firefox-x11)
 
-[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Ffirefox-x11)][status]
-[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/firefox-x11.svg?style=flat-square)][pulls]
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Ffirefox-x11)][status]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/firefox-x11.svg)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/firefox-x11.svg)][layers]
-[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/firefox-x11/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/firefox-x11.svg?style=flat-square)][version]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/firefox-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/firefox-x11.svg)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/firefox-x11/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/firefox-x11
