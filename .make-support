@@ -62,7 +62,7 @@ log() {
 
         # print the message
         date=$(date +'%Y-%d-%m %H:%M:%S')
-        message="[$date] $HOSTNAME.$prefix ${1:-}"
+        message="[$date] $HOSTNAME.$prefix $(echo "${1:-}" | sed -E 's/\033[[^m]+m//g')"
 
         echo "$message" | tee -a build.log >&2
 
