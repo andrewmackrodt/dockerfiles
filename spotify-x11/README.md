@@ -1,15 +1,13 @@
 # [andrewmackrodt/docker-spotify-x11](https://github.com/andrewmackrodt/dockerfiles/tree/master/spotify-x11)
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fspotify-x11)][status]
-[![License](https://img.shields.io/github/license/andrewmackrodt/dockerfiles.svg?color=blue&style=flat-square)][license]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/spotify-x11.svg?style=flat-square)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/spotify-x11.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/spotify-x11/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
 [![Version](https://images.microbadger.com/badges/version/andrewmackrodt/spotify-x11.svg?style=flat-square)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/spotify-x11/
-[license]: https://github.com/andrewmackrodt/dockerfiles/blob/master/LICENSE
-[pulls]: https://cloud.docker.com/repository/docker/andrewmackrodt/spotify-x11
+[pulls]: https://hub.docker.com/r/andrewmackrodt/spotify-x11
 [layers]: https://microbadger.com/images/andrewmackrodt/spotify-x11
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/spotify-x11/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/spotify-x11/tags

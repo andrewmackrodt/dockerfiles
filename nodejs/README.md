@@ -1,15 +1,13 @@
 # [andrewmackrodt/docker-nodejs](https://github.com/andrewmackrodt/dockerfiles/tree/master/nodejs)
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fnodejs)][status]
-[![License](https://img.shields.io/github/license/andrewmackrodt/dockerfiles.svg?color=blue&style=flat-square)][license]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/nodejs.svg?style=flat-square)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/nodejs.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/nodejs/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
 [![Version](https://images.microbadger.com/badges/version/andrewmackrodt/nodejs.svg?style=flat-square)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/nodejs/
-[license]: https://github.com/andrewmackrodt/dockerfiles/blob/master/LICENSE
-[pulls]: https://cloud.docker.com/repository/docker/andrewmackrodt/nodejs
+[pulls]: https://hub.docker.com/r/andrewmackrodt/nodejs
 [layers]: https://microbadger.com/images/andrewmackrodt/nodejs
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/nodejs/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/nodejs/tags

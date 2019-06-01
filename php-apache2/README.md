@@ -1,15 +1,13 @@
 # [andrewmackrodt/docker-php-apache2](https://github.com/andrewmackrodt/dockerfiles/tree/master/php-apache2)
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fphp-apache2)][status]
-[![License](https://img.shields.io/github/license/andrewmackrodt/dockerfiles.svg?color=blue&style=flat-square)][license]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/php-apache2.svg?style=flat-square)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/php-apache2.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/php-apache2/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
 [![Version](https://images.microbadger.com/badges/version/andrewmackrodt/php-apache2.svg?style=flat-square)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/php-apache2/
-[license]: https://github.com/andrewmackrodt/dockerfiles/blob/master/LICENSE
-[pulls]: https://cloud.docker.com/repository/docker/andrewmackrodt/php-apache2
+[pulls]: https://hub.docker.com/r/andrewmackrodt/php-apache2
 [layers]: https://microbadger.com/images/andrewmackrodt/php-apache2
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/php-apache2/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/php-apache2/tags
