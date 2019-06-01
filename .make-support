@@ -168,6 +168,35 @@ dockerPush() {
             docker push "$IMAGE:latest"
         fi
     done
+
+    updateDescription
+}
+
+updateDescription() {
+    if [ ! -f README.md ]; then
+        debug 'skipping description update no README.md'
+
+        return
+    fi
+
+    debug 'updating README.md'
+
+    if [ -z "${DOCKER_HUB_TOKEN:-}" ]; then
+        error 'DOCKER_HUB_TOKEN is not set'
+
+        return
+    fi
+
+    setEnvironment
+
+    # send the api request to update the description
+    echo '{"full_description": '$(jq -Rs . README.md)'}' \
+        | curl -sSL "https://hub.docker.com/v2/repositories/$VENDOR/$NAME/" \
+            -d @- -X PATCH \
+            -H "Content-Type: application/json" \
+            -H "Authorization: JWT ${DOCKER_HUB_TOKEN}" 2>&1 \
+        | sed -E 's/JWT .+/JWT **redacted**/' \
+        | debug
 }
 
 setEnvironment() {

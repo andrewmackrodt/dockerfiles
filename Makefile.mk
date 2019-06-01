@@ -37,7 +37,7 @@ push: pre-push do-push post-push
 pre-push:
 
 do-push:
-	export REGISTRY_HOST="$(REGISTRY_HOST)" ; \
+	@export REGISTRY_HOST="$(REGISTRY_HOST)" ; \
 	export IMAGE="$(IMAGE)" ; \
 	export NAME="$(NAME)" ; \
 	export TAG_MAJOR="$(TAG_MAJOR)" ; \
