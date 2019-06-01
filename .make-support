@@ -264,6 +264,7 @@ getVcsRef() {
 
     if [ -f .dockerignore ]; then
         exclude=$(cat .dockerignore | sed -E 's/(.+)/":(exclude)\1"/')
+        exclude=$exclude' ":(exclude).dockerignore"'
 
         debug "git log exclude: $(echo "$exclude" | tr $'\n' ' ')"
     else
