@@ -1,6 +1,21 @@
 # [andrewmackrodt/docker-ubuntu-x11-i386](https://github.com/andrewmackrodt/dockerfiles/tree/master/ubuntu-x11-i386)
 
-Ubuntu 18.04 (Bionic) base image for i386 X11 applications.
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fubuntu-x11-i386)][status]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/ubuntu-x11-i386.svg)][pulls]
+[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/ubuntu-x11-i386.svg)][layers]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/ubuntu-x11-i386/Dockerfile.svg?label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/ubuntu-x11-i386.svg)][version]
+
+[status]: https://jenkins.mackrodt.io/job/dockerfiles/job/ubuntu-x11-i386/
+[pulls]: https://hub.docker.com/r/andrewmackrodt/ubuntu-x11-i386
+[layers]: https://microbadger.com/images/andrewmackrodt/ubuntu-x11-i386
+[dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/ubuntu-x11-i386/Dockerfile
+[version]: https://hub.docker.com/r/andrewmackrodt/ubuntu-x11-i386/tags
+
+[Ubuntu](https://www.ubuntu.com/) 18.04 (Bionic) base image for i386 X11 applications.
+
+See [andrewmackrodt/docker-ubuntu](https://github.com/andrewmackrodt/dockerfiles/tree/master/ubuntu)
+for more details.
 
 ## Examples
 - [andrewmackrodt/pcsx2-x11](https://hub.docker.com/r/andrewmackrodt/pcsx2-x11)
