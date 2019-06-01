@@ -27,10 +27,10 @@ getProperties() {
     local latestLink=$(echo "$downloadLinks" | head -n2 | tail -n1)
 
     local REDREAM_VERSION=$(echo "$latestLink" | sed -E 's/.+linux-v([^"'"'"']+)\.tar\.gz/\1/')
-    local VERSION=$(echo "$REDREAM_VERSION" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]+)(-([0-9]+))?.*/\1-r\3/' | sed -E 's/-r$//')
+    local LABEL_VERSION=$(echo "$REDREAM_VERSION" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]+)(-([0-9]+))?.*/\1-r\3/' | sed -E 's/-r$//')
 
     echo "REDREAM_VERSION=$REDREAM_VERSION"
-    echo "VERSION=$VERSION"
+    echo "LABEL_VERSION=$LABEL_VERSION"
 }
 
 getProperties > build.properties

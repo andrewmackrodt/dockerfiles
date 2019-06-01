@@ -7,9 +7,9 @@ getBaseVersion() {
 }
 
 getProperties() {
-    local VERSION=$(getBaseVersion)
+    local LABEL_VERSION=$(getBaseVersion)
 
-    echo "VERSION=$VERSION"
+    echo "LABEL_VERSION=$LABEL_VERSION"
 }
 
 getProperties > build.properties

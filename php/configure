@@ -51,7 +51,7 @@ for v in $versions; do
 
     {
       echo "PHP_VERSION=$php_version"
-      echo "VERSION=$version"
+      echo "LABEL_VERSION=$version"
     } \
       > "build${php_version}.properties"
 done

@@ -12,14 +12,14 @@ EOF
 getProperties() {
     local DOLPHIN_EMU_VERSION=$(getLatestVersion)
 
-    local VERSION=$( \
+    local LABEL_VERSION=$( \
         echo "$DOLPHIN_EMU_VERSION" \
           | sed -E 's/^([0-9]+:)?(([0-9]+\.){1,2}[0-9]+)(\+git-r20([0-9]+))?.*/\2-r\5/' \
           | sed -E 's/-r$//' \
       )
 
     echo "DOLPHIN_EMU_VERSION=$DOLPHIN_EMU_VERSION"
-    echo "VERSION=$VERSION"
+    echo "LABEL_VERSION=$LABEL_VERSION"
 }
 
 getProperties > build.properties

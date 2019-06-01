@@ -52,7 +52,7 @@ for v in $versions; do
     {
       echo "NODEJS_VERSION=$nodejs_version"
       echo "NODEJS_MAJOR_VERSION=$nodejs_major_version"
-      echo "VERSION=$version"
+      echo "LABEL_VERSION=$version"
     } \
       > "build${v}.properties"
 done

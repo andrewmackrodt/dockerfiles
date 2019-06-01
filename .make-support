@@ -157,12 +157,12 @@ dockerPush() {
 
     for properties in $versions; do
         setEnvironment "$properties"
-        docker push "$IMAGE:$VERSION"
+        docker push "$IMAGE:$LABEL_VERSION"
         if [ "${TAG_MAJOR:-false}" = "true" ]; then
-            docker push "$IMAGE:$(echo "$VERSION" | sed -E 's/^([^.]+).*/\1/')"
+            docker push "$IMAGE:$(echo "$LABEL_VERSION" | sed -E 's/^([^.]+).*/\1/')"
         fi
         if [ "${TAG_MINOR:-false}" = "true" ]; then
-            docker push "$IMAGE:$(echo "$VERSION" | sed -E 's/^([^.]+\.[^.]+).*/\1/')"
+            docker push "$IMAGE:$(echo "$LABEL_VERSION" | sed -E 's/^([^.]+\.[^.]+).*/\1/')"
         fi
         if [ "$properties" = "$latest" ]; then
             docker push "$IMAGE:latest"
@@ -225,7 +225,7 @@ setVersion() {
     local properties=${1:-build.properties}
 
     if [ -f "$properties" ]; then
-        VERSION=$(sed -nE 's/^VERSION=(.+)/\1/p' "$properties" | sed -E 's/"//g' | sed -E "s/'//g")
+        LABEL_VERSION=$(sed -nE 's/^LABEL_VERSION=(.+)/\1/p' "$properties" | sed -E 's/"//g' | sed -E "s/'//g")
     fi
 }
 
@@ -238,16 +238,16 @@ getBuildArgs() {
 }
 
 getBuildTags() {
-    echo " -t ${IMAGE}:${VERSION}"
+    echo " -t ${IMAGE}:${LABEL_VERSION}"
 
     if [ "${TAG_MAJOR:-false}" = "true" ]; then
-        local version=$(echo "$VERSION" | sed -E 's/^([^.]+).*/\1/')
+        local version=$(echo "$LABEL_VERSION" | sed -E 's/^([^.]+).*/\1/')
 
         echo " -t ${IMAGE}:${version}"
     fi
 
     if [ "${TAG_MINOR:-false}" = "true" ]; then
-        local version=$(echo "$VERSION" | sed -E 's/^([^.]+\.[^.]+).*/\1/')
+        local version=$(echo "$LABEL_VERSION" | sed -E 's/^([^.]+\.[^.]+).*/\1/')
 
         echo " -t ${IMAGE}:${version}"
     fi

@@ -7,9 +7,9 @@ getBaseVersion() {
 }
 
 getProperties() {
-    local VERSION=$(getBaseVersion | sed -E 's/^v//')
+    local LABEL_VERSION=$(getBaseVersion | sed -E 's/^v//')
 
-    echo "VERSION=$VERSION"
+    echo "LABEL_VERSION=$LABEL_VERSION"
 }
 
 getProperties > build.properties
