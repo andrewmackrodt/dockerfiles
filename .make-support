@@ -48,7 +48,7 @@ log() {
         ;;
         DEBUG | *)
             prefix='DEBUG:'
-            color='\033[90m'
+            color=''
     esac
 
     if [ -z "${HOSTNAME:-}" ]; then
@@ -119,6 +119,8 @@ dockerBuild() {
         debug 'using existing build.properties file(s)'
     fi
 
+    setEnvironment
+
     local latest=$(echo "$versions" | tail -n1)
     local isLatest
 
@@ -135,6 +137,7 @@ dockerBuild() {
 
             set -x
             docker build \
+                --cache-from "${IMAGE}:${LABEL_VERSION}" \
                 $args \
                 --build-arg "LABEL_NAME=$NAME" \
                 --build-arg "LABEL_USAGE=https://$VCS_HOST/$VENDOR/$VCS_NAME/tree/master/$NAME" \
