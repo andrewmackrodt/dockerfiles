@@ -12,15 +12,13 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       cmake \
-      doxygen \
-      freeglut3-dev \
       libgl1-mesa-dev \
       libglew-dev \
+      libglfw3-dev \
+      linux-libc-dev \
       qtmultimedia5-dev \
       libqt5opengl5-dev \
-      libsdl1.2-dev \
       libsdl2-dev \
-      libopenal-dev \
       qtbase5-dev \
  && rm -rf /var/lib/apt/lists/*
 
@@ -28,8 +26,10 @@ ARG YABAUSE_VERSION
 
 RUN git clone https://github.com/devmiyax/yabause.git \
  && cd yabause \
- && git checkout "$YABAUSE_VERSION" \
- && perl -0777 -i -pe 's/^#ifdef ARCH_IS_LINUX.+?^#endif\n//ms' yabause/src/qt/QtYabause.cpp \
+ && git checkout "$YABAUSE_VERSION"
+
+RUN cd yabause \
+ && sed -i -E 's/if ?\( ?! ?ANDROID\)/if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")/' yabause/src/CMakeLists.txt \
  && mkdir build \
  && cd build \
  && cmake ../yabause \
@@ -59,20 +59,18 @@ LABEL org.label-schema.name="$LABEL_NAME" \
 USER root
 WORKDIR /root
 
-# copy the binary
-COPY --from=0 /root/yabause/build/src/qt/yabause /opt/yabause/yabause
-
 # install dependecies
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
-      freeglut3 \
       libglew2.0 \
-      libopenal1 \
       libsdl2.2 \
       libqt5dbus5 \
       libqt5multimedia5 \
       libqt5opengl5 \
  && rm -rf /var/lib/apt/lists/*
+
+# copy the binary
+COPY --from=0 /root/yabause/build/src/qt/yabause /opt/yabause/yabause
 
 # create directories
 RUN for d in /opt/yabause /saves /config; do \

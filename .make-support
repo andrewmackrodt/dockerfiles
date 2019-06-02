@@ -135,12 +135,8 @@ dockerBuild() {
             local args=$(getBuildArgs "$properties")
             local tags=$(getBuildTags "$isLatest")
 
-            # ignore errors on pull, the image may not have been pushed if it's new
-            docker pull "${IMAGE}:${LABEL_VERSION}" || true
-
             set -x
             docker build \
-                --cache-from "${IMAGE}:${LABEL_VERSION}" \
                 $args \
                 --build-arg "LABEL_NAME=$NAME" \
                 --build-arg "LABEL_USAGE=https://$VCS_HOST/$VENDOR/$VCS_NAME/tree/master/$NAME" \
