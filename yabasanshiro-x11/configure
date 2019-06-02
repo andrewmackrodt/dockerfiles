@@ -1,0 +1,19 @@
+#!/bin/bash
+
+FROM=andrewmackrodt/buildpack-deps
+
+getLatestVersion() {
+    docker run -i --rm --entrypoint=/bin/sh "$FROM" <<'EOF'
+        wget -qO- https://api.github.com/repos/devmiyax/yabause/commits/master \
+            | jq -r '.sha'
+EOF
+}
+
+getProperties() {
+    local YABAUSE_VERSION=$(getLatestVersion | sed -E 's/^(.{7}).*/\1/')
+
+    echo "YABAUSE_VERSION=$YABAUSE_VERSION"
+    echo "LABEL_VERSION=$YABAUSE_VERSION"
+}
+
+getProperties > build.properties

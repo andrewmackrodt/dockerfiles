@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# export XDG_RUNTIME_DIR
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+# export DBUS_SESSION_BUS_ADDRESS
+if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+fi
+
+# make directories writeable
+sudo chown $(id -u):$(id -g) "$XDG_RUNTIME_DIR" "/saves" "/config"
+
+# ini defaults
+if [ ! -f /config/yabause.ini ]; then
+    tee /config/yabause.ini >/dev/null<<EOF
+[0.9.11]
+General\SaveStates=/saves
+
+EOF
+fi
+
+# start yabasanshiro
+exec "$(which yabause)" "$@"
