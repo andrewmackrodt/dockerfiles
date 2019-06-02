@@ -1,15 +1,13 @@
 # [andrewmackrodt/docker-yabasanshiro-x11](https://github.com/andrewmackrodt/dockerfiles/tree/master/yabasanshiro-x11)
 
-[![Status](https://jenkins.mackrodt.io/buildStatus/icon?style=flat-square&job=dockerfiles%2Fyabasanshiro-x11)][status]
-[![License](https://img.shields.io/github/license/andrewmackrodt/dockerfiles.svg?color=blue&style=flat-square)][license]
-[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/yabasanshiro-x11.svg?style=flat-square)][pulls]
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fyabasanshiro-x11)][status]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/yabasanshiro-x11.svg)][pulls]
 [![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/yabasanshiro-x11.svg)][layers]
-[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/yabasanshiro-x11/Dockerfile.svg?style=flat-square&label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/yabasanshiro-x11.svg?style=flat-square)][version]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/yabasanshiro-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/yabasanshiro-x11.svg)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/yabasanshiro-x11/
-[license]: https://github.com/andrewmackrodt/dockerfiles/blob/master/LICENSE
-[pulls]: https://cloud.docker.com/repository/docker/andrewmackrodt/yabasanshiro-x11
+[pulls]: https://hub.docker.com/r/andrewmackrodt/yabasanshiro-x11
 [layers]: https://microbadger.com/images/andrewmackrodt/yabasanshiro-x11
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/yabasanshiro-x11/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/yabasanshiro-x11/tags
