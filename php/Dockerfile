@@ -1,25 +1,9 @@
 FROM andrewmackrodt/ubuntu
 
-ARG LABEL_NAME
-ARG LABEL_VERSION
-ARG LABEL_USAGE
-ARG LABEL_VENDOR
-ARG LABEL_VCS_URL
-ARG LABEL_VCS_REF
-
-LABEL org.label-schema.name="$LABEL_NAME" \
-  org.label-schema.version="$LABEL_VERSION" \
-  org.label-schema.usage="$LABEL_USAGE" \
-  org.label-schema.vendor="$LABEL_VENDOR" \
-  org.label-schema.vcs-url="$LABEL_VCS_URL" \
-  org.label-schema.vcs-ref="$LABEL_VCS_REF" \
-  org.label-schema.schema-version="1.0"
-
 USER root
 WORKDIR /root
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG PHP_VERSION
 
 # add ondrej/php repository
 RUN apt-get update -qq \
@@ -29,6 +13,8 @@ RUN apt-get update -qq \
  && apt-get purge -qqy --auto-remove \
       software-properties-common \
  && rm -rf /var/lib/apt/lists/*
+
+ARG PHP_VERSION
 
 # install php packages
 RUN apt-get update -qq \
@@ -85,3 +71,22 @@ ENV ENTRYPOINT0 /usr/bin/php
 
 USER ubuntu
 WORKDIR /home/ubuntu
+
+################################################################################
+# labels
+################################################################################
+
+ARG LABEL_NAME
+ARG LABEL_VERSION
+ARG LABEL_USAGE
+ARG LABEL_VENDOR
+ARG LABEL_VCS_URL
+ARG LABEL_VCS_REF
+
+LABEL org.label-schema.name="$LABEL_NAME" \
+  org.label-schema.version="$LABEL_VERSION" \
+  org.label-schema.usage="$LABEL_USAGE" \
+  org.label-schema.vendor="$LABEL_VENDOR" \
+  org.label-schema.vcs-url="$LABEL_VCS_URL" \
+  org.label-schema.vcs-ref="$LABEL_VCS_REF" \
+  org.label-schema.schema-version="1.0"

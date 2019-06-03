@@ -17,8 +17,7 @@ LABEL org.label-schema.name="$LABEL_NAME" \
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN set -ex \
- && apt-get update -qq \
+RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       ca-certificates \
       sudo \
@@ -27,8 +26,7 @@ RUN set -ex \
  && rm -rf /var/lib/apt/lists/*
 
 # add tini
-RUN set -ex \
- && ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -q -O /tmp/release.json "https://api.github.com/repos/krallin/tini/releases/latest" \
  && grep -E '"browser_download_url":.+'$ARCH'' /tmp/release.json | grep -v -E ".(asc|sig)" | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
  && wget -q -O /usr/local/bin/tini "$(cat /tmp/release.txt)" \
@@ -36,8 +34,7 @@ RUN set -ex \
  && rm -f /tmp/release.*
 
 # add gosu
-RUN set -ex \
- && ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -q -O /tmp/release.json "https://api.github.com/repos/tianon/gosu/releases/latest" \
  && grep -E '"browser_download_url":.+'$ARCH'' /tmp/release.json | grep -v -E ".(asc|sig)" | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
  && wget -q -O /usr/local/bin/gosu "$(cat /tmp/release.txt)" \
@@ -46,8 +43,7 @@ RUN set -ex \
  && gosu nobody true
 
 # add s6-overlay
-RUN set -ex \
- && ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -q -O /tmp/release.json "https://api.github.com/repos/just-containers/s6-overlay/releases/latest" \
  && grep -E '"browser_download_url":.+'$ARCH'' /tmp/release.json | grep -v -E ".(asc|sig)" | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
  && wget -q -O s6-overlay.tar.gz "$(cat /tmp/release.txt)" \
