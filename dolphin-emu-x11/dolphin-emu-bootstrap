@@ -1,9 +1,5 @@
 #!/bin/sh
 
-# fix file permissions
-sudo chown $(id -u):$(id -g) "$HOME/.config" "$HOME/.local"
-sudo chown -R $(id -u):$(id -g) /config /data
-
 # set the game directory
 if [ ! -f /config/Dolphin.ini ]; then
     tee /config/Dolphin.ini >/dev/null<<EOF

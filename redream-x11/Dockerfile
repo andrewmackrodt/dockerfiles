@@ -38,6 +38,9 @@ VOLUME /config
 VOLUME /bios
 VOLUME /cache
 
+# set directories to be chowned on container start
+ENV USER_DIRS /saves:/config:/bios:/cache${USER_DIRS:+:$USER_DIRS}
+
 # set the secondary entrypoint
 ENV ENTRYPOINT0 /usr/local/bin/redream-bootstrap
 

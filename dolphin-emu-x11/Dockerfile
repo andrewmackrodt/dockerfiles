@@ -63,6 +63,9 @@ RUN mkdir -p /home/ubuntu/.local/share \
 VOLUME /config
 VOLUME /data
 
+# set directories to be chowned on container start
+ENV USER_DIRS /config:/data${USER_DIRS:+:$USER_DIRS}
+
 # set the secondary entrypoint
 ENV ENTRYPOINT0 /usr/local/bin/dolphin-emu-bootstrap
 

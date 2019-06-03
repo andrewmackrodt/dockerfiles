@@ -100,3 +100,4 @@ Container specific parameters which should not be overridden at runtime.
 | --- | --- |
 | `ENTRYPOINT0=` | Executed after `docker-entrypoint.sh` if `CMD` is empty or begins with "-" |
 | `S6_ENABLE=0` | <p>`s6-overlay` init configuration:</p><ul><li>0: disabled</li><li>1: always</li><li>2: `CMD` is empty</li></ul> |
+| `USER_DIRS=` | Directories to be recursively chowned to $PUID:GUID on container start |

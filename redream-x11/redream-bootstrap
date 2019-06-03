@@ -34,9 +34,6 @@ mklinks() {
     done
 }
 
-# fix file permissions
-sudo chown -R $(id -u):$(id -g) /saves /config /bios /cache
-
 # set the game directory
 if [ ! -f /config/redream.cfg ]; then
     echo "gamedir: /games;" > /config/redream.cfg
@@ -54,4 +51,4 @@ EXIT_CODE=$?
 mklinks /saves "vmu0.bin vmu1.bin vmu2.bin vmu3.bin"
 mklinks /config "redream.cfg redream.key"
 
-exit $?
+exit $EXIT_CODE

@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# make directories writeable
-sudo chown $(id -u):$(id -g) "/saves" "/config"
-
 # ini defaults
 if [ ! -f /config/yabause.ini ]; then
     tee /config/yabause.ini >/dev/null<<EOF

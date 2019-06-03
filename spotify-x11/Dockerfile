@@ -50,9 +50,6 @@ RUN mkdir /cache /home/ubuntu/.cache \
  && ln -s /cache /home/ubuntu/.cache/spotify \
  && chown -h -R ubuntu:ubuntu /home/ubuntu/.cache
 
-# copy files to container
-COPY spotify-bootstrap /usr/local/bin/spotify-bootstrap
-
 # stepdown to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
@@ -61,8 +58,11 @@ WORKDIR /home/ubuntu
 VOLUME /config
 VOLUME /cache
 
+# set directories to be chowned on container start
+ENV USER_DIRS /config:/cache${USER_DIRS:+:$USER_DIRS}
+
 # set the secondary entrypoint
-ENV ENTRYPOINT0 /usr/local/bin/spotify-bootstrap
+ENV ENTRYPOINT0 /usr/bin/spotify
 
 ################################################################################
 # labels

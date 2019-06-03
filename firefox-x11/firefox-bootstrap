@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# make directories writeable
-sudo chown $(id -u):$(id -g) /data /downloads
-
 # create the default profile
 if [ ! -f /data/firefox/profiles.ini ]; then
     CONTAINER_ID_SHORT=$(awk -F':' '$2 == "pids" { print $3 }' /proc/1/cgroup \

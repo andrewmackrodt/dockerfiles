@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# make directories writeable
-sudo chown $(id -u):$(id -g) /bios /data /plugins
-
 try_fetch_bios() {
     # abort if /bios contains any *.bin files
     if [ "$(ls /bios/*.bin 2>/dev/null | wc -l)" != "0" ]; then

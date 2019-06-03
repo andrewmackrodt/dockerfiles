@@ -82,6 +82,9 @@ RUN mkdir -p /home/ubuntu/.config/yabause \
 VOLUME /config
 VOLUME /saves
 
+# set directories to be chowned on container start
+ENV USER_DIRS /config:/saves${USER_DIRS:+:$USER_DIRS}
+
 # set the secondary entrypoint
 ENV ENTRYPOINT0 /usr/local/bin/yabause-bootstrap
 

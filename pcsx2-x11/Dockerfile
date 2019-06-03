@@ -69,6 +69,9 @@ VOLUME /data
 VOLUME /bios
 VOLUME /plugins
 
+# set directories to be chowned on container start
+ENV USER_DIRS /data:/bios:/plugins${USER_DIRS:+:$USER_DIRS}
+
 # set the secondary entrypoint
 ENV ENTRYPOINT0 /usr/local/bin/pcsx2-bootstrap
 

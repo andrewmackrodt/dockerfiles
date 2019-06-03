@@ -56,6 +56,9 @@ WORKDIR /home/ubuntu
 VOLUME /data
 VOLUME /downloads
 
+# set directories to be chowned on container start
+ENV USER_DIRS /data:/downloads${USER_DIRS:+:$USER_DIRS}
+
 # set the secondary entrypoint
 ENV ENTRYPOINT0 /usr/local/bin/chromium-bootstrap
 
