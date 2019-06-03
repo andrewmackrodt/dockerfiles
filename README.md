@@ -4,7 +4,7 @@ Dockerfiles based on Ubuntu 18.04 (Bionic).
 
 ## Features
 
-* Default non-root user account `ubuntu` with passwordless sudo
+* Default non-root user account `ubuntu` with optional passwordless sudo
 * Configurable UID via environment variable
 * Configurable GID via environment variable
 * Configurable timezone via environment variable or /etc/localtime mount
@@ -81,6 +81,7 @@ docker run --rm -it \
 | `-e PUID=1000` | The user id, recommended: `$(id -u)` |
 | `-e PGID=1000` | The group id, recommended: `$(id -g)` |
 | `-e TZ=UTC` | The timezone, e.g. `Europe/London` |
+| `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
 
 ## Development
 

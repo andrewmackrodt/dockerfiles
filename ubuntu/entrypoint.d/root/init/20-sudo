@@ -1,0 +1,24 @@
+#!/bin/sh
+
+debug() {
+    if [ "${ENTRYPOINT_DEBUG:-0}" != "1" ]; then
+        return
+    fi
+
+    echo "DEBUG: $1" >&2
+}
+
+if [ "${SUDO_NOPASSWD:-0}" != "1" ]; then
+    debug 'skipping NOPASSWD sudo entry for %adm'
+
+    exit
+fi
+
+debug 'adding NOPASSWD sudo entry for %adm'
+
+tee -a /etc/sudoers.d/passwordless >/dev/null<<EOF
+
+# Allow members of adm to execute any command without specifying password
+%adm ALL=(ALL) NOPASSWD: ALL
+
+EOF

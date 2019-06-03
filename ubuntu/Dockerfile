@@ -52,9 +52,9 @@ RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
 
 # allow passwordless sudo to entrypoint
 RUN /bin/echo -e "\
+\n\
 # Allow members of adm to execute the entrypoint\n\
 %adm ALL=(ALL) NOPASSWD:SETENV: /usr/local/bin/docker-entrypoint.sh\n\
-\n\
 " \
   >/etc/sudoers.d/passwordless
 
