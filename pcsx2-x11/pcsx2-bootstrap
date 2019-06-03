@@ -1,16 +1,7 @@
 #!/bin/sh
 
-# export XDG_RUNTIME_DIR
-export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
-
-# generate locale
-export LANG=${LANG:-en_US.UTF-8}
-if ! locale -a 2>/dev/null | sed "s/.utf/.UTF-/" | grep -q "$LANG"; then
-    sudo locale-gen "$(echo "$LANG" | sed -E "s/\..*//")" "$LANG"
-fi
-
 # make directories writeable
-sudo chown $(id -u):$(id -g) /bios /data /plugins "$XDG_RUNTIME_DIR"
+sudo chown $(id -u):$(id -g) /bios /data /plugins
 
 try_fetch_bios() {
     # abort if /bios contains any *.bin files

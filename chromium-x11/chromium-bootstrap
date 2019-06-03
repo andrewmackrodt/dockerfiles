@@ -1,21 +1,7 @@
 #!/bin/sh
 
-# export XDG_RUNTIME_DIR
-export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
-
-# export DBUS_SESSION_BUS_ADDRESS
-if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
-    export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
-fi
-
-# generate locale
-export LANG=${LANG:-en_US.UTF-8}
-if ! locale -a 2>/dev/null | sed "s/.utf/.UTF-/" | grep -q "$LANG"; then
-    sudo locale-gen "$(echo "$LANG" | sed -E "s/\..*//")" "$LANG"
-fi
-
 # make directories writeable
-sudo chown $(id -u):$(id -g) /data /downloads "$XDG_RUNTIME_DIR"
+sudo chown $(id -u):$(id -g) /data /downloads
 
 # create the default alsa config to allow setting the soundcard
 # via the ALSA_PCM environment variable, e.g.

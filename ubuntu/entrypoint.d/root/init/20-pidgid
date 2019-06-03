@@ -57,16 +57,7 @@ set_gid () {
     sed -i -E "s/^($ADM_USER:x:[^:]+):[^:]+:/\1:$PGID:/" /etc/passwd
     sed -i -E "s/^($ADM_USER:x):[^:]+:/\1:$PGID:/" /etc/group
 
-    # update file gid
-
-    local exclude_mounts="$( \
-          mount \
-            | sed -n -E "s#^[^ ]+ on ($ADM_HOME.+?) type.+#\\1#p" \
-            | sed -E "s#.+#-not -path '\\0' -not -path '\\0/*'#" \
-            | tr $"\n" " " \
-        )"
-
-    eval find "$ADM_HOME" $exclude_mounts -print0 | xargs -0 -r chgrp "$PGID"
+    # file permissions are updated in start/20-permissions
 }
 
 set_uid () {
@@ -89,16 +80,7 @@ set_uid () {
         fi
     fi
 
-    # update file uid
-
-    local exclude_mounts="$( \
-          mount \
-            | sed -n -E "s#^[^ ]+ on ($ADM_HOME.+?) type.+#\\1#p" \
-            | sed -E "s#.+#-not -path '\\0' -not -path '\\0/*'#" \
-            | tr $"\n" " " \
-        )"
-
-    eval find "$ADM_HOME" $exclude_mounts -print0 | xargs -0 -r chown "$PUID"
+    # file permissions are updated in start/20-permissions
 }
 
 # set PUID and PGID from mounts if empty

@@ -10,8 +10,31 @@ fi
 ############################################################
 
 if [ "$(id -u)" != "0" ]; then
-    exec sudo -EH "$0" "$@"
+    # write entrypoint args to file, they cannot be passed along to the sudo
+    # command if the container was previously started with the option to
+    # disable passwordless sudo - however, a special rule exists to allow
+    # passwordless sudo to call this file
+
+    for arg in "$@"; do
+      echo "$arg"
+    done | tac > ~/.entrypoint.txt
+
+    exec sudo -EH "$0"
 fi
+
+# restore args
+if [ $# -eq 0 \
+        -a ! -z "${SUDO_USER:-}" \
+        -a -f "/home/${SUDO_USER}/.entrypoint.txt" \
+ ]; then
+
+    while IFS='' read arg; do
+        set -- "$arg" "$@"
+    done <"/home/${SUDO_USER}/.entrypoint.txt"
+
+    rm "/home/${SUDO_USER}/.entrypoint.txt"
+fi
+
 
 ADM_USER=ubuntu
 
@@ -101,7 +124,7 @@ if [ \
     set -- /init "$@"
 else
     # fallback to user shell if no ENTRYPOINT0 and no CMD
-    if [ $# -eq 0 ]; then
+    if echo "${1:--}" | grep -qE '^-'; then
         ADM_SHELL=$(awk -F':' '$1 == "'$ADM_USER'" { print $7 }' /etc/passwd)
 
         set -- "$ADM_SHELL" "$@"
@@ -121,6 +144,16 @@ if [ -f '/tmp/docker-entrypoint.env' ]; then
     eval $(env | cut -d'=' -f1 | grep -v 'PATH' | xargs echo unset)
     eval $(sed -E 's/^/export /' '/tmp/docker-entrypoint.env' | sed -E 's/=(.+)/="\1"/')
     rm '/tmp/docker-entrypoint.env'
+fi
+
+# export XDG_RUNTIME_DIR
+if [ -z "${XDG_RUNTIME_DIR:-}" ]; then
+    export XDG_RUNTIME_DIR="/run/user/$(id -u $ADM_USER)"
+fi
+
+# export DBUS_SESSION_BUS_ADDRESS
+if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" -a -S "$XDG_RUNTIME_DIR/bus" ]; then
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
 fi
 
 exec "$@"

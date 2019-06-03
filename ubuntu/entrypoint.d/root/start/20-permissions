@@ -1,0 +1,30 @@
+#!/bin/sh
+
+ADM_USER=ubuntu
+ADM_PASSWD=$(grep -E "^$ADM_USER:" /etc/passwd)
+ADM_UID=$(echo "$ADM_PASSWD" | cut -d':' -f3)
+ADM_HOME=$(echo "$ADM_PASSWD" | cut -d':' -f6)
+
+EXCLUDE_HOME_MOUNTS="$( \
+      mount \
+        | sed -n -E "s#^[^ ]+ on ($ADM_HOME.+?) type.+#\\1#p" \
+        | sed -E "s#.+#-not -path '\\0' -not -path '\\0/*'#" \
+        | tr $"\n" " " \
+    )"
+
+eval find "$ADM_HOME" $EXCLUDE_HOME_MOUNTS -print0 | xargs -0 -r chown "$ADM_USER:$ADM_USER"
+
+XDG_PATH="/run/user/$ADM_UID"
+
+if [ ! -d "$XDG_PATH" ]; then
+    mkdir -p "$XDG_PATH"
+fi
+
+EXCLUDE_XDG_MOUNTS="$( \
+      mount \
+        | sed -n -E "s#^[^ ]+ on ($XDG_PATH.+?) type.+#\\1#p" \
+        | sed -E "s#.+#-not -path '\\0' -not -path '\\0/*'#" \
+        | tr $"\n" " " \
+    )"
+
+eval find "$XDG_PATH" $EXCLUDE_XDG_MOUNTS -print0 | xargs -0 -r chown "$ADM_USER:$ADM_USER"

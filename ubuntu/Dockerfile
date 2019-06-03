@@ -54,8 +54,13 @@ RUN set -ex \
  && tar zxf s6-overlay.tar.gz -C / \
  && rm -f /tmp/release.* s6-overlay.tar.gz
 
-# allow passwordless sudo to users in group adm
-RUN /bin/echo -e "# Allow members of group adm to execute any command\n%adm ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/passwordless
+# allow passwordless sudo to entrypoint
+RUN /bin/echo -e "\
+# Allow members of adm to execute the entrypoint\n\
+%adm ALL=(ALL) NOPASSWD:SETENV: /usr/local/bin/docker-entrypoint.sh\n\
+\n\
+" \
+  >/etc/sudoers.d/passwordless
 
 # copy files to the container
 COPY entrypoint.d /etc/entrypoint.d
@@ -79,5 +84,11 @@ RUN chgrp -R adm /var/log \
 # change to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
+
+# create common directories, some apps will fail if they don't exist
+RUN mkdir -p \
+  /home/ubuntu/.cache \
+  /home/ubuntu/.config \
+  /home/ubuntu/.local/share
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
