@@ -29,31 +29,23 @@ the container without requiring an image rebuild.
 
 ## Usage
 
+**Security Notice:** container requires running with `--privileged` or you will
+not get acceptable framerates. If anyone knows why this is the case, please
+raise an issue. Mounting all device node from /dev, adding the ALL system
+capability and running apparmor as unconfined do not help.
+
 ### docker
 
 ```
-# detect gpu devices to pass through
-GPU_DEVICES=$( \
-    echo "$( \
-        find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl|-modeset)' \
-            | grep --color=never '.' \
-          || echo '/dev/dri'\
-      )" \
-      | sed -E "s/^/--device /" \
-  )
-
 # get the xdg runtime dir
 XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 
 # create the container
 docker create \
   --name yabause \
-  --security-opt apparmor:unconfined \
+  --privileged \
   --net host \
   --shm-size 128M \
-  --device /dev/input \
-  --device /dev/snd \
-  $GPU_DEVICES \
   -v $HOME/Games/Saturn:/games \
   -v $HOME/.yabause/saves:/saves \
   -v $HOME/.yabause/config:/config \
