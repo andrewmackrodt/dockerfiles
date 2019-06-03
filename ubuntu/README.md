@@ -16,7 +16,7 @@
 
 ## Features
 
-* Default non-root user account `ubuntu` with passwordless sudo
+* Default non-root user account `ubuntu` with optional passwordless sudo
 * Configurable UID via environment variable
 * Configurable GID via environment variable
 * Configurable timezone via environment variable
@@ -80,6 +80,7 @@ ubuntu      51  0.0  0.0  34400  2860 ?        R    13:56   0:00  \_ ps faux
 | `-e PUID=1000` | The user id, recommended: `$(id -u)` |
 | `-e PGID=1000` | The group id, recommended: `$(id -g)` |
 | `-e TZ=UTC` | The timezone, e.g. `Europe/London` |
+| `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
 
 **Additional parameters for image builders**
 
@@ -87,3 +88,4 @@ ubuntu      51  0.0  0.0  34400  2860 ?        R    13:56   0:00  \_ ps faux
 | --- | --- |
 | `ENTRYPOINT0=` | Executed after `docker-entrypoint.sh` if `CMD` is empty or begins with "-" |
 | `S6_ENABLE=0` | <p>`s6-overlay` init configuration:</p><ul><li>0: disabled</li><li>1: always</li><li>2: `CMD` is empty</li></ul> |
+| `USER_DIRS=` | Directories to be recursively chowned to $PUID:GUID on container start |
