@@ -35,7 +35,7 @@ the container without requiring an image rebuild.
 # detect gpu devices to pass through
 GPU_DEVICES=$( \
     echo "$( \
-        find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl)' \
+        find /dev -maxdepth 1 -regextype posix-extended -iregex '.+/nvidia([0-9]|ctl|-modeset)' \
             | grep --color=never '.' \
           || echo '/dev/dri'\
       )" \
