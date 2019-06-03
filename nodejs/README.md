@@ -71,3 +71,4 @@ docker run --rm -it \
 | --- | --- |
 | `-e PUID=1000` | The user id, recommended: `$(id -u)` |
 | `-e PGID=1000` | The group id, recommended: `$(id -g)` |
+| `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
