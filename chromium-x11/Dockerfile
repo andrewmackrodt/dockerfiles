@@ -17,7 +17,6 @@ RUN apt-get update -qq \
             | sort \
             | uniq \
         ) \
-      alsa-utils \
       locales \
       notify-osd \
  && rm -rf /var/lib/apt/lists/*
@@ -45,9 +44,6 @@ RUN mkdir /downloads \
  && ln -s /downloads /home/ubuntu/Downloads \
  && chown -h -R ubuntu:ubuntu /home/ubuntu/Downloads
 
-# copy files to container
-COPY chromium-bootstrap /usr/local/bin/chromium-bootstrap
-
 # stepdown to the ubuntu user
 USER ubuntu
 WORKDIR /home/ubuntu
@@ -60,7 +56,7 @@ VOLUME /downloads
 ENV USER_DIRS /data:/downloads${USER_DIRS:+:$USER_DIRS}
 
 # set the secondary entrypoint
-ENV ENTRYPOINT0 /usr/local/bin/chromium-bootstrap
+ENV ENTRYPOINT0 /usr/bin/chromium-browser
 
 ################################################################################
 # labels

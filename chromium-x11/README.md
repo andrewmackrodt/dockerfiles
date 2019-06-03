@@ -20,7 +20,6 @@ experience the web.
 
 * OpenGL acceleration (Mesa DRI/GLX and NVidia †)
 * Audio via PulseAudio
-* Audio via ALSA (fallback)
 * Controller support (tested with wireless DS4 over Bluetooth)
 
 † libnvidia-gl-390 is installed, see [here][gist] if you have a different
@@ -83,10 +82,5 @@ docker create \
 | `-e PGID=1000` | The group id, recommended: `$(id -g)` |
 | `-e TZ=UTC` | The timezone, e.g. "Europe/London" |
 | `-e LANG=en_US.UTF-8` | The language to use, e.g. "de_DE" |
-| `-e ALSA_PCM=<device>` | The ALSA device, e.g. "dmix:CARD=NVidia,DEV=8", see `aplay -L` |
 | `-v /data` | Chromium data |
 | `-v /downloads` | Chromium download directory |
-
-_Setting `ALSA_PCM` should only be used if it's not possible to use pulseaudio.
-ALSA requires exclusive access to the audio device whereas pulseaudio can share
-the device between the host and other containers and is probably what you want._
