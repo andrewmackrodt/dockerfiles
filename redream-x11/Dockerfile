@@ -1,24 +1,7 @@
 FROM andrewmackrodt/ubuntu-x11
 
-ARG LABEL_NAME
-ARG LABEL_VERSION
-ARG LABEL_USAGE
-ARG LABEL_VENDOR
-ARG LABEL_VCS_URL
-ARG LABEL_VCS_REF
-
-LABEL org.label-schema.name="$LABEL_NAME" \
-  org.label-schema.version="$LABEL_VERSION" \
-  org.label-schema.usage="$LABEL_USAGE" \
-  org.label-schema.vendor="$LABEL_VENDOR" \
-  org.label-schema.vcs-url="$LABEL_VCS_URL" \
-  org.label-schema.vcs-ref="$LABEL_VCS_REF" \
-  org.label-schema.schema-version="1.0"
-
 USER root
 WORKDIR /root
-
-ARG REDREAM_VERSION
 
 # create directories
 RUN for d in /opt/redream /saves /config /bios /cache; do \
@@ -26,6 +9,8 @@ RUN for d in /opt/redream /saves /config /bios /cache; do \
       chown ubuntu:adm "$d"; \
       chmod 2770 "$d"; \
     done
+
+ARG REDREAM_VERSION
 
 # install redream to /opt/redream
 RUN wget -qO- "https://redream.io/download/redream.x86_64-linux-v$REDREAM_VERSION.tar.gz" > redream.tar.gz \
@@ -55,3 +40,22 @@ VOLUME /cache
 
 # set the secondary entrypoint
 ENV ENTRYPOINT0 /usr/local/bin/redream-bootstrap
+
+################################################################################
+# labels
+################################################################################
+
+ARG LABEL_NAME
+ARG LABEL_VERSION
+ARG LABEL_USAGE
+ARG LABEL_VENDOR
+ARG LABEL_VCS_URL
+ARG LABEL_VCS_REF
+
+LABEL org.label-schema.name="$LABEL_NAME" \
+  org.label-schema.version="$LABEL_VERSION" \
+  org.label-schema.usage="$LABEL_USAGE" \
+  org.label-schema.vendor="$LABEL_VENDOR" \
+  org.label-schema.vcs-url="$LABEL_VCS_URL" \
+  org.label-schema.vcs-ref="$LABEL_VCS_REF" \
+  org.label-schema.schema-version="1.0"
