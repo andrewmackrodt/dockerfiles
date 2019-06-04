@@ -8,6 +8,22 @@ debug() {
     echo "DEBUG: $1" >&2
 }
 
+IS_NVIDIA_MOUNT=0
+
+for d in /usr/local/nvidia/lib /usr/local/nvidia/lib64 /nvidia; do
+    if [ -d "$d" ]; then
+        echo "$d" >>/etc/ld.so.conf.d/nvidia.conf
+        IS_NVIDIA_MOUNT=1
+    fi
+done
+
+if [ $IS_NVIDIA_MOUNT = 1 ]; then
+    debug 'updating ldconfig with mounted nvidia library paths'
+    ldconfig
+
+    exit
+fi
+
 # abort if user requested skip download
 if [ "${NVIDIA_SKIP_DOWNLOAD:-0}" = "1" ]; then
     debug 'skipping nvidia driver check NVIDIA_SKIP_DOWNLOAD=1'

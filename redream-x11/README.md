@@ -21,14 +21,26 @@ enabling you to play your favorite Dreamcast games in high-definition.
 * Audio via PulseAudio
 * Controller support (tested with wireless DS4 over Bluetooth)
 
-† libnvidia-gl-390 is installed; the host driver version will be checked the
-first time a container is started and an attempt to install the correct driver
-in the container will be made. To skip this behaviour set the environment
-variable `NVIDIA_SKIP_DOWNLOAD=1`. It is also possible to mount a volume
-containing the drivers contained on the host and use those, see [here][gist]
-for an example on how to achieve this.
+**† NVidia driver note**
+
+libnvidia-gl-390 is provided in the image, being the current supported version
+in the current version of Ubuntu. The host driver version will be checked the
+first time a container is started and if there is a version mismatch, an attempt
+to install the correct driver in the container will be made unless:
+
+1. Any of the following directories are present: `/usr/local/nvidia/lib`,
+   `/usr/local/nvidia/lib64` or `/nvidia`. It is assumed that the correct
+   libraries are mounted from the host. Directories will be added to
+   `etc/ld.so.conf.d/nvidia.conf`.
+2. The environment variable `NVIDIA_SKIP_DOWNLOAD=1` has been set.
+3. The installed driver matches the host `/proc/driver/nvidia/version`.
+
+The first option is the preferred way to add NVidia drivers to the container.
+See [here][gist] for an example on generating the required files on the host.
+It may also be possible to achieve this using [nvidia-docker][nvidia-docker].
 
 [gist]: https://gist.github.com/andrewmackrodt/e5f9eaf63c9296db73901796bc46a3f8
+[nvidia-docker]: https://github.com/NVIDIA/nvidia-docker
 
 ## Usage
 
