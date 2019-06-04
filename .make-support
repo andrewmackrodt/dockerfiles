@@ -198,7 +198,7 @@ updateDescription() {
     setEnvironment
 
     # send the api request to update the description
-    echo '{"full_description": '$(jq -Rs . README.md)'}' \
+    echo -n '{"full_description": '"$(jq -Rs . README.md)"'}' \
         | curl -sSL "https://hub.docker.com/v2/repositories/$VENDOR/$NAME/" \
             -d @- -X PATCH \
             -H "Content-Type: application/json" \

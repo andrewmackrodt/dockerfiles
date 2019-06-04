@@ -55,6 +55,25 @@ release:
 	cd pcsx2-x11; make build && make push
 	cd yabasanshiro-x11; make build && make push
 
+docs:
+	cd ubuntu; make docs
+	cd php; make docs
+	cd php-apache2; make docs
+	cd apache2; make docs
+	cd buildpack-deps; make docs
+	cd buildpack-dind; make docs
+	cd nodejs; make docs
+	cd nodejs-chromium; make docs
+	cd ubuntu-x11; make docs
+	cd ubuntu-x11-i386; make docs
+	cd firefox-x11; make docs
+	cd chromium-x11; make docs
+	cd spotify-x11; make docs
+	cd redream-x11; make docs
+	cd dolphin-emu-x11; make docs
+	cd pcsx2-x11; make docs
+	cd yabasanshiro-x11; make docs
+
 clean:
 	cd ubuntu; make clean
 	cd php; make clean

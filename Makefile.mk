@@ -50,5 +50,15 @@ do-push:
 
 post-push:
 
+docs:
+	@export REGISTRY_HOST="$(REGISTRY_HOST)" ; \
+	export IMAGE="$(IMAGE)" ; \
+	export NAME="$(NAME)" ; \
+	export VENDOR="$(VENDOR)" ; \
+	\
+	. $(SUPPORT_FUNCTIONS) ; \
+	\
+	updateDescription ; \
+
 clean:
 	rm -f build*.log build*.properties
