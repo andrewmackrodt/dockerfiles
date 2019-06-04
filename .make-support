@@ -131,37 +131,43 @@ dockerBuild() {
             isLatest=0
         fi
         setEnvironment "$properties"
-        {
-            local args=$(getBuildArgs "$properties")
-            local tags=$(getBuildTags "$isLatest")
-            local cacheFrom="${IMAGE}:${LABEL_VERSION}"
 
-            # ignore errors on pull, the image may not have been pushed if it's new
-            if ! docker pull "$cacheFrom"; then
-                cacheFrom="${IMAGE}:latest"
-                if ! docker pull "$cacheFrom"; then
-                    cacheFrom=
-                fi
-            fi
-            if [ ! -z "$cacheFrom" ]; then
-                cacheFrom="--cache-from $cacheFrom"
-            fi
+        local args=$(getBuildArgs "$properties")
+        local tags=$(getBuildTags "$isLatest")
+        local cacheFrom="${IMAGE}:${LABEL_VERSION}"
 
-            set -ex
-            docker build \
-                $cacheFrom \
-                $args \
-                --build-arg "LABEL_NAME=$NAME" \
-                --build-arg "LABEL_USAGE=https://$VCS_HOST/$VENDOR/$VCS_NAME/tree/master/$NAME" \
-                --build-arg "LABEL_VENDOR=$VENDOR" \
-                --build-arg "LABEL_VCS_URL=$VCS_URL" \
-                --build-arg "LABEL_VCS_REF=$VCS_REF" \
-                $tags \
-                "$DOCKER_BUILD_CONTEXT" \
-                -f "$DOCKER_FILE_PATH"
-            set +ex
-        } \
-            2>&1 | log
+        # ignore errors on pull, the image may not have been pushed if it's new
+        if ! docker pull "$cacheFrom" 2>&1 | debug; then
+            cacheFrom="${IMAGE}:latest"
+            if ! docker pull "$cacheFrom" 2>&1 | debug; then
+                cacheFrom=
+            fi
+        fi
+        if [ ! -z "$cacheFrom" ]; then
+            cacheFrom="--cache-from $cacheFrom"
+        fi
+
+        command="$(cat <<EOF
+docker build \
+    $cacheFrom \
+    $args \
+    --build-arg "LABEL_NAME=$NAME" \
+    --build-arg "LABEL_USAGE=https://$VCS_HOST/$VENDOR/$VCS_NAME/tree/master/$NAME" \
+    --build-arg "LABEL_VENDOR=$VENDOR" \
+    --build-arg "LABEL_VCS_URL=$VCS_URL" \
+    --build-arg "LABEL_VCS_REF=$VCS_REF" \
+    $tags \
+    "$DOCKER_BUILD_CONTEXT" \
+    -f "$DOCKER_FILE_PATH"
+EOF
+  )"
+
+        debug "Build Command: $command"
+        eval $command 2>&1 | log
+
+        if [ ${PIPESTATUS[0]} -ne 0 ]; then
+            fatal 'build error'
+        fi
     done
 }
 

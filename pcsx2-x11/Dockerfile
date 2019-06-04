@@ -58,7 +58,7 @@ USER ubuntu
 WORKDIR /home/ubuntu
 
 # link /data to PCSX2 config
-RUN mkdir /home/ubuntu/.config \
+RUN mkdir -p /home/ubuntu/.config \
  && ln -s /data /home/ubuntu/.config/PCSX2
 
 # create .local/share for recently-used.xbel

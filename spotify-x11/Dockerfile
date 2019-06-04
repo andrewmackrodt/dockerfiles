@@ -37,14 +37,14 @@ RUN apt-get update -qq \
  && rm -rf /var/lib/apt/lists/*
 
 # link /config to spotify config
-RUN mkdir /config /home/ubuntu/.config \
+RUN mkdir -p /config /home/ubuntu/.config \
  && chgrp adm /config \
  && chmod 2770 /config \
  && ln -s /config /home/ubuntu/.config/spotify \
  && chown -h -R ubuntu:ubuntu /home/ubuntu/.config
 
 # link /cache to spotify cache
-RUN mkdir /cache /home/ubuntu/.cache \
+RUN mkdir -p /cache /home/ubuntu/.cache \
  && chgrp adm /cache \
  && chmod 2770 /cache \
  && ln -s /cache /home/ubuntu/.cache/spotify \

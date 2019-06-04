@@ -17,6 +17,7 @@ RUN apt-get update -qq \
             | sort \
             | uniq \
         ) \
+      libdbusmenu-gtk3-4 \
       locales \
       notify-osd \
  && rm -rf /var/lib/apt/lists/*
@@ -32,7 +33,7 @@ RUN apt-get update -qq \
 RUN mkdir /data \
  && chgrp adm /data \
  && chmod 2770 /data \
- && mkdir /home/ubuntu/.config \
+ && mkdir -p /home/ubuntu/.config \
  && ln -s /data /home/ubuntu/.config/chromium \
  && chown -h -R ubuntu:ubuntu /home/ubuntu/.config
 
