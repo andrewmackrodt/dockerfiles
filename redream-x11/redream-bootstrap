@@ -40,7 +40,7 @@ if [ ! -f /config/redream.cfg ]; then
 fi
 
 # link volumes to redream dir
-mklinks /saves "vmu0.bin vmu1.bin vmu2.bin vmu3.bin"
+mklinks /vmu "vmu0.bin vmu1.bin vmu2.bin vmu3.bin"
 mklinks /config "redream.cfg redream.key"
 mklinks /bios "boot.bin flash.bin" ro
 
@@ -48,7 +48,7 @@ $(which redream) "$@"
 EXIT_CODE=$?
 
 # copy variable data to volumes, e.g. on first run
-mklinks /saves "vmu0.bin vmu1.bin vmu2.bin vmu3.bin"
+mklinks /vmu "vmu0.bin vmu1.bin vmu2.bin vmu3.bin"
 mklinks /config "redream.cfg redream.key"
 
 exit $EXIT_CODE

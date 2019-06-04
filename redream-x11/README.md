@@ -50,6 +50,7 @@ docker create \
   --device /dev/snd \
   $GPU_DEVICES \
   -v $HOME/Games/Dreamcast:/games:ro \
+  -v $HOME/.redream/vmu:/vmu \
   -v $HOME/.redream/saves:/saves \
   -v $HOME/.redream/config:/config \
   -v $HOME/.redream/bios:/bios \
@@ -76,7 +77,8 @@ docker create \
 | `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
 | `-e TZ=UTC` | The timezone, e.g. "Europe/London" |
 | `-v /games` | Redream games directory |
-| `-v /saves` | Redream save files (vmu*.bin) |
+| `-v /vmu` | Redream save files (vmu*.bin) |
+| `-v /saves` | Redream savestates |
 | `-v /config` | Redream config files (redream.cfg, redream.key) |
 | `-v /bios` | Redream ROM files (boot.bin, flash.bin) |
 | `-v /cache` | Redream cache directory |

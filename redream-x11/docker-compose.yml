@@ -35,6 +35,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       # redream
       - $HOME/Games/Dreamcast:/games:ro
+      - $HOME/.redream/vmu:/vmu
       - $HOME/.redream/saves:/saves
       - $HOME/.redream/config:/config
       - $HOME/.redream/bios:/bios

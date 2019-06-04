@@ -4,7 +4,7 @@ USER root
 WORKDIR /root
 
 # create directories
-RUN for d in /opt/redream /saves /config /bios /cache; do \
+RUN for d in /opt/redream /vmu /saves /config /bios /cache; do \
       mkdir "$d"; \
       chown ubuntu:adm "$d"; \
       chmod 2770 "$d"; \
@@ -22,7 +22,8 @@ RUN wget -qO- "https://redream.io/download/redream.x86_64-linux-v$REDREAM_VERSIO
 # create a symlink to redream bin
 RUN ln -s /opt/redream/redream /usr/local/bin/redream
 
-# link cache directory
+# link directories
+RUN ln -s /saves /opt/redream/saves
 RUN ln -s /cache /opt/redream/cache
 
 # copy files to container
@@ -33,13 +34,14 @@ USER ubuntu
 WORKDIR /home/ubuntu
 
 # export volumes
+VOLUME /vmu
 VOLUME /saves
 VOLUME /config
 VOLUME /bios
 VOLUME /cache
 
 # set directories to be chowned on container start
-ENV USER_DIRS /saves:/config:/bios:/cache${USER_DIRS:+:$USER_DIRS}
+ENV USER_DIRS /vmu:/saves:/config:/bios:/cache${USER_DIRS:+:$USER_DIRS}
 
 # set the secondary entrypoint
 ENV ENTRYPOINT0 /usr/local/bin/redream-bootstrap
