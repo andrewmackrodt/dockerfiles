@@ -30,10 +30,20 @@ RUN dpkg --add-architecture i386 \
       libcanberra-gtk3-module:i386 \
       libgl1-mesa-dri:i386 \
       libgl1-mesa-glx:i386 \
-      libnvidia-gl-390:i386 \
       rtkit:i386 \
       pulseaudio:i386 \
  && rm -rf /var/lib/apt/lists/*
+
+# install nvidia driver from proprietary gpu drivers repository
+RUN apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends software-properties-common \
+ && add-apt-repository -y ppa:graphics-drivers/ppa \
+ && apt-get purge -qqy --auto-remove software-properties-common \
+ && apt-get install -qqy --no-install-recommends libnvidia-gl-390:i386 \
+ && rm -rf /var/lib/apt/lists/*
+
+# copy files to the container
+COPY entrypoint.d /etc/entrypoint.d
 
 # add ubuntu user to multimedia
 RUN for group in video audio voice pulse rtkit \

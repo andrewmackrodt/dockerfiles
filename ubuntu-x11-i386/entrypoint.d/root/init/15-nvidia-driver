@@ -1,0 +1,87 @@
+#!/bin/sh
+
+debug() {
+    if [ "${ENTRYPOINT_DEBUG:-0}" != "1" ]; then
+        return
+    fi
+
+    echo "DEBUG: $1" >&2
+}
+
+# abort if user requested skip download
+if [ "${NVIDIA_SKIP_DOWNLOAD:-0}" = "1" ]; then
+    debug 'skipping nvidia driver check NVIDIA_SKIP_DOWNLOAD=1'
+
+    exit
+fi
+
+# abort if nvidia driver not found
+if [ ! -f /proc/driver/nvidia/version ]; then
+    debug 'file not found: /proc/driver/nvidia/version'
+
+    exit
+fi
+
+HOST_DRIVER_VERSION=$(cat /proc/driver/nvidia/version | sed -nE 's/.*Module[ \t]+([0-9]+(\.[0-9]+)?).*/\1/p')
+
+if [ -z "$HOST_DRIVER_VERSION" ]; then
+    echo "Unable to detect host nvidia driver version" >&2
+    echo "Please contact image maintainer" >&2
+
+    exit
+fi
+
+CONTAINER_DRIVER_VERSION=$(dpkg -l | grep libnvidia-gl | awk '{ print $3 }' | sed -nE 's/^([0-9]+(\.[0-9]+)?).*/\1/p')
+
+if [ -z "$CONTAINER_DRIVER_VERSION" ]; then
+    echo "Unable to detect container nvidia driver version" >&2
+    echo "Please contact image maintainer" >&2
+
+    exit
+fi
+
+# abort if drivers match
+if [ "$HOST_DRIVER_VERSION" = "$CONTAINER_DRIVER_VERSION" ]; then
+    debug "NVidia driver match $HOST_DRIVER_VERSION"
+
+    exit
+fi
+
+echo "NVidia driver mismatch Host($HOST_DRIVER_VERSION) <=> Container($CONTAINER_DRIVER_VERSION)" >&2
+echo "Automatic driver match will be attempted ..."
+
+HOST_DRIVER_MAJOR_VERSION=$(echo "$HOST_DRIVER_VERSION" | sed -E 's/\..+//')
+
+export DEBIAN_FRONTEND=noninteractive
+
+# update package lists
+apt-get update -qq
+
+PACKAGE_NAME="libnvidia-gl-$HOST_DRIVER_MAJOR_VERSION:i386"
+
+PACKAGE_VERSION=$( \
+    apt-cache madison "$PACKAGE_NAME" \
+        | grep "$HOST_DRIVER_VERSION" \
+        | head -n1 \
+        | awk '{ print $3 }' \
+    )
+
+if [ -z "$PACKAGE_VERSION" ]; then
+    echo "Failed to locate a package with the same driver version" >&2
+    echo ""
+    echo "X11 apps may fail; mount drivers from your host as a volume" >&2
+    echo "and set LD_LIBRARY_PATH to include the volume" >&2
+
+    exit
+fi
+
+CONTAINER_DRIVER_MAJOR_VERSION=$(echo "$CONTAINER_DRIVER_VERSION" | sed -E 's/\..+//')
+PURGE_PACKAGE_NAME="libnvidia-gl-$CONTAINER_DRIVER_MAJOR_VERSION:i386"
+
+echo "Removing old package $PURGE_PACKAGE_NAME ..."
+apt-get purge -qqy --auto-remove "$PURGE_PACKAGE_NAME" >/dev/null
+
+echo "Installing package $PACKAGE_NAME=$PACKAGE_VERSION ..."
+apt-get install -qqy --no-install-recommends "$PACKAGE_NAME=$PACKAGE_VERSION" >/dev/null
+
+rm -rf /var/lib/apt/lists/*

@@ -23,9 +23,12 @@ with all PC controllers, turbo speed, networked multiplayer, and even more!
 * Audio via PulseAudio
 * Controller support (tested with wireless DS4 over Bluetooth)
 
-† libnvidia-gl-390 is installed, see [here][gist] if you have a different
-proprietary NVidia driver installed on how to mount the correct drivers to
-the container without requiring an image rebuild.
+† libnvidia-gl-390 is installed; the host driver version will be checked the
+first time a container is started and an attempt to install the correct driver
+in the container will be made. To skip this behaviour set the environment
+variable `NVIDIA_SKIP_DOWNLOAD=1`. It is also possible to mount a volume
+containing the drivers contained on the host and use those, see [here][gist]
+for an example on how to achieve this.
 
 [gist]: https://gist.github.com/andrewmackrodt/e5f9eaf63c9296db73901796bc46a3f8
 
