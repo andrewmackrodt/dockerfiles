@@ -26,14 +26,14 @@ with all PC controllers, turbo speed, networked multiplayer, and even more!
 **† NVidia driver note**
 
 libnvidia-gl-390 is provided in the image, being the current supported version
-in the current version of Ubuntu. The host driver version will be checked the
+in the latest Ubuntu LTS release. The host driver version will be checked the
 first time a container is started and if there is a version mismatch, an attempt
 to install the correct driver in the container will be made unless:
 
 1. Any of the following directories are present: `/usr/local/nvidia/lib`,
    `/usr/local/nvidia/lib64` or `/nvidia`. It is assumed that the correct
    libraries are mounted from the host. Directories will be added to
-   `etc/ld.so.conf.d/nvidia.conf`.
+   `/etc/ld.so.conf.d/nvidia.conf`.
 2. The environment variable `NVIDIA_SKIP_DOWNLOAD=1` has been set.
 3. The installed driver matches the host `/proc/driver/nvidia/version`.
 
