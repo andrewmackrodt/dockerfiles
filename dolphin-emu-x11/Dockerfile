@@ -24,6 +24,7 @@ RUN apt-get update -qq \
             | awk '{ print $1 }' \
             | grep . \
         ) \
+      libvulkan1 \
  && rm -rf /var/lib/apt/lists/*
 
 ARG DOLPHIN_EMU_VERSION
