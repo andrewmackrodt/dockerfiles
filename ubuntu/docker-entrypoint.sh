@@ -16,7 +16,8 @@ if [ "$(id -u)" != "0" ]; then
     # passwordless sudo to call this file
 
     for arg in "$@"; do
-      echo "$arg"
+        # use printf, echo skips args beginning with hyphen '-'
+        printf '%s\n' "$arg"
     done | tac > ~/.entrypoint.txt
 
     exec sudo -EH "$0"
@@ -28,7 +29,7 @@ if [ $# -eq 0 \
         -a -f "/home/${SUDO_USER}/.entrypoint.txt" \
  ]; then
 
-    while IFS='' read arg; do
+    while IFS='' read -r arg; do
         set -- "$arg" "$@"
     done <"/home/${SUDO_USER}/.entrypoint.txt"
 

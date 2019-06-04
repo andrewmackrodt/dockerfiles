@@ -139,7 +139,7 @@ dockerBuild() {
             docker pull "${IMAGE}:${LABEL_VERSION}" || true
             docker pull "${IMAGE}:latest" || true
 
-            set -x
+            set -ex
             docker build \
                 --cache-from "${IMAGE}:${LABEL_VERSION}" \
                 --cache-from "${IMAGE}:latest" \
@@ -152,7 +152,7 @@ dockerBuild() {
                 $tags \
                 "$DOCKER_BUILD_CONTEXT" \
                 -f "$DOCKER_FILE_PATH"
-            set +x
+            set +ex
         } \
             2>&1 | log
     done
