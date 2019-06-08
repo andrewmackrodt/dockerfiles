@@ -15,6 +15,7 @@ RUN apt-get update -qq \
       p7zip-full \
       unzip \
       xinput \
+      xz-utils \
       winbind \
       zenity \
  && rm -rf /var/lib/apt/lists/*
