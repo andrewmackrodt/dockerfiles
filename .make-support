@@ -62,7 +62,7 @@ log() {
 
         # print the message
         date=$(date +'%Y-%d-%m %H:%M:%S')
-        message="[$date] $HOSTNAME.$prefix $(echo "${1:-}" | sed -E 's/\033[[^m]+m//g')"
+        message="[$date] $HOSTNAME.$prefix ${1:-}"
 
         echo "$message" | tee -a build.log >&2
 
@@ -163,7 +163,9 @@ EOF
   )"
 
         debug "Build Command: $command"
-        eval $command 2>&1 | log
+
+        # skip log function causing bash segfault in wine-x11
+        eval $command 2>&1 | tee -a build.log
 
         if [ ${PIPESTATUS[0]} -ne 0 ]; then
             fatal 'build error'

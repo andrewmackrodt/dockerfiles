@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ $(find /data -mindepth 1 -maxdepth 1 | wc -l) -eq 0 ]; then
+    echo "copying default wine prefix to /data ..."
+    cp -a /usr/local/share/wine/. /data
+fi
+
+# exec wine
+exec "/opt/wine-${WINE_BRANCH}/bin/wine" "$@"
