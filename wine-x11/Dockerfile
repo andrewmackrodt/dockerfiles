@@ -58,17 +58,22 @@ RUN export WINEPREFIX=/usr/local/share/wine \
  && winetricks -q d3dcompiler_47 dotnet472 \
  && rm -rf /root/.cache/winetricks
 
-# add corefonts and multimedia packages
+# add fonts
+RUN export WINEPREFIX=/usr/local/share/wine \
+ && export WINEDLLOVERRIDES="mscoree,mshtml=" \
+ && mkdir -p "$WINEPREFIX" \
+ && winetricks -q corefonts \
+ && rm -rf /root/.cache/winetricks
+
+# add multimedia
 RUN export WINEPREFIX=/usr/local/share/wine \
  && export WINEDLLOVERRIDES="mscoree,mshtml=" \
  && mkdir -p "$WINEPREFIX" \
  && winetricks -q \
-      corefonts \
-      d9vk_master \
+      d3dx9_36 \
+      dxvk \
       faudio \
-      sdl \
       vulkanrt \
-      xinput \
  && rm -rf /root/.cache/winetricks
 
 ENV WINEPREFIX=/data
