@@ -55,7 +55,7 @@ ENV WINEARCH=win64
 RUN export WINEPREFIX=/usr/local/share/wine \
  && export WINEDLLOVERRIDES="mscoree,mshtml=" \
  && mkdir -p "$WINEPREFIX" \
- && winetricks -q d3dcompiler_43 dotnet472 \
+ && winetricks -q d3dcompiler_47 dotnet472 \
  && rm -rf /root/.cache/winetricks
 
 # add corefonts and multimedia packages
@@ -65,6 +65,7 @@ RUN export WINEPREFIX=/usr/local/share/wine \
  && winetricks -q \
       corefonts \
       d9vk_master \
+      faudio \
       sdl \
       vulkanrt \
       xinput \
