@@ -73,6 +73,7 @@ RUN export WINEPREFIX=/usr/local/share/wine \
       d3dx9_36 \
       dxvk \
       faudio \
+      xact \
       vulkanrt \
  && rm -rf /root/.cache/winetricks
 
