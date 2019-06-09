@@ -51,19 +51,21 @@ ENV PATH="/opt/wine-$WINE_BRANCH/bin:$PATH"
 # set the default wine arch
 ENV WINEARCH=win64
 
-# add wine packages
+# add dotnet
+RUN export WINEPREFIX=/usr/local/share/wine \
+ && export WINEDLLOVERRIDES="mscoree,mshtml=" \
+ && mkdir -p "$WINEPREFIX" \
+ && winetricks -q d3dcompiler_43 dotnet472 \
+ && rm -rf /root/.cache/winetricks
+
+# add corefonts and multimedia packages
 RUN export WINEPREFIX=/usr/local/share/wine \
  && export WINEDLLOVERRIDES="mscoree,mshtml=" \
  && mkdir -p "$WINEPREFIX" \
  && winetricks -q \
       corefonts \
-      dotnet472 \
-      d3dcompiler_43 \
       d9vk_master \
-      faudio \
       sdl \
-      vcrun2013 \
-      vcrun2017 \
       vulkanrt \
       xinput \
  && rm -rf /root/.cache/winetricks
