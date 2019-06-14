@@ -1,0 +1,28 @@
+#!/bin/bash
+
+FROM=andrewmackrodt/buildpack-deps
+
+getLatestVersion() {
+    docker run -i --rm --entrypoint=/bin/bash "$FROM" <<'EOF'
+        commit=$(wget -qO- https://api.github.com/repos/darlinghq/darling/commits/master)
+        commit_sha=$(echo "$commit" | jq -r '.sha' 2>/dev/null)
+
+        echo "COMMIT_SHA=$commit_sha"
+
+        echo COMMIT_DATE="$( \
+            echo "$commit" \
+                | jq -r '.commit.committer.date' 2>/dev/null \
+                | sed -E 's/[^0-9]//g' \
+                | sed -E 's/[0-9]{2}$//' \
+          )"
+EOF
+}
+
+getProperties() {
+    eval "$(getLatestVersion)"
+
+    echo "DARLING_VERSION=$COMMIT_SHA"
+    echo "LABEL_VERSION=$COMMIT_DATE"
+}
+
+getProperties > build.properties
