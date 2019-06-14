@@ -78,7 +78,8 @@ USER root
 WORKDIR /root
 
 # install dependecies
-RUN apt-get update -qq \
+RUN dpkg --add-architecture i386 \
+ && apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       bison \
       clang \
