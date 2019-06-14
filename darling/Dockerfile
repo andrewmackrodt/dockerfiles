@@ -68,6 +68,8 @@ RUN cd darling/build \
 RUN cd darling/build \
  && make install lkm_install || true
 
+RUN cp /lib/modules/$(uname -r)/extra/darling-mach.ko /root/darling-mach.ko
+
 ################################################################################
 # Stage 2 : Create a new image and copy the binary
 ################################################################################
@@ -112,8 +114,11 @@ RUN dpkg --add-architecture i386 \
 # copy darling
 COPY --from=0 /usr/local/libexec/darling /usr/local/libexec/darling
 COPY --from=0 /usr/local/bin/darling /usr/local/bin/darling
-COPY --from=0 "/lib/modules/$(uname -r)/extra/darling-mach.ko" "/lib/modules/$(uname -r)/extra/darling-mach.ko"
+COPY --from=0 /root/darling-mach.ko /root/darling-mach.ko
 COPY --from=0 /root/darling/build/src/lkm /root/darling/build/src/lkm
+
+RUN mkdir -p "/lib/modules/$(uname -r)/extra" \
+ && mv /root/darling-mach.ko "/lib/modules/$(uname -r)/extra/darling-mach.ko"
 
 # run as root while testing
 ## stepdown to the ubuntu user
