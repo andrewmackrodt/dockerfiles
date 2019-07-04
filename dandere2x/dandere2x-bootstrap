@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /opt/dandere2x
+python3 /opt/dandere2x/new.py
