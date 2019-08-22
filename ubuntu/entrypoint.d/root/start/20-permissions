@@ -13,7 +13,8 @@ set_local_permissions() {
             | tr $"\n" " " \
         )"
 
-    eval find "$1" $EXCLUDE_MOUNTS -print0 2>/dev/null | xargs -0 -r chown "$ADM_USER:$ADM_USER"
+    eval find "$1" $EXCLUDE_MOUNTS -not -user "$ADM_USER" -print0 2>/dev/null \
+      | xargs -0 -r chown "$ADM_USER:$ADM_USER"
 }
 
 XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u $ADM_USER)}"
