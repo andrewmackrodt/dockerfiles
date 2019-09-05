@@ -1,0 +1,29 @@
+#!/bin/bash
+
+FROM=$(sed -n -E "s/^FROM ([^# ]+).*/\1/p" Dockerfile)
+
+getLatestVersion() {
+    docker run -i --rm --user root --entrypoint=/bin/sh "$FROM" <<'EOF'
+        npm view firebase-tools \
+            | perl -pe 's/\x1b\[[0-9;]*[mG]//g' \
+            | grep -E '^latest:[ \t]' \
+            | awk '{ print $2 }'
+EOF
+}
+
+getProperties() {
+    local FIREBASE_TOOLS_VERSION
+    local LABEL_VERSION
+
+    FIREBASE_TOOLS_VERSION=$(getLatestVersion)
+
+    LABEL_VERSION=$( \
+        echo "$FIREBASE_TOOLS_VERSION" \
+            | sed -E 's/^([0-9]+\.[0-9]+(\.[0-9]+)?).*/\1/'
+        )
+
+    echo "FIREBASE_TOOLS_VERSION=$FIREBASE_TOOLS_VERSION"
+    echo "LABEL_VERSION=$LABEL_VERSION"
+}
+
+getProperties > build.properties
