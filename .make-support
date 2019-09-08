@@ -42,7 +42,7 @@ log() {
             prefix='FATAL:'
             color='\033[41;39m'
 
-            if [ -z "${exitCode:-}" ]; then
+            if [[ -z "${exitCode:-}" ]] || [[ "${exitCode:-}" == "0" ]]; then
                 exitCode=255
             fi
         ;;
@@ -75,12 +75,10 @@ log() {
         while read -r line; do
             log "$line" "${2:-}" "${3:-}"
         done
-
-        return
     fi
 
     # exit if exit code is set
-    if [ ! -z "${exitCode:-}" ]; then
+    if [ "${exitCode:-}" != "" ]; then
         exit "$exitCode"
     fi
 }
@@ -164,9 +162,10 @@ EOF
 
         debug "Build Command: $command"
         eval $command 2>&1 | log
+        exitCode=${PIPESTATUS[0]}
 
-        if [ ${PIPESTATUS[0]} -ne 0 ]; then
-            fatal 'build error'
+        if [ ${exitCode} -ne 0 ]; then
+            fatal 'build error' ${exitCode}
         fi
     done
 }
