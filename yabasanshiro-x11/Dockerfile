@@ -30,6 +30,8 @@ RUN git clone https://github.com/devmiyax/yabause.git \
 
 RUN cd yabause \
  && sed -i -E 's/if ?\( ?! ?ANDROID\)/if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")/' yabause/src/CMakeLists.txt \
+ && sed -i 's/-std=c11/-std=gnu99/' yabause/src/CMakeLists.txt \
+ && sed -i 's/${CMAKE_STATIC_LIBRARY_PREFIX}/${BINARY_DIR}\/lib/' yabause/CMake/Packages/external_libchdr.cmake \
  && mkdir build \
  && cd build \
  && cmake ../yabause \
@@ -55,7 +57,7 @@ RUN apt-get update -qq \
  && rm -rf /var/lib/apt/lists/*
 
 # copy the binary
-COPY --from=0 /root/yabause/build/src/qt/yabause /opt/yabause/yabause
+COPY --from=0 /root/yabause/build/src/qt/yabasanshiro /opt/yabause/yabasanshiro
 
 # create directories
 RUN for d in /opt/yabause /saves /config; do \
@@ -65,10 +67,10 @@ RUN for d in /opt/yabause /saves /config; do \
     done
 
 # create a symlink to yabause bin
-RUN ln -s /opt/yabause/yabause /usr/local/bin/yabause
+RUN ln -s /opt/yabause/yabasanshiro /usr/local/bin/yabasanshiro
 
 # copy files to container
-COPY yabause-bootstrap /usr/local/bin/yabause-bootstrap
+COPY yabasanshiro-bootstrap /usr/local/bin/yabasanshiro-bootstrap
 
 # stepdown to the ubuntu user
 USER ubuntu
@@ -86,7 +88,7 @@ VOLUME /saves
 ENV USER_DIRS /config:/saves${USER_DIRS:+:$USER_DIRS}
 
 # set the secondary entrypoint
-ENV ENTRYPOINT0 /usr/local/bin/yabause-bootstrap
+ENV ENTRYPOINT0 /usr/local/bin/yabasanshiro-bootstrap
 
 ################################################################################
 # labels

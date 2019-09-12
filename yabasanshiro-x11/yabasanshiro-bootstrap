@@ -10,4 +10,4 @@ EOF
 fi
 
 # start yabasanshiro
-exec "$(which yabause)" "$@"
+exec "$(which yabasanshiro)" "$@"
