@@ -2,7 +2,7 @@
 
 # backup environment variables
 if [ ! -f /tmp/docker-entrypoint.env ]; then
-    env > /tmp/docker-entrypoint.env
+    export > /tmp/docker-entrypoint.env
 fi
 
 ############################################################
@@ -76,7 +76,7 @@ run_entrypoint_scripts 'start'
 (
     if [ -f '/tmp/docker-entrypoint.env' ]; then
         eval $(env | cut -d'=' -f1 | grep -v 'PATH' | xargs echo unset)
-        eval $(sed -E 's/^/export /' '/tmp/docker-entrypoint.env' | sed -E 's/=(.+)/="\1"/')
+        . /tmp/docker-entrypoint.env
     fi
 
     if [ ! -f /var/local/entrypoint.lock ]; then
@@ -143,7 +143,7 @@ fi
 # restore env variables
 if [ -f '/tmp/docker-entrypoint.env' ]; then
     eval $(env | cut -d'=' -f1 | grep -v 'PATH' | xargs echo unset)
-    eval $(sed -E 's/^/export /' '/tmp/docker-entrypoint.env' | sed -E 's/=(.+)/="\1"/')
+    . /tmp/docker-entrypoint.env
     rm '/tmp/docker-entrypoint.env'
 fi
 
