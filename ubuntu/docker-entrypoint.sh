@@ -75,7 +75,12 @@ run_entrypoint_scripts 'start'
 # run user scripts in a subshell to restore the original environment
 (
     if [ -f '/tmp/docker-entrypoint.env' ]; then
-        eval $(env | cut -d'=' -f1 | grep -v 'PATH' | xargs echo unset)
+        eval $(export \
+            | grep -E '^export ' \
+            | grep -vE '^export PATH=' \
+            | sed -E 's/^export /unset /' \
+            | cut -d'=' -f1 \
+        )
         . /tmp/docker-entrypoint.env
     fi
 
@@ -142,7 +147,12 @@ fi
 
 # restore env variables
 if [ -f '/tmp/docker-entrypoint.env' ]; then
-    eval $(env | cut -d'=' -f1 | grep -v 'PATH' | xargs echo unset)
+    eval $(export \
+        | grep -E '^export ' \
+        | grep -vE '^export PATH=' \
+        | sed -E 's/^export /unset /' \
+        | cut -d'=' -f1 \
+    )
     . /tmp/docker-entrypoint.env
     rm '/tmp/docker-entrypoint.env'
 fi
