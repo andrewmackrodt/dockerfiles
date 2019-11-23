@@ -49,6 +49,8 @@ RUN apt-get update -qq \
       php${PHP_VERSION}-xsl \
       php${PHP_VERSION}-zip \
       php-xdebug \
+      git \
+      unzip \
  && rm -rf /var/lib/apt/lists/*
 
 # install composer
