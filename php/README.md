@@ -18,13 +18,14 @@ everything from your blog to the most popular websites in the world.
 
 ## Versions
 
-PHP `7.3` is tagged as `latest`. Images for versions `5.6`, `7.0`, `7.1` and `7.2` are also provided:
+PHP `7.4` is tagged as `latest`. Images for versions `5.6`, `7.0`, `7.1`, `7.2` and `7.3` are also provided:
 
 - <strike>`andrewmackrodt/php:5.6` Legacy (end-of-life: 2018-12-31)</strike>
 - <strike>`andrewmackrodt/php:7.0` Legacy (end-of-life: 2018-12-03)</strike>
-- `andrewmackrodt/php:7.1` Supported (end-of-life: 2019-12-01)
+- <strike>`andrewmackrodt/php:7.1` Legacy (end-of-life: 2019-12-01)</strike>
 - `andrewmackrodt/php:7.2` Supported (end-of-life: 2020-11-30)
-- `andrewmackrodt/php:7.3` Latest (end-of-life: 2021-12-06)
+- `andrewmackrodt/php:7.3` Supported (end-of-life: 2021-12-06)
+- `andrewmackrodt/php:7.4` Latest (end-of-life: 2022-12-00)
 
 **Update Schedule**
 

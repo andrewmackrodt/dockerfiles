@@ -32,7 +32,7 @@ configuration due to the way that Apache prefork functions.
 - `www-data` uses the same `UID` as the `ubuntu` account
 - Modules: `rewrite`, `headers`, `ssl`, `remoteip`
 
-**[PHP 7.3](https://www.php.net/releases/7_3_0.php)** and the latest version of
+**[PHP 7.4](https://www.php.net/releases/7_4_0.php)** and the latest version of
 **[composer](https://getcomposer.org/)** as of the image build date.
 
 **Extensions:**
