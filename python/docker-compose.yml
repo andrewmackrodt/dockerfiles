@@ -1,0 +1,13 @@
+---
+version: "2.1"
+
+services:
+  python:
+    image: andrewmackrodt/python
+    environment:
+      # host UID/GID mapping
+      - PUID=${UID:-1000}
+      - PGID=${UID:-1000}
+    volumes:
+      # timezone
+      - /etc/localtime:/etc/localtime:ro

@@ -1,0 +1,60 @@
+# [andrewmackrodt/docker-python](https://github.com/andrewmackrodt/dockerfiles/tree/master/python)
+
+[![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fpython)][status]
+[![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/python.svg)][pulls]
+[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/python.svg)][layers]
+[![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/python/Dockerfile.svg?label=dockerfile)][dockerfile]
+[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/python.svg)][version]
+
+[status]: https://jenkins.mackrodt.io/job/dockerfiles/job/python/
+[pulls]: https://hub.docker.com/r/andrewmackrodt/python
+[layers]: https://microbadger.com/images/andrewmackrodt/python
+[dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/python/Dockerfile
+[version]: https://hub.docker.com/r/andrewmackrodt/python/tags
+
+[Python](https://www.python.org/) is an interpreted, object-oriented, high-level
+programming language with dynamic semantics. Its high-level built in data
+structures, combined with dynamic typing and dynamic binding, make it very
+attractive for Rapid Application Development, as well as for use as a scripting
+or glue language to connect existing components together.
+
+## Versions
+
+Python `3.7` is tagged as `latest`. Images for versions `2.7` and`3.6` are also provided:
+
+- `andrewmackrodt/python:2.7` security (end-of-life: 2020-01-01)
+- `andrewmackrodt/python:3.6` bugfix (end-of-life: 2021-12-23)
+- `andrewmackrodt/python:3.7` bugfix (end-of-life: 2023-06-27)
+
+**Update Schedule**
+
+Images are built nightly and images will be updated as new `major.minor.patch-release`
+packages of PYTHON are released. It's possible to pull a specific tag, e.g.
+`docker pull andrewmackrodt/python:3.7.5-r2`, see [Docker Hub][hub] for a list of
+supported tags.
+
+[hub]: https://hub.docker.com/r/andrewmackrodt/python/tags
+
+**Removal Policy**
+
+Old tags are subject to removal periodically without notice.
+
+## Usage
+
+### docker
+
+```
+# start interactive mode
+docker run --rm -it andrewmackrodt/python
+
+# print version
+docker run --rm andrewmackrodt/python --version
+```
+
+## Parameters
+
+| Parameter | Function |
+| --- | --- |
+| `-e PUID=1000` | The user id, recommended: `$(id -u)` |
+| `-e PGID=1000` | The group id, recommended: `$(id -g)` |
+| `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |

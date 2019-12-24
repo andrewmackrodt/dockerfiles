@@ -1,0 +1,71 @@
+#!/bin/bash
+
+FROM=andrewmackrodt/$(basename "$(pwd)")
+
+parseBuildVersions() {
+    if yq --help | grep -q kislyuk; then
+        yq -r '.build.versions[]' "$1"
+    else
+        yq r "$1" 'build.versions[*]'
+    fi
+}
+
+getLatestVersions() {
+    local versions=$(parseBuildVersions 'build.yml' | sed -E 's/^ *- |"//g')
+
+    if [ -z "$versions" ]; then
+        echo 'failed to parse build.yml' >&2
+
+        exit 255
+    fi
+
+    echo 'getting latest python versions ...' >&2
+
+    docker run -i --rm \
+        --user root \
+        --entrypoint=/bin/sh \
+        -e "versions=$versions" \
+        "$FROM" <<'EOF'
+            apt-get update -qq
+            for v in $versions; do
+                echo -n "$v:"
+                echo -n $( \
+                    apt-cache show "python${v}" \
+                      | grep Version \
+                      | head -n1 \
+                      | awk '{ print $2 }' \
+                )
+                echo -n ":"
+                apt-cache show "python${v}" \
+                    | grep Version \
+                    | head -n1 \
+                    | awk '{ print $2 }' \
+                    | sed -E 's/[~][0-9]+(\.[0-9]+)?$//' \
+                    | sed -E 's/-([0-9]+)$/-r\1/' \
+                    | sed -E 's/-r$//' \
+                    | sed -E 's/~a([0-9]+)/-alpha\1/' \
+                    | sed -E 's/~b([0-9]+)/-beta\1/' \
+                    | sed -E 's/~rc([0-9]+)/-rc\1/'
+            done
+EOF
+}
+
+versions=$(getLatestVersions)
+
+if [ -z "$versions" ]; then
+    exit 255
+fi
+
+for v in $versions; do
+    tag_version=$(echo "$v" | cut -f1 -d':')
+    python_version=$(echo "$v" | cut -f2 -d':')
+    label_versions=$(echo "$v" | cut -f3 -d':')
+
+    {
+      echo "PYTHON_VERSION=$python_version"
+      echo "PYTHON_MAJOR_MINOR_VERSION=${python_version:0:3}"
+      echo "PYTHON_MAJOR_VERSION=${python_version:0:1}"
+      echo "LABEL_VERSION=$label_versions"
+    } \
+      > "build${tag_version}.properties"
+done
