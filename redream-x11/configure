@@ -23,8 +23,7 @@ EOF
 
 getProperties() {
     local downloadLinks=$(getDownloadLinks)
-    local stableLink=$(echo "$downloadLinks" | head -n1)
-    local latestLink=$(echo "$downloadLinks" | head -n2 | tail -n1)
+    local latestLink=$(echo "$downloadLinks" | sort -rV | head -n1)
 
     local REDREAM_VERSION=$(echo "$latestLink" | sed -E 's/.+linux-v([^"'"'"']+)\.tar\.gz/\1/')
     local LABEL_VERSION=$(echo "$REDREAM_VERSION" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]+)(-([0-9]+))?.*/\1-r\3/' | sed -E 's/-r$//')
