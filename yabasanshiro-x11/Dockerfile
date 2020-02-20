@@ -29,9 +29,6 @@ RUN git clone https://github.com/devmiyax/yabause.git \
  && git checkout "$YABAUSE_VERSION"
 
 RUN cd yabause \
- && sed -i -E 's/if ?\( ?! ?ANDROID\)/if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")/' yabause/src/CMakeLists.txt \
- && sed -i 's/-std=c11/-std=gnu99/' yabause/src/CMakeLists.txt \
- && sed -i 's/${CMAKE_STATIC_LIBRARY_PREFIX}/${BINARY_DIR}\/lib/' yabause/CMake/Packages/external_libchdr.cmake \
  && mkdir build \
  && cd build \
  && cmake ../yabause \
