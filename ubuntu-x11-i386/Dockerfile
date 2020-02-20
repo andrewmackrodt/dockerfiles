@@ -30,6 +30,7 @@ RUN dpkg --add-architecture i386 \
       libcanberra-gtk3-module:i386 \
       libgl1-mesa-dri:i386 \
       libgl1-mesa-glx:i386 \
+      libnotify-bin:i386 \
       rtkit:i386 \
       pulseaudio:i386 \
  && rm -rf /var/lib/apt/lists/*

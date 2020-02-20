@@ -25,8 +25,8 @@ experience the web.
 **† NVidia driver note**
 
 libnvidia-gl-390 is provided in the image, being the current supported version
-in the latest Ubuntu LTS release. The host driver version will be checked the
-first time a container is started and if there is a version mismatch, an attempt
+in the latest Ubuntu LTS release. The host driver version will be checked every
+time the container is started and if there is a version mismatch, an attempt
 to install the correct driver in the container will be made unless:
 
 1. Any of the following directories are present: `/usr/local/nvidia/lib`,

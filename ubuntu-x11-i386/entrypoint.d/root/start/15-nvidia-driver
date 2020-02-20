@@ -63,8 +63,10 @@ if [ "$HOST_DRIVER_VERSION" = "$CONTAINER_DRIVER_VERSION" ]; then
     exit
 fi
 
-echo "NVidia driver mismatch Host($HOST_DRIVER_VERSION) <=> Container($CONTAINER_DRIVER_VERSION)" >&2
-echo "Automatic driver match will be attempted ..."
+{
+    echo "NVidia driver mismatch Host($HOST_DRIVER_VERSION) <=> Container($CONTAINER_DRIVER_VERSION)"
+    echo "Automatic driver match will be attempted ..."
+} | tee /dev/stderr | sudo -E -u \#${PUID:-1000} notify-send -u critical -i error "$(cat -)"
 
 HOST_DRIVER_MAJOR_VERSION=$(echo "$HOST_DRIVER_VERSION" | sed -E 's/\..+//')
 
@@ -73,7 +75,7 @@ export DEBIAN_FRONTEND=noninteractive
 # update package lists
 apt-get update -qq
 
-PACKAGE_NAME="libnvidia-gl-$HOST_DRIVER_MAJOR_VERSION"
+PACKAGE_NAME="libnvidia-gl-$HOST_DRIVER_MAJOR_VERSION:i386"
 
 PACKAGE_VERSION=$( \
     apt-cache madison "$PACKAGE_NAME" \
@@ -83,21 +85,23 @@ PACKAGE_VERSION=$( \
     )
 
 if [ -z "$PACKAGE_VERSION" ]; then
-    echo "Failed to locate a package with the same driver version" >&2
-    echo ""
-    echo "X11 apps may fail; mount drivers from your host as a volume" >&2
-    echo "and set LD_LIBRARY_PATH to include the volume" >&2
+    {
+        echo "Failed to locate a package with the same driver version"
+        echo ""
+        echo "X11 apps may fail; mount drivers from your host as a volume"
+        echo "and set LD_LIBRARY_PATH to include the volume"
+    } | tee /dev/stderr | sudo -E -u \#${PUID:-1000} notify-send -u critical -i error "$(cat -)"
 
     exit
 fi
 
 CONTAINER_DRIVER_MAJOR_VERSION=$(echo "$CONTAINER_DRIVER_VERSION" | sed -E 's/\..+//')
-PURGE_PACKAGE_NAME="libnvidia-gl-$CONTAINER_DRIVER_MAJOR_VERSION"
+PURGE_PACKAGE_NAME="libnvidia-gl-$CONTAINER_DRIVER_MAJOR_VERSION:i386"
 
-echo "Removing old package $PURGE_PACKAGE_NAME ..."
+echo "Removing old package $PURGE_PACKAGE_NAME ..." >&2
 apt-get purge -qqy --auto-remove "$PURGE_PACKAGE_NAME" >/dev/null
 
-echo "Installing package $PACKAGE_NAME=$PACKAGE_VERSION ..."
+echo "Installing package $PACKAGE_NAME=$PACKAGE_VERSION ..." >&2
 apt-get install -qqy --no-install-recommends "$PACKAGE_NAME=$PACKAGE_VERSION" >/dev/null
 
 rm -rf /var/lib/apt/lists/*

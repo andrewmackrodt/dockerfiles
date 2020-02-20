@@ -29,6 +29,7 @@ RUN apt-get update -qq \
       libcanberra-gtk3-module \
       libgl1-mesa-dri \
       libgl1-mesa-glx \
+      libnotify-bin \
       rtkit \
       pulseaudio \
  && rm -rf /var/lib/apt/lists/*
