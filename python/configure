@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FROM=andrewmackrodt/$(basename "$(pwd)")
+FROM=andrewmackrodt/ubuntu
 
 parseBuildVersions() {
     if yq --help | grep -q kislyuk; then
