@@ -17,7 +17,8 @@ if [ "$(id -u)" != "0" ]; then
 
     for arg in "$@"; do
         # use printf, echo skips args beginning with hyphen '-'
-        printf '%s\n' "$arg"
+        printf %s "$arg" | base64 -w0
+        printf '\n'
     done | tac > ~/.entrypoint.txt
 
     exec sudo -EH "$0"
@@ -30,7 +31,7 @@ if [ $# -eq 0 \
  ]; then
 
     while IFS='' read -r arg; do
-        set -- "$arg" "$@"
+        set -- "$(printf %s "$arg" | base64 -d)" "$@"
     done <"/home/${SUDO_USER}/.entrypoint.txt"
 
     rm "/home/${SUDO_USER}/.entrypoint.txt"
