@@ -40,7 +40,7 @@ getLatestVersions() {
                     | grep Version \
                     | head -n1 \
                     | awk '{ print $2 }' \
-                    | sed -E 's/[~][0-9]+(\.[0-9]+)?$//' \
+                    | sed -E 's/[~][0-9]+(\.[0-9]+)(ubuntu\d*)?$//' \
                     | sed -E 's/-([0-9]+)$/-r\1/' \
                     | sed -E 's/-r$//' \
                     | sed -E 's/~a([0-9]+)/-alpha\1/' \
@@ -59,7 +59,7 @@ fi
 for v in $versions; do
     tag_version=$(echo "$v" | cut -f1 -d':')
     python_version=$(echo "$v" | cut -f2 -d':')
-    label_versions=$(echo "$v" | cut -f3 -d':')
+    label_versions=$(echo "$v" | cut -f3 -d':' | sed -E "s/~.+//")
 
     {
       echo "PYTHON_VERSION=$python_version"
