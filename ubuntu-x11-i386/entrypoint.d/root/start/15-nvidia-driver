@@ -47,7 +47,12 @@ if [ -z "$HOST_DRIVER_VERSION" ]; then
     exit
 fi
 
-CONTAINER_DRIVER_VERSION=$(dpkg -l | grep libnvidia-gl | awk '{ print $3 }' | sed -nE 's/^([0-9]+(\.[0-9]+)?).*/\1/p')
+CONTAINER_DRIVER_VERSION=$( \
+    dpkg -l \
+        | grep libnvidia-gl \
+        | awk '{ print $3 }' \
+        | sed -nE 's/^([0-9]+(\.[0-9]+)?).*/\1/p' \
+    )
 
 if [ -z "$CONTAINER_DRIVER_VERSION" ]; then
     echo "Unable to detect container nvidia driver version" >&2
@@ -77,22 +82,41 @@ apt-get update -qq
 
 PACKAGE_NAME="libnvidia-gl-$HOST_DRIVER_MAJOR_VERSION:i386"
 
-PACKAGE_VERSION=$( \
+MAJOR_PACKAGE_APT_VERSIONS=$( \
     apt-cache madison "$PACKAGE_NAME" \
-        | grep "$HOST_DRIVER_VERSION" \
-        | head -n1 \
         | awk '{ print $3 }' \
+        | sort -rV
     )
 
-if [ -z "$PACKAGE_VERSION" ]; then
+PACKAGE_APT_VERSION=$( \
+    echo "$MAJOR_PACKAGE_APT_VERSIONS" \
+        | grep "$HOST_DRIVER_VERSION" \
+        | head -n1 \
+    )
+
+if [ -z "$PACKAGE_APT_VERSION" ]; then
+    PACKAGE_APT_VERSION=$(echo "$MAJOR_PACKAGE_APT_VERSIONS" | head -n1)
+
     {
         echo "Failed to locate a package with the same driver version"
-        echo ""
+        if [ ! -z "$PACKAGE_APT_VERSION" ]; then
+            if [ "$PACKAGE_VERSION" != "$CONTAINER_DRIVER_VERSION" ]; then
+                echo "The latest package will be installed $PACKAGE_NAME=$PACKAGE_APT_VERSION" >&2
+            fi
+        fi
         echo "X11 apps may fail; mount drivers from your host as a volume"
         echo "and set LD_LIBRARY_PATH to include the volume"
     } | tee /dev/stderr | sudo -E -u \#${PUID:-1000} notify-send -u critical -i error "$(cat -)"
 
-    exit
+    if [ -z "$PACKAGE_APT_VERSION" ]; then
+        exit
+    fi
+
+    PACKAGE_VERSION=$(echo "$PACKAGE_APT_VERSION" | sed -nE 's/^([0-9]+(\.[0-9]+)?).*/\1/p')
+
+    if [ "$PACKAGE_VERSION" = "$CONTAINER_DRIVER_VERSION" ]; then
+        exit
+    fi
 fi
 
 CONTAINER_DRIVER_MAJOR_VERSION=$(echo "$CONTAINER_DRIVER_VERSION" | sed -E 's/\..+//')
@@ -101,7 +125,7 @@ PURGE_PACKAGE_NAME="libnvidia-gl-$CONTAINER_DRIVER_MAJOR_VERSION:i386"
 echo "Removing old package $PURGE_PACKAGE_NAME ..." >&2
 apt-get purge -qqy --auto-remove "$PURGE_PACKAGE_NAME" >/dev/null
 
-echo "Installing package $PACKAGE_NAME=$PACKAGE_VERSION ..." >&2
-apt-get install -qqy --no-install-recommends "$PACKAGE_NAME=$PACKAGE_VERSION" >/dev/null
+echo "Installing package $PACKAGE_NAME=$PACKAGE_APT_VERSION ..." >&2
+apt-get install -qqy --no-install-recommends "$PACKAGE_NAME=$PACKAGE_APT_VERSION" >/dev/null
 
 rm -rf /var/lib/apt/lists/*
