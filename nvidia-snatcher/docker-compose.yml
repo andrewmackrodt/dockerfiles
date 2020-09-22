@@ -1,0 +1,17 @@
+---
+version: "2.1"
+
+services:
+  chromium:
+    image: andrewmackrodt/nvidia-snatcher
+    cap_add:
+      - SYS_ADMIN
+    network_mode: host
+    environment:
+      - DISPLAY=unix$DISPLAY
+      - LANG=${LANG:-en_US.UTF-8}
+      - PGID=${UID:-1000}
+      - PUID=${UID:-1000}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
