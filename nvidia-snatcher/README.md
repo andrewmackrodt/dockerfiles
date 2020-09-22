@@ -19,6 +19,20 @@
 ### docker
 
 ```
+# run the snatcher using uk stores without containerized chromium window 
+docker run --rm -it \
+  --network=host \
+  -e "COUNTRY=great_britain" \
+  -e "DISPLAY=unix$DISPLAY" \
+  -e "LANG=${LANG:-en_US.UTF-8}" \
+  -e "PGID=$(id -g)" \
+  -e "PUID=$(id -u)" \
+  -e "STORES=nvidia,overclockers,scan,ebuyer,novatech,box" \
+  -e "TRUSTED=true" \
+  -v "/etc/localtime:/etc/localtime:ro" \
+  -v "/tmp/.X11-unix:/tmp/.X11-unix:ro" \
+  andrewmackrodt/nvidia-snatcher
+
 # run the snatcher without containerized chromium window 
 docker run --rm -it \
   --network=host \

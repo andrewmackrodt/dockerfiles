@@ -8,10 +8,12 @@ services:
       - SYS_ADMIN
     network_mode: host
     environment:
+      - COUNTRY=great_britain
       - DISPLAY=unix$DISPLAY
       - LANG=${LANG:-en_US.UTF-8}
       - PGID=${UID:-1000}
       - PUID=${UID:-1000}
+      - STORES=nvidia,overclockers,scan,ebuyer,novatech,box
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:ro

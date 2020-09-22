@@ -4,7 +4,7 @@ FROM=andrewmackrodt/nodejs-chromium
 
 getLatestVersion() {
     docker run -i --rm --entrypoint=/bin/bash "$FROM" <<'EOF'
-        commit=$(wget -qO- https://api.github.com/repos/andrewmackrodt/nvidia-snatcher/commits/main)
+        commit=$(wget -qO- https://api.github.com/repos/andrewmackrodt/nvidia-snatcher/commits/master)
         commit_sha=$(echo "$commit" | jq -r '.sha' 2>/dev/null)
 
         echo "COMMIT_SHA=$commit_sha"
