@@ -13,9 +13,9 @@ RUN git clone https://github.com/andrewmackrodt/nvidia-snatcher \
 
 WORKDIR /home/ubuntu/nvidia-snatcher
 
-RUN npm ci
-
-RUN npm run build
+RUN npm ci \
+ && npm run build \
+ && npm ci --only=production
 
 ################################################################################
 # Stage 2 : Package
@@ -23,19 +23,37 @@ RUN npm run build
 
 FROM andrewmackrodt/nodejs-chromium
 
-COPY --from=build --chown=ubuntu:ubuntu /home/ubuntu/nvidia-snatcher/build/ /home/ubuntu/nvidia-snatcher/
-COPY --from=build --chown=ubuntu:ubuntu /home/ubuntu/nvidia-snatcher/package.json /home/ubuntu/nvidia-snatcher/package.json
-COPY --from=build --chown=ubuntu:ubuntu /home/ubuntu/nvidia-snatcher/package-lock.json /home/ubuntu/nvidia-snatcher/package-lock.json
+COPY --from=build \
+  /home/ubuntu/nvidia-snatcher/package.json \
+  /home/ubuntu/nvidia-snatcher/package-lock.json \
+  /home/ubuntu/nvidia-snatcher/build/ \
+  /opt/nvidia-snatcher/
 
-# todo remove when repository dependencies are fixed
-COPY --from=build --chown=ubuntu:ubuntu /home/ubuntu/nvidia-snatcher/node_modules/ /home/ubuntu/nvidia-snatcher/node_modules/
+COPY --from=build \
+  /home/ubuntu/nvidia-snatcher/node_modules/ \
+  /opt/nvidia-snatcher/node_modules/
 
-WORKDIR /home/ubuntu/nvidia-snatcher
+COPY nvidia-snatcher /usr/local/bin/nvidia-snatcher
 
-# todo restore when repository dependencies are fixed
-#RUN npm ci --only=production
+USER root
 
-CMD ["--", "index.js"]
+RUN mkdir /data \
+ && chown ubuntu:adm /data \
+ && chmod 2770 /data
+
+USER ubuntu
+
+WORKDIR /opt/nvidia-snatcher
+
+VOLUME /data
+
+ENV USER_DIRS /data${USER_DIRS:+:$USER_DIRS}
+
+ENV ENTRYPOINT0 /usr/local/bin/nvidia-snatcher
+
+################################################################################
+# labels
+################################################################################
 
 ARG LABEL_NAME
 ARG LABEL_VERSION

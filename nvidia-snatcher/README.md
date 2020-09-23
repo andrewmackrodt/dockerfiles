@@ -22,13 +22,13 @@
 # run the snatcher using uk stores without containerized chromium window 
 docker run --rm -it \
   --network=host \
+  -e "BROWSER_TRUSTED=true" \
   -e "COUNTRY=great_britain" \
   -e "DISPLAY=unix$DISPLAY" \
   -e "LANG=${LANG:-en_US.UTF-8}" \
   -e "PGID=$(id -g)" \
   -e "PUID=$(id -u)" \
   -e "STORES=nvidia,overclockers,scan,ebuyer,novatech,box" \
-  -e "TRUSTED=true" \
   -v "/etc/localtime:/etc/localtime:ro" \
   -v "/tmp/.X11-unix:/tmp/.X11-unix:ro" \
   andrewmackrodt/nvidia-snatcher
@@ -36,11 +36,11 @@ docker run --rm -it \
 # run the snatcher without containerized chromium window 
 docker run --rm -it \
   --network=host \
+  -e "BROWSER_TRUSTED=true" \
   -e "DISPLAY=unix$DISPLAY" \
   -e "LANG=${LANG:-en_US.UTF-8}" \
   -e "PGID=$(id -g)" \
   -e "PUID=$(id -u)" \
-  -e "TRUSTED=true" \
   -v "/etc/localtime:/etc/localtime:ro" \
   -v "/tmp/.X11-unix:/tmp/.X11-unix:ro" \
   andrewmackrodt/nvidia-snatcher
@@ -67,3 +67,8 @@ See https://github.com/jef/nvidia-snatcher#customization.
 | `-e PUID=1000` | The user id, recommended: `$(id -u)` |
 | `-e PGID=1000` | The group id, recommended: `$(id -g)` |
 | `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
+| `-e TZ=UTC` | The timezone, e.g. "Europe/London" |
+| `-e BROWSER_TRUSTED=false` | Set to "true" to allow running without `--cap-add=SYS_ADMIN` |
+| `-e COUNTRY=usa` | The region to query when using the nvidia store |
+| `-e STORES=nvidia` | Comma-separated list of stores to check |
+| `-v /data` | Screenshots directory |
