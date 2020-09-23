@@ -24,25 +24,22 @@ docker run --rm -it \
   --network=host \
   -e "BROWSER_TRUSTED=true" \
   -e "COUNTRY=great_britain" \
-  -e "DISPLAY=unix$DISPLAY" \
   -e "LANG=${LANG:-en_US.UTF-8}" \
   -e "PGID=$(id -g)" \
   -e "PUID=$(id -u)" \
   -e "STORES=nvidia,overclockers,scan,ebuyer,novatech,box" \
   -v "/etc/localtime:/etc/localtime:ro" \
-  -v "/tmp/.X11-unix:/tmp/.X11-unix:ro" \
   andrewmackrodt/nvidia-snatcher
 
 # run the snatcher without containerized chromium window 
 docker run --rm -it \
   --network=host \
   -e "BROWSER_TRUSTED=true" \
-  -e "DISPLAY=unix$DISPLAY" \
   -e "LANG=${LANG:-en_US.UTF-8}" \
+  -e "OPEN_BROWSER=false" \
   -e "PGID=$(id -g)" \
   -e "PUID=$(id -u)" \
   -v "/etc/localtime:/etc/localtime:ro" \
-  -v "/tmp/.X11-unix:/tmp/.X11-unix:ro" \
   andrewmackrodt/nvidia-snatcher
 
 # run the snatcher with containerized chromium window forwarded using X11 
