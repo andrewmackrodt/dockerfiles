@@ -5,7 +5,7 @@ WORKDIR /root
 
 # install libspotify
 RUN wget -q -O libspotify-12.1.51-Linux-x86_64-release.tar.gz "https://raw.githubusercontent.com/mopidy/libspotify-archive/master/libspotify-12.1.51-Linux-x86_64-release.tar.gz" \
- && tar zxf libspotify-12.1.51-Linux-x86_64-release.tar.gz -C /opt \
+ && tar zxfh libspotify-12.1.51-Linux-x86_64-release.tar.gz -C /opt \
  && rm -f libspotify-12.1.51-Linux-x86_64-release.tar.gz \
  && cd /opt/libspotify-12.1.51-Linux-x86_64-release \
  && make install prefix=/usr/local \

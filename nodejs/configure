@@ -11,7 +11,7 @@ parseBuildVersions() {
 }
 
 getLatestVersion() {
-    echo 'getting latest nodejs release for $1 ...' >&2
+    echo "getting latest nodejs release for $1 ..." >&2
 
     docker run -i --rm \
         --user root \

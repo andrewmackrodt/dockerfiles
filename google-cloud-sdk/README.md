@@ -12,7 +12,7 @@
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/google-cloud-sdk/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/google-cloud-sdk/tags
 
-[google-cloud-sdk](https://cloud.google.com/sdk/) based on Ubuntu 18.04.
+[google-cloud-sdk](https://cloud.google.com/sdk/) based on Ubuntu 20.04.
 
 See [andrewmackrodt/ubuntu](https://github.com/andrewmackrodt/dockerfiles/tree/master/ubuntu)
 for more details.

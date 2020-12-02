@@ -14,14 +14,17 @@ RUN apt-get update -qq \
       python${PYTHON_MAJOR_MINOR_VERSION}=${PYTHON_VERSION} \
       python${PYTHON_MAJOR_MINOR_VERSION}-dev \
       $( \
-          if [ "${PYTHON_MAJOR_VERSION}" = "2" ]; then \
-            echo python-pip ; \
-          else \
+          if [ "${PYTHON_MAJOR_VERSION}" -gt "2" ]; then \
             echo python${PYTHON_MAJOR_VERSION}-pip ; \
           fi \
         ) \
       git \
  && rm -rf /var/lib/apt/lists/*
+
+# manually install pip if python2
+RUN if [ "${PYTHON_MAJOR_VERSION}" = "2" ]; then \
+      wget -qO- https://bootstrap.pypa.io/get-pip.py | python${PYTHON_MAJOR_MINOR_VERSION} ; \
+    fi
 
 # set PYTHON_MAJOR_VERSION as default
 RUN update-alternatives --install /usr/bin/python${PYTHON_MAJOR_VERSION} python${PYTHON_MAJOR_VERSION} /usr/bin/python${PYTHON_MAJOR_MINOR_VERSION} 10 \

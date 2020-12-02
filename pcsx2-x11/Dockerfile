@@ -26,7 +26,6 @@ RUN apt-get update -qq \
         ) \
       libcap2-bin \
       locales \
-      rtkit \
       unzip \
  && rm -rf /var/lib/apt/lists/*
 

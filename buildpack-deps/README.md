@@ -12,8 +12,8 @@
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/buildpack-deps/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/buildpack-deps/tags
 
-[Ubuntu](https://www.ubuntu.com/) 18.04 (Bionic) base image with build dependencies.
-Includes packages from the [official](https://github.com/docker-library/buildpack-deps/blob/ff09b5c5288f4643056bd7938268d749e9f8a2db/bionic/Dockerfile)
+[Ubuntu](https://www.ubuntu.com/) 20.04 (Focal) base image with build dependencies.
+Includes packages from the [official](https://github.com/docker-library/buildpack-deps/blob/65d69325ad741cea6dee20781c1faaab2e003d87/ubuntu/focal/Dockerfile)
 ubuntu buildpack-deps image.
 
 See [andrewmackrodt/docker-ubuntu](https://github.com/andrewmackrodt/dockerfiles/tree/master/ubuntu)

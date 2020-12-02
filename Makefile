@@ -12,6 +12,7 @@ build:
 	cd firebase-tools; make build
 	cd ubuntu-x11; make build
 	cd ubuntu-x11-i386; make build
+	cd smplayer-x11; make build
 	cd firefox-x11; make build
 	cd chromium-x11; make build
 	cd spotify-x11; make build
@@ -34,6 +35,7 @@ push:
 	cd firebase-tools; make push
 	cd ubuntu-x11; make push
 	cd ubuntu-x11-i386; make push
+	cd smplayer-x11; make push
 	cd firefox-x11; make push
 	cd chromium-x11; make push
 	cd spotify-x11; make push
@@ -56,6 +58,7 @@ release:
 	cd firebase-tools; make build && make push
 	cd ubuntu-x11; make build && make push
 	cd ubuntu-x11-i386; make build && make push
+	cd smplayer-x11; make build && make push
 	cd firefox-x11; make build && make push
 	cd chromium-x11; make build && make push
 	cd spotify-x11; make build && make push
@@ -78,6 +81,7 @@ docs:
 	cd firebase-tools; make docs
 	cd ubuntu-x11; make docs
 	cd ubuntu-x11-i386; make docs
+	cd smplayer-x11; make docs
 	cd firefox-x11; make docs
 	cd chromium-x11; make docs
 	cd spotify-x11; make docs
@@ -100,6 +104,7 @@ clean:
 	cd firebase-tools; make clean
 	cd ubuntu-x11; make clean
 	cd ubuntu-x11-i386; make clean
+	cd smplayer-x11; make clean
 	cd firefox-x11; make clean
 	cd chromium-x11; make clean
 	cd spotify-x11; make clean

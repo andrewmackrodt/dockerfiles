@@ -19,20 +19,7 @@ RUN apt-get update -qq \
         ) \
  && rm -rf /var/lib/apt/lists/*
 
-ARG LABEL_NAME
 ARG LABEL_VERSION
-ARG LABEL_USAGE
-ARG LABEL_VENDOR
-ARG LABEL_VCS_URL
-ARG LABEL_VCS_REF
-
-LABEL org.label-schema.name="$LABEL_NAME" \
-  org.label-schema.version="$LABEL_VERSION" \
-  org.label-schema.usage="$LABEL_USAGE" \
-  org.label-schema.vendor="$LABEL_VENDOR" \
-  org.label-schema.vcs-url="$LABEL_VCS_URL" \
-  org.label-schema.vcs-ref="$LABEL_VCS_REF" \
-  org.label-schema.schema-version="1.0"
 
 # install chromium-browser
 RUN apt-get update -qq \
@@ -45,3 +32,21 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 USER ubuntu
 WORKDIR /home/ubuntu
+
+################################################################################
+# labels
+################################################################################
+
+ARG LABEL_NAME
+ARG LABEL_USAGE
+ARG LABEL_VENDOR
+ARG LABEL_VCS_URL
+ARG LABEL_VCS_REF
+
+LABEL org.label-schema.name="$LABEL_NAME" \
+  org.label-schema.version="$LABEL_VERSION" \
+  org.label-schema.usage="$LABEL_USAGE" \
+  org.label-schema.vendor="$LABEL_VENDOR" \
+  org.label-schema.vcs-url="$LABEL_VCS_URL" \
+  org.label-schema.vcs-ref="$LABEL_VCS_REF" \
+  org.label-schema.schema-version="1.0"

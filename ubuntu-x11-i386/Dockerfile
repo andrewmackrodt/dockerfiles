@@ -31,7 +31,7 @@ RUN dpkg --add-architecture i386 \
       libgl1-mesa-dri:i386 \
       libgl1-mesa-glx:i386 \
       libnotify-bin:i386 \
-      rtkit:i386 \
+      rtkit \
       pulseaudio:i386 \
  && rm -rf /var/lib/apt/lists/*
 
@@ -40,7 +40,7 @@ RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends software-properties-common \
  && add-apt-repository -y ppa:graphics-drivers/ppa \
  && apt-get purge -qqy --auto-remove software-properties-common \
- && apt-get install -qqy --no-install-recommends libnvidia-gl-390:i386 \
+ && apt-get install -qqy --no-install-recommends libnvidia-gl-455:i386 \
  && rm -rf /var/lib/apt/lists/*
 
 # copy files to the container

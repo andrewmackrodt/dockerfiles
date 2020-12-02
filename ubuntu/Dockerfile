@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ARG LABEL_NAME
 ARG LABEL_VERSION
@@ -45,9 +45,9 @@ RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
 # add s6-overlay
 RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -q -O /tmp/release.json "https://api.github.com/repos/just-containers/s6-overlay/releases/latest" \
- && grep -E '"browser_download_url":.+'$ARCH'' /tmp/release.json | grep -v -E ".(asc|sig)" | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
+ && grep -E '"browser_download_url":.+'$ARCH'\.tar\.gz' /tmp/release.json | grep -v -E ".(asc|sig)" | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
  && wget -q -O s6-overlay.tar.gz "$(cat /tmp/release.txt)" \
- && tar zxf s6-overlay.tar.gz -C / \
+ && tar zxfh s6-overlay.tar.gz -C / \
  && rm -f /tmp/release.* s6-overlay.tar.gz
 
 # allow passwordless sudo to entrypoint

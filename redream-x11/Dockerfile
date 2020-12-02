@@ -14,7 +14,7 @@ ARG REDREAM_VERSION
 
 # install redream to /opt/redream
 RUN wget -qO- "https://redream.io/download/redream.x86_64-linux-v$REDREAM_VERSION.tar.gz" > redream.tar.gz \
- && tar zxf redream.tar.gz -C /opt/redream \
+ && tar zxfh redream.tar.gz -C /opt/redream \
  && rm -f redream.tar.gz \
  && chown -R ubuntu:adm /opt/redream \
  && chmod -R g+w /opt/redream

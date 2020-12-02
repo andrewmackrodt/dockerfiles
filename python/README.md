@@ -20,17 +20,17 @@ or glue language to connect existing components together.
 
 ## Versions
 
-Python `3.7` is tagged as `latest`. Images for versions `2.7` and`3.6` are also provided:
+Python `3.9` is tagged as `latest`. Images for versions `2.7` and`3.8` are also provided:
 
-- `andrewmackrodt/python:2.7` security (end-of-life: 2020-01-01)
-- `andrewmackrodt/python:3.6` bugfix (end-of-life: 2021-12-23)
-- `andrewmackrodt/python:3.7` bugfix (end-of-life: 2023-06-27)
+- <strike>`andrewmackrodt/python:2.7` security (end-of-life: 2020-01-01)</strike>
+- `andrewmackrodt/python:3.8` bugfix (end-of-life: 2024-10-14)
+- `andrewmackrodt/python:3.9` bugfix (end-of-life: 2025-10-05)
 
 **Update Schedule**
 
 Images are built nightly and images will be updated as new `major.minor.patch-release`
 packages of PYTHON are released. It's possible to pull a specific tag, e.g.
-`docker pull andrewmackrodt/python:3.7.5-r2`, see [Docker Hub][hub] for a list of
+`docker pull andrewmackrodt/python:3.9.0-r5`, see [Docker Hub][hub] for a list of
 supported tags.
 
 [hub]: https://hub.docker.com/r/andrewmackrodt/python/tags

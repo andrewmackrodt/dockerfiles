@@ -1,6 +1,6 @@
 # [andrewmackrodt/dockerfiles](https://github.com/andrewmackrodt/dockerfiles)
 
-Dockerfiles based on Ubuntu 18.04 (Bionic).
+Dockerfiles based on Ubuntu 20.04 (Focal).
 
 ## Features
 

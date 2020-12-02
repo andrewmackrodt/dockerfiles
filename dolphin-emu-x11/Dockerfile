@@ -9,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       software-properties-common \
- && add-apt-repository -y ppa:dolphin-emu/ppa \
+ && add-apt-repository -y ppa:drewwalton19216801/dolphin-master-cosmic \
  && apt-get purge -qqy --auto-remove \
       software-properties-common \
  && rm -rf /var/lib/apt/lists/*

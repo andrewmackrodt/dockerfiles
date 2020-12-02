@@ -12,7 +12,7 @@
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/ubuntu-x11-i386/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/ubuntu-x11-i386/tags
 
-[Ubuntu](https://www.ubuntu.com/) 18.04 (Bionic) base image for i386 X11 applications.
+[Ubuntu](https://www.ubuntu.com/) 20.04 (Focal) base image for i386 X11 applications.
 
 See [andrewmackrodt/docker-ubuntu](https://github.com/andrewmackrodt/dockerfiles/tree/master/ubuntu)
 for more details.
@@ -28,7 +28,7 @@ for more details.
 
 **† NVidia driver note**
 
-libnvidia-gl-390 is provided in the image, being the current supported version
+libnvidia-gl-455 is provided in the image, being the current supported version
 in the latest Ubuntu LTS release. The host driver version will be checked every
 time the container is started and if there is a version mismatch, an attempt
 to install the correct driver in the container will be made unless:

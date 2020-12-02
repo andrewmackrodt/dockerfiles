@@ -12,7 +12,7 @@
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/ubuntu/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/ubuntu/tags
 
-[Ubuntu](https://www.ubuntu.com/) 18.04 (Bionic) base image.
+[Ubuntu](https://www.ubuntu.com/) 20.04 (Focal) base image.
 
 ## Features
 

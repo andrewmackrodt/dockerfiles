@@ -18,20 +18,21 @@ everything from your blog to the most popular websites in the world.
 
 ## Versions
 
-PHP `7.4` is tagged as `latest`. Images for versions `5.6`, `7.0`, `7.1`, `7.2` and `7.3` are also provided:
+PHP `8.0` is tagged as `latest`. Images for versions `5.6`, `7.0`, `7.1`, `7.2`, `7.3` and `7.4` are also provided:
 
 - <strike>`andrewmackrodt/php:5.6` Legacy (end-of-life: 2018-12-31)</strike>
 - <strike>`andrewmackrodt/php:7.0` Legacy (end-of-life: 2018-12-03)</strike>
 - <strike>`andrewmackrodt/php:7.1` Legacy (end-of-life: 2019-12-01)</strike>
-- `andrewmackrodt/php:7.2` Supported (end-of-life: 2020-11-30)
+- <strike>`andrewmackrodt/php:7.2` Legacy (end-of-life: 2020-11-30)</strike>
 - `andrewmackrodt/php:7.3` Supported (end-of-life: 2021-12-06)
-- `andrewmackrodt/php:7.4` Latest (end-of-life: 2022-12-00)
+- `andrewmackrodt/php:7.4` Supported (end-of-life: 2022-11-28)
+- `andrewmackrodt/php:8.0` Latest (end-of-life: 2023-11-26)
 
 **Update Schedule**
 
 Images are built nightly and images will be updated as new `major.minor.patch-release`
 packages of PHP are released. It's possible to pull a specific tag, e.g.
-`docker pull andrewmackrodt/php:7.3.5-r1`, see [Docker Hub][hub] for a list of
+`docker pull andrewmackrodt/php:7.3.24-r3`, see [Docker Hub][hub] for a list of
 supported tags.
 
 [hub]: https://hub.docker.com/r/andrewmackrodt/php/tags

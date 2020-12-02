@@ -29,7 +29,7 @@ VOLUME /config
 ENV USER_DIRS /config${USER_DIRS:+:$USER_DIRS}
 
 # set the secondary entrypoint
-ENV ENTRYPOINT0 /home/ubuntu/node_modules/bin/firebase
+ENV ENTRYPOINT0 /home/ubuntu/.local/lib/node_modules/bin/firebase
 
 ################################################################################
 # labels

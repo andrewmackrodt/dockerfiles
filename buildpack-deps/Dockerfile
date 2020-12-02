@@ -20,8 +20,8 @@ WORKDIR /root
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# adapted from [buildpack-deps:bionic](https://hub.docker.com/_/buildpack-deps/)
-# @see https://github.com/docker-library/buildpack-deps/blob/ff09b5c/bionic/Dockerfile
+# adapted from [buildpack-deps:focal](https://hub.docker.com/_/buildpack-deps/)
+# @see https://github.com/docker-library/buildpack-deps/blob/65d6932/ubuntu/focal/Dockerfile
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       autoconf \
@@ -39,7 +39,6 @@ RUN apt-get update -qq \
       libevent-dev \
       libffi-dev \
       libgdbm-dev \
-      libgeoip-dev \
       libglib2.0-dev \
       libgmp-dev \
       libjpeg-turbo8-dev \
@@ -47,6 +46,7 @@ RUN apt-get update -qq \
       liblzma-dev \
       libmagickcore-dev \
       libmagickwand-dev \
+      libmaxminddb-dev \
       libmysqlclient-dev \
       libncurses5-dev \
       libncursesw5-dev \

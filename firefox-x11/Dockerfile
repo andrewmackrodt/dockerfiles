@@ -15,7 +15,7 @@ RUN apt-get update -qq \
             | awk '{ print $1 }' \
             | grep . \
         ) \
-      libavcodec57 \
+      libavcodec58 \
       libdbusmenu-gtk3-4 \
  && rm -rf /var/lib/apt/lists/*
 

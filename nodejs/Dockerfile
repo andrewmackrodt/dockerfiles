@@ -17,10 +17,12 @@ ENV ENTRYPOINT0 /usr/bin/node
 USER ubuntu
 WORKDIR /home/ubuntu
 
-RUN npm config set prefix $HOME/node_modules
+RUN mkdir -p $HOME/.local/lib \
+ && npm config set prefix $HOME/.local
+
 RUN npm install -g yarn
 
-ENV PATH /home/ubuntu/node_modules/bin:$PATH
+ENV PATH /home/ubuntu/.local/lib/node_modules/bin:$PATH
 
 ################################################################################
 # labels

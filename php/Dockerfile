@@ -35,7 +35,11 @@ RUN apt-get update -qq \
       php${PHP_VERSION}-igbinary \
       php${PHP_VERSION}-imap \
       php${PHP_VERSION}-intl \
-      php${PHP_VERSION}-json \
+      $( \
+          if ! [ "${PHP_VERSION}" = "$(/bin/echo -e "${PHP_VERSION}\n8.0" | sort -V | head -n1)" ]; then \
+            echo php${PHP_VERSION}-json ; \
+          fi \
+        ) \
       php${PHP_VERSION}-mbstring \
       php${PHP_VERSION}-memcached \
       php${PHP_VERSION}-mysql \
