@@ -1,4 +1,4 @@
-FROM andrewmackrodt/nodejs
+FROM andrewmackrodt/nodejs:lts
 
 USER root
 WORKDIR /root

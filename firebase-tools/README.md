@@ -12,7 +12,7 @@
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/firebase-tools/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/firebase-tools/tags
 
-[Node.js](https://nodejs.org/) 12.x image with [npm](https://www.npmjs.com/),
+[Node.js](https://nodejs.org/) 14.x image with [npm](https://www.npmjs.com/),
 [firebase-tools](https://firebase.google.com/docs/cli/).
 
 See [andrewmackrodt/docker-nodejs](https://github.com/andrewmackrodt/dockerfiles/tree/master/nodejs)
