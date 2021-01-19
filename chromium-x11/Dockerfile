@@ -5,6 +5,13 @@ WORKDIR /root
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# pin chromium-browser package from bionic-updates
+# https://askubuntu.com/a/1286743/170380
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe" > /etc/apt/sources.list.d/bionic-updates.list \
+ && echo "Package: chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg-extra chromium-codecs-ffmpeg" > /etc/apt/preferences.d/chromium-browser-deb \
+ && echo "Pin: release a=bionic-updates" >> /etc/apt/preferences.d/chromium-browser-deb \
+ && echo "Pin-Priority: 900" >> /etc/apt/preferences.d/chromium-browser-deb
+
 # install dependencies
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \

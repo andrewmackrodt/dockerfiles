@@ -4,8 +4,9 @@ FROM=$(sed -n -E "s/^FROM ([^# ]+).*/\1/p" Dockerfile)
 
 getLatestVersion() {
     docker run -i --rm --user root --entrypoint=/bin/sh "$FROM" <<'EOF'
+        echo "deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe" > /etc/apt/sources.list.d/bionic-updates.list
         apt-get update -qq
-        apt-cache show chromium-browser | grep Version | head -n1 | awk '{ print $2 }'
+        apt-cache show chromium-browser | grep Version | grep 18\.04 | head -n1 | awk '{ print $2 }'
 EOF
 }
 
