@@ -23,7 +23,7 @@ RUN apt-get update -qq \
 
 # manually install pip if python2
 RUN if [ "${PYTHON_MAJOR_VERSION}" = "2" ]; then \
-      wget -qO- https://bootstrap.pypa.io/get-pip.py | python${PYTHON_MAJOR_MINOR_VERSION} ; \
+      wget -qO- https://bootstrap.pypa.io/pip/2.7/get-pip.py | python${PYTHON_MAJOR_MINOR_VERSION} ; \
     fi
 
 # set PYTHON_MAJOR_VERSION as default
