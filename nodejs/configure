@@ -6,7 +6,7 @@ parseBuildVersions() {
     if yq --help | grep -q kislyuk; then
         yq -r '.build.versions[]' "$1"
     else
-        yq r "$1" 'build.versions[*]'
+        yq e '.build.versions[]' "$1"
     fi
 }
 
