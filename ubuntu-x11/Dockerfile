@@ -38,8 +38,9 @@ RUN apt-get update -qq \
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends software-properties-common \
  && add-apt-repository -y ppa:graphics-drivers/ppa \
+ && add-apt-repository -y ppa:oem-solutions-group/nvidia-driver-staging \
  && apt-get purge -qqy --auto-remove software-properties-common \
- && apt-get install -qqy --no-install-recommends libnvidia-gl-455 \
+ && apt-get install -qqy --no-install-recommends libnvidia-gl-460 \
  && rm -rf /var/lib/apt/lists/*
 
 # copy files to the container

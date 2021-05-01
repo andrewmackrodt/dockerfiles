@@ -43,33 +43,35 @@ HOST_DRIVER_VERSION=$(cat /proc/driver/nvidia/version | sed -nE 's/.*Module[ \t]
 if [ -z "$HOST_DRIVER_VERSION" ]; then
     echo "Unable to detect host nvidia driver version" >&2
     echo "Please contact image maintainer" >&2
+    echo "https://github.com/andrewmackrodt/dockerfiles/issues" >&2
 
     exit
 fi
 
 CONTAINER_DRIVER_VERSION=$( \
     dpkg -l \
-        | grep libnvidia-gl \
-        | awk '{ print $3 }' \
+        | awk '$1 == "ii" && $2 ~ "libnvidia-.+:i386" { print $3 }' \
         | sed -nE 's/^([0-9]+(\.[0-9]+)?).*/\1/p' \
+        | head -n1 \
     )
 
 if [ -z "$CONTAINER_DRIVER_VERSION" ]; then
     echo "Unable to detect container nvidia driver version" >&2
     echo "Please contact image maintainer" >&2
+    echo "https://github.com/andrewmackrodt/dockerfiles/issues" >&2
 
     exit
 fi
 
 # abort if drivers match
 if [ "$HOST_DRIVER_VERSION" = "$CONTAINER_DRIVER_VERSION" ]; then
-    debug "NVidia driver match $HOST_DRIVER_VERSION"
+    debug "nvidia driver match $HOST_DRIVER_VERSION"
 
     exit
 fi
 
 {
-    echo "NVidia driver mismatch Host($HOST_DRIVER_VERSION) <=> Container($CONTAINER_DRIVER_VERSION)"
+    echo "nvidia driver mismatch Host($HOST_DRIVER_VERSION) <=> Container($CONTAINER_DRIVER_VERSION)"
     echo "Automatic driver match will be attempted ..."
 } | tee /dev/stderr | sudo -E -u \#${PUID:-1000} notify-send -u critical -i error "$(cat -)"
 
@@ -106,6 +108,7 @@ if [ -z "$PACKAGE_APT_VERSION" ]; then
         fi
         echo "X11 apps may fail; mount drivers from your host as a volume"
         echo "and set LD_LIBRARY_PATH to include the volume"
+        echo "https://github.com/andrewmackrodt/dockerfiles/blob/master/ubuntu-x11-i386/README.md#nvidia-driver-note"
     } | tee /dev/stderr | sudo -E -u \#${PUID:-1000} notify-send -u critical -i error "$(cat -)"
 
     if [ -z "$PACKAGE_APT_VERSION" ]; then
@@ -119,10 +122,13 @@ if [ -z "$PACKAGE_APT_VERSION" ]; then
     fi
 fi
 
-CONTAINER_DRIVER_MAJOR_VERSION=$(echo "$CONTAINER_DRIVER_VERSION" | sed -E 's/\..+//')
-PURGE_PACKAGE_NAME="libnvidia-gl-$CONTAINER_DRIVER_MAJOR_VERSION:i386"
+PURGE_PACKAGE_NAME=$( \
+    dpkg -l \
+        | awk '$1 == "ii" && $2 ~ "libnvidia-.+:i386" { print $2 }' \
+        | tr '\n' ' '
+    )
 
-echo "Removing old package $PURGE_PACKAGE_NAME ..." >&2
+echo "Removing old packages $PURGE_PACKAGE_NAME ..." >&2
 apt-get purge -qqy --auto-remove "$PURGE_PACKAGE_NAME" >/dev/null
 
 echo "Installing package $PACKAGE_NAME=$PACKAGE_APT_VERSION ..." >&2
