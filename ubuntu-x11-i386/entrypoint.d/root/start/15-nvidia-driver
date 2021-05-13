@@ -124,12 +124,12 @@ fi
 
 PURGE_PACKAGE_NAME=$( \
     dpkg -l \
-        | awk '$1 == "ii" && $2 ~ "libnvidia-.+:i386" { print $2 }' \
+        | awk '$1 == "ii" && $2 ~ "libnvidia-" { print $2 }' \
         | tr '\n' ' '
     )
 
 echo "Removing old packages $PURGE_PACKAGE_NAME ..." >&2
-apt-get purge -qqy --auto-remove "$PURGE_PACKAGE_NAME" >/dev/null
+apt-get purge -qqy --auto-remove $PURGE_PACKAGE_NAME >/dev/null
 
 echo "Installing package $PACKAGE_NAME=$PACKAGE_APT_VERSION ..." >&2
 apt-get install -qqy --no-install-recommends "$PACKAGE_NAME=$PACKAGE_APT_VERSION" >/dev/null

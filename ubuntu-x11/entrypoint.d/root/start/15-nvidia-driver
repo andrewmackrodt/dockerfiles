@@ -129,7 +129,7 @@ PURGE_PACKAGE_NAME=$( \
     )
 
 echo "Removing old packages $PURGE_PACKAGE_NAME ..." >&2
-apt-get purge -qqy --auto-remove "$PURGE_PACKAGE_NAME" >/dev/null
+apt-get purge -qqy --auto-remove $PURGE_PACKAGE_NAME >/dev/null
 
 echo "Installing package $PACKAGE_NAME=$PACKAGE_APT_VERSION ..." >&2
 apt-get install -qqy --no-install-recommends "$PACKAGE_NAME=$PACKAGE_APT_VERSION" >/dev/null
