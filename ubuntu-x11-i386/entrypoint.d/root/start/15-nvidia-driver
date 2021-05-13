@@ -50,7 +50,7 @@ fi
 
 CONTAINER_DRIVER_VERSION=$( \
     dpkg -l \
-        | awk '$1 == "ii" && $2 ~ "libnvidia-.+:i386" { print $3 }' \
+        | awk '$1 == "ii" && $2 ~ "libnvidia-gl-" { print $3 }' \
         | sed -nE 's/^([0-9]+(\.[0-9]+)?).*/\1/p' \
         | head -n1 \
     )
@@ -82,10 +82,10 @@ export DEBIAN_FRONTEND=noninteractive
 # update package lists
 apt-get update -qq
 
-PACKAGE_NAME="libnvidia-gl-$HOST_DRIVER_MAJOR_VERSION:i386"
+PACKAGE_NAME="libnvidia-gl-$HOST_DRIVER_MAJOR_VERSION"
 
 MAJOR_PACKAGE_APT_VERSIONS=$( \
-    apt-cache madison "$PACKAGE_NAME" \
+    apt-cache madison "$PACKAGE_NAME:i386" \
         | awk '{ print $3 }' \
         | sort -rV
     )
@@ -131,7 +131,7 @@ PURGE_PACKAGE_NAME=$( \
 echo "Removing old packages $PURGE_PACKAGE_NAME ..." >&2
 apt-get purge -qqy --auto-remove $PURGE_PACKAGE_NAME >/dev/null
 
-echo "Installing package $PACKAGE_NAME=$PACKAGE_APT_VERSION ..." >&2
-apt-get install -qqy --no-install-recommends "$PACKAGE_NAME=$PACKAGE_APT_VERSION" >/dev/null
+echo "Installing packages $PACKAGE_NAME=$PACKAGE_APT_VERSION "$PACKAGE_NAME:i386=$PACKAGE_APT_VERSION" ..." >&2
+apt-get install -qqy --no-install-recommends "$PACKAGE_NAME=$PACKAGE_APT_VERSION" "$PACKAGE_NAME:i386=$PACKAGE_APT_VERSION" >/dev/null
 
 rm -rf /var/lib/apt/lists/*
