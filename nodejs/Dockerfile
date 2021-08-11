@@ -34,7 +34,7 @@ RUN mkdir -p $HOME/.local/lib \
 
 RUN npm install -g yarn
 
-ENV PATH /home/ubuntu/.local/lib/node_modules/bin:$PATH
+ENV PATH /home/ubuntu/.local/bin:$PATH
 
 ################################################################################
 # labels
