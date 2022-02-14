@@ -23,6 +23,7 @@ RUN apt-get update -qq \
       sudo \
       tzdata \
       wget \
+      xz-utils \
  && rm -rf /var/lib/apt/lists/*
 
 # add tini
@@ -44,11 +45,12 @@ RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
 
 # add s6-overlay
 RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+ && [ "$ARCH" != "amd64" ] || ARCH="x86_64" \
  && wget -q -O /tmp/release.json "https://api.github.com/repos/just-containers/s6-overlay/releases/latest" \
- && grep -E '"browser_download_url":.+'$ARCH'\.tar\.gz' /tmp/release.json | grep -v -E ".(asc|sig)" | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
- && wget -q -O s6-overlay.tar.gz "$(cat /tmp/release.txt)" \
- && tar zxfh s6-overlay.tar.gz -C / \
- && rm -f /tmp/release.* s6-overlay.tar.gz
+ && grep -E '"browser_download_url": *"[^"]*'$ARCH'[^"]*\.tar\.xz"' /tmp/release.json | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
+ && wget -q -O s6-overlay.tar.xz "$(cat /tmp/release.txt)" \
+ && tar Jxfh s6-overlay.tar.xz -C / \
+ && rm -f /tmp/release.* s6-overlay.tar.xz
 
 # allow passwordless sudo to entrypoint
 RUN /bin/echo -e "\
