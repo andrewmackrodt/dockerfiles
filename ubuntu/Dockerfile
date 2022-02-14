@@ -44,7 +44,7 @@ RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
 
 # add s6-overlay
 RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
- && wget -q -O /tmp/release.json "https://api.github.com/repos/just-containers/s6-overlay/releases/latest" \
+ && wget -q -O /tmp/release.json "https://api.github.com/repos/just-containers/s6-overlay/releases/38080409" \
  && grep -E '"browser_download_url":.+'$ARCH'\.tar\.gz' /tmp/release.json | grep -v -E ".(asc|sig)" | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
  && wget -q -O s6-overlay.tar.gz "$(cat /tmp/release.txt)" \
  && tar zxfh s6-overlay.tar.gz -C / \
