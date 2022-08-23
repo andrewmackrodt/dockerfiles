@@ -12,7 +12,7 @@
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/nodejs-chromium/Dockerfile
 [version]: https://hub.docker.com/r/andrewmackrodt/nodejs-chromium/tags
 
-[Node.js](https://nodejs.org/) 14.x image with [npm](https://www.npmjs.com/),
+[Node.js](https://nodejs.org/) 16.x image with [npm](https://www.npmjs.com/),
 [yarn](https://yarnpkg.com/) and [chromium](https://www.chromium.org/) for
 applications requiring a headless browser, e.g. to for SSR.
 

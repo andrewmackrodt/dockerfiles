@@ -4,9 +4,9 @@ TAG_MAJOR=true
 build:
 
 pre-push:
-	docker tag andrewmackrodt/nodejs:12 andrewmackrodt/nodejs:maintenance
-	docker tag andrewmackrodt/nodejs:14 andrewmackrodt/nodejs:lts
-	docker tag andrewmackrodt/nodejs:16 andrewmackrodt/nodejs:current
+	docker tag andrewmackrodt/nodejs:14 andrewmackrodt/nodejs:maintenance
+	docker tag andrewmackrodt/nodejs:16 andrewmackrodt/nodejs:lts
+	docker tag andrewmackrodt/nodejs:18 andrewmackrodt/nodejs:current
 
 post-push:
 	docker push andrewmackrodt/nodejs:maintenance
