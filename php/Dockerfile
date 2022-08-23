@@ -36,7 +36,7 @@ RUN apt-get update -qq \
       php${PHP_VERSION}-imap \
       php${PHP_VERSION}-intl \
       $( \
-          if ! [ "${PHP_VERSION}" = "$(/bin/echo -e "${PHP_VERSION}\n8.0" | sort -V | head -n1)" ]; then \
+          if [ "$(echo "${PHP_VERSION}" | cut -c1)" -lt "8" ]; then \
             echo php${PHP_VERSION}-json ; \
           fi \
         ) \
@@ -52,7 +52,7 @@ RUN apt-get update -qq \
       php${PHP_VERSION}-xml \
       php${PHP_VERSION}-xsl \
       php${PHP_VERSION}-zip \
-      php-xdebug \
+      php${PHP_VERSION}-xdebug \
       git \
       unzip \
  && rm -rf /var/lib/apt/lists/*
