@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fapache2)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/apache2.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/apache2.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/apache2/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/apache2.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/apache2)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/apache2)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/apache2/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/apache2
-[layers]: https://microbadger.com/images/andrewmackrodt/apache2
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/apache2/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/apache2
 [version]: https://hub.docker.com/r/andrewmackrodt/apache2/tags
 
 [Apache][apache] HTTP Server Project is an effort to develop and maintain an

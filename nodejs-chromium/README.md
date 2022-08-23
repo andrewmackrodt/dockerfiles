@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fnodejs-chromium)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/nodejs-chromium.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/nodejs-chromium.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/nodejs-chromium/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/nodejs-chromium.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/nodejs-chromium)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/nodejs-chromium)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/nodejs-chromium/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/nodejs-chromium
-[layers]: https://microbadger.com/images/andrewmackrodt/nodejs-chromium
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/nodejs-chromium/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/nodejs-chromium
 [version]: https://hub.docker.com/r/andrewmackrodt/nodejs-chromium/tags
 
 [Node.js](https://nodejs.org/) 16.x image with [npm](https://www.npmjs.com/),

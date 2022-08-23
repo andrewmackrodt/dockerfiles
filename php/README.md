@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fphp)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/php.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/php.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/php/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/php.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/php)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/php)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/php/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/php
-[layers]: https://microbadger.com/images/andrewmackrodt/php
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/php/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/php
 [version]: https://hub.docker.com/r/andrewmackrodt/php/tags
 
 [PHP](https://php.net/) is a popular general-purpose scripting language that is

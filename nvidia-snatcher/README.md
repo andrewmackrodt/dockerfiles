@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fnvidia-snatcher)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/nvidia-snatcher.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/nvidia-snatcher.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/nvidia-snatcher/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/nvidia-snatcher.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/nvidia-snatcher)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/nvidia-snatcher)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/nvidia-snatcher/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/nvidia-snatcher
-[layers]: https://microbadger.com/images/andrewmackrodt/nvidia-snatcher
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/nvidia-snatcher/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/nvidia-snatcher
 [version]: https://hub.docker.com/r/andrewmackrodt/nvidia-snatcher/tags
 
 [nvidia-snatcher](https://github.com/jef/nvidia-snatcher) image.

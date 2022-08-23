@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fbuildpack-dind)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/buildpack-dind.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/buildpack-dind.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/buildpack-dind/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/buildpack-dind.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/buildpack-dind)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/buildpack-dind)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/buildpack-dind/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/buildpack-dind
-[layers]: https://microbadger.com/images/andrewmackrodt/buildpack-dind
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/buildpack-dind/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/buildpack-dind
 [version]: https://hub.docker.com/r/andrewmackrodt/buildpack-dind/tags
 
 [Ubuntu](https://www.ubuntu.com/) 20.04 (Focal) base image with build dependencies

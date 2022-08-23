@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fchromium-x11)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/chromium-x11.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/chromium-x11.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/chromium-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/chromium-x11.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/chromium-x11)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/chromium-x11)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/chromium-x11/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/chromium-x11
-[layers]: https://microbadger.com/images/andrewmackrodt/chromium-x11
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/chromium-x11/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/chromium-x11
 [version]: https://hub.docker.com/r/andrewmackrodt/chromium-x11/tags
 
 [Chromium](https://www.chromium.org/Home) is an open-source browser project that aims

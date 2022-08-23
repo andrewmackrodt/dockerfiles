@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Ffirefox-x11)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/firefox-x11.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/firefox-x11.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/firefox-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/firefox-x11.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/firefox-x11)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/firefox-x11)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/firefox-x11/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/firefox-x11
-[layers]: https://microbadger.com/images/andrewmackrodt/firefox-x11
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/firefox-x11/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/firefox-x11
 [version]: https://hub.docker.com/r/andrewmackrodt/firefox-x11/tags
 
 [Firefox](https://www.mozilla.org/en-GB/firefox/new/) is a free and open-source

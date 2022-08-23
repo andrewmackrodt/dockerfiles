@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fyabasanshiro-x11)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/yabasanshiro-x11.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/yabasanshiro-x11.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/yabasanshiro-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/yabasanshiro-x11.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/yabasanshiro-x11)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/yabasanshiro-x11)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/yabasanshiro-x11/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/yabasanshiro-x11
-[layers]: https://microbadger.com/images/andrewmackrodt/yabasanshiro-x11
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/yabasanshiro-x11/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/yabasanshiro-x11
 [version]: https://hub.docker.com/r/andrewmackrodt/yabasanshiro-x11/tags
 
 [Yaba Sanshiro](http://www.uoyabause.org/) _(uoYabause)_ is an unofficial port

@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fdolphin-emu-x11)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/dolphin-emu-x11.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/dolphin-emu-x11.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/dolphin-emu-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/dolphin-emu-x11.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/dolphin-emu-x11)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/dolphin-emu-x11)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/dolphin-emu-x11/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/dolphin-emu-x11
-[layers]: https://microbadger.com/images/andrewmackrodt/dolphin-emu-x11
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/dolphin-emu-x11/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/dolphin-emu-x11
 [version]: https://hub.docker.com/r/andrewmackrodt/dolphin-emu-x11/tags
 
 [Dolphin](https://dolphin-emu.org/) is an emulator for two recent Nintendo video

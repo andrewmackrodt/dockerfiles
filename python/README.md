@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fpython)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/python.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/python.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/python/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/python.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/python)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/python)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/python/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/python
-[layers]: https://microbadger.com/images/andrewmackrodt/python
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/python/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/python
 [version]: https://hub.docker.com/r/andrewmackrodt/python/tags
 
 [Python](https://www.python.org/) is an interpreted, object-oriented, high-level

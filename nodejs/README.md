@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fnodejs)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/nodejs.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/nodejs.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/nodejs/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/nodejs.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/nodejs)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/nodejs)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/nodejs/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/nodejs
-[layers]: https://microbadger.com/images/andrewmackrodt/nodejs
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/nodejs/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/nodejs
 [version]: https://hub.docker.com/r/andrewmackrodt/nodejs/tags
 
 [Node.js](https://nodejs.org/) is a JavaScript runtime built on Chrome's V8 JavaScript engine.

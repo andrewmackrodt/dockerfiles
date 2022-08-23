@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fpcsx2-x11)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/pcsx2-x11.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/pcsx2-x11.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/pcsx2-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/pcsx2-x11.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/pcsx2-x11)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/pcsx2-x11)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/pcsx2-x11/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/pcsx2-x11
-[layers]: https://microbadger.com/images/andrewmackrodt/pcsx2-x11
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/pcsx2-x11/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/pcsx2-x11
 [version]: https://hub.docker.com/r/andrewmackrodt/pcsx2-x11/tags
 
 [PCSX2](https://pcsx2.net/) is a free and open-source PlayStation 2 (PS2)

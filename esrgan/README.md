@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fesrgan)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/esrgan.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/esrgan.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/esrgan/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/esrgan.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/esrgan)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/esrgan)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/esrgan/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/esrgan
-[layers]: https://microbadger.com/images/andrewmackrodt/esrgan
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/esrgan/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/esrgan
 [version]: https://hub.docker.com/r/andrewmackrodt/esrgan/tags
 
 [ESRGAN](https://github.com/xinntao/ESRGAN) (Enhanced SRGAN) is a seminal work

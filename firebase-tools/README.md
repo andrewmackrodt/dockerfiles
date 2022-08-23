@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Ffirebase-tools)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/firebase-tools.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/firebase-tools.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/firebase-tools/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/firebase-tools.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/firebase-tools)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/firebase-tools)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/firebase-tools/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/firebase-tools
-[layers]: https://microbadger.com/images/andrewmackrodt/firebase-tools
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/firebase-tools/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/firebase-tools
 [version]: https://hub.docker.com/r/andrewmackrodt/firebase-tools/tags
 
 [Node.js](https://nodejs.org/) 14.x image with [npm](https://www.npmjs.com/),

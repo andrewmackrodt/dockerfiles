@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fgoogle-cloud-sdk)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/google-cloud-sdk.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/google-cloud-sdk.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/google-cloud-sdk/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/google-cloud-sdk.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/google-cloud-sdk)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/google-cloud-sdk)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/google-cloud-sdk/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/google-cloud-sdk
-[layers]: https://microbadger.com/images/andrewmackrodt/google-cloud-sdk
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/google-cloud-sdk/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/google-cloud-sdk
 [version]: https://hub.docker.com/r/andrewmackrodt/google-cloud-sdk/tags
 
 [google-cloud-sdk](https://cloud.google.com/sdk/) based on Ubuntu 20.04.

@@ -2,14 +2,14 @@
 
 [![Status](https://jenkins.mackrodt.io/buildStatus/icon?job=dockerfiles%2Fsmplayer-x11)][status]
 [![Pulls](https://img.shields.io/docker/pulls/andrewmackrodt/smplayer-x11.svg)][pulls]
-[![Layers](https://images.microbadger.com/badges/image/andrewmackrodt/smplayer-x11.svg)][layers]
 [![Dockerfile](https://img.shields.io/github/size/andrewmackrodt/dockerfiles/smplayer-x11/Dockerfile.svg?label=dockerfile)][dockerfile]
-[![Version](https://images.microbadger.com/badges/version/andrewmackrodt/smplayer-x11.svg)][version]
+[![Size](https://img.shields.io/docker/image-size/andrewmackrodt/smplayer-x11)][size]
+[![Version](https://img.shields.io/docker/v/andrewmackrodt/smplayer-x11)][version]
 
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/smplayer-x11/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/smplayer-x11
-[layers]: https://microbadger.com/images/andrewmackrodt/smplayer-x11
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/smplayer-x11/Dockerfile
+[size]: https://microbadger.com/images/andrewmackrodt/smplayer-x11
 [version]: https://hub.docker.com/r/andrewmackrodt/smplayer-x11/tags
 
 [SMPlayer](https://www.smplayer.info/) is a free media player with built-in codecs
