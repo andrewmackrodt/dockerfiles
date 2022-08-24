@@ -15,7 +15,7 @@
 [nvidia-snatcher](https://github.com/jef/nvidia-snatcher) image.
 
 ## Usage
-
+<span data-message="dockerhub formatting fix"></span>
 ### docker
 
 ```

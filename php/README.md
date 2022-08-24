@@ -57,7 +57,7 @@ All images include [composer](https://getcomposer.org/).
 - Legacy: <em>`mcrypt (PHP <= 7.1)`</em>
 
 ## Usage
-
+<span data-message="dockerhub formatting fix"></span>
 ### docker
 
 ```

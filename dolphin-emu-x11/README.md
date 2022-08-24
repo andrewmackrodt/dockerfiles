@@ -45,7 +45,7 @@ It may also be possible to achieve this using [nvidia-docker][nvidia-docker].
 [nvidia-docker]: https://github.com/NVIDIA/nvidia-docker
 
 ## Usage
-
+<span data-message="dockerhub formatting fix"></span>
 ### docker
 
 ```
