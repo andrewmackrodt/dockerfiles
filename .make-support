@@ -283,15 +283,15 @@ getVcsRef() {
     debug 'determining git ref ...'
 
     if [ -f .dockerignore ]; then
-        exclude=$(cat .dockerignore | sed -E 's/(.+)/":(exclude)\1"/')
-        exclude=$exclude' ":(exclude).dockerignore"'
+        exclude=$(cat .dockerignore | sed -E 's/(.+)/":(exclude)\1"/' | tr $'\n' ' ')
+        exclude="$exclude "'":(exclude).dockerignore"'
 
-        debug "git log exclude: $(echo "$exclude" | tr $'\n' ' ')"
+        debug "git log exclude: $exclude"
     else
         debug 'skipping exclusions: no .dockerignore'
     fi
 
-    local ref=$(eval git log --format=%h $exclude . | head -n1)
+    local ref=$(eval git log --format=%h "${exclude[*]}" . | head -n1)
 
     debug "git ref: $ref"
 
