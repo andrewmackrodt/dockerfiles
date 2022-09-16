@@ -6,8 +6,6 @@
 [![Size](https://img.shields.io/docker/image-size/andrewmackrodt/ubuntu)][size]
 [![Version](https://img.shields.io/docker/v/andrewmackrodt/ubuntu)][version]
 
-https://img.shields.io/docker/v/andrewmackrodt/php
-
 [status]: https://jenkins.mackrodt.io/job/dockerfiles/job/ubuntu/
 [pulls]: https://hub.docker.com/r/andrewmackrodt/ubuntu
 [dockerfile]: https://github.com/andrewmackrodt/dockerfiles/blob/master/ubuntu/Dockerfile
