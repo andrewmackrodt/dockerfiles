@@ -1,4 +1,4 @@
-FROM andrewmackrodt/php
+FROM andrewmackrodt/php:8.2
 
 ARG LABEL_NAME
 ARG LABEL_VERSION
