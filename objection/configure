@@ -1,0 +1,20 @@
+#!/bin/bash
+
+FROM=$(sed -n -E "s/^FROM ([^# ]+).*/\1/p" Dockerfile)
+
+getLatestVersion() {
+    docker run -i --rm --user root --entrypoint=/bin/sh "$FROM" <<'EOF'
+        wget -qO- https://pypi.org/rss/project/objection/releases.xml \
+            | sed -nE 's#.*<title>([0-9]+[^<]+)</title>.*#\1#p' \
+            | head -n1
+EOF
+}
+
+getProperties() {
+    local objection_version
+    objection_version=$(getLatestVersion)
+    echo "OBJECTION_VERSION=$objection_version"
+    echo "LABEL_VERSION=$objection_version"
+}
+
+getProperties > build.properties
