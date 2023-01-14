@@ -79,6 +79,8 @@ docs:
 	cd nodejs-chromium; make docs
 	cd google-cloud-sdk; make docs
 	cd firebase-tools; make docs
+	cd fossilize; make docs
+	cd objection; make docs
 	cd ubuntu-x11; make docs
 	cd ubuntu-x11-i386; make docs
 	cd smplayer-x11; make docs
@@ -102,6 +104,8 @@ clean:
 	cd nodejs-chromium; make clean
 	cd google-cloud-sdk; make clean
 	cd firebase-tools; make clean
+	cd fossilize; make clean
+	cd objection; make clean
 	cd ubuntu-x11; make clean
 	cd ubuntu-x11-i386; make clean
 	cd smplayer-x11; make clean
