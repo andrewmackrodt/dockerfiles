@@ -1,6 +1,6 @@
 # [andrewmackrodt/dockerfiles](https://github.com/andrewmackrodt/dockerfiles)
 
-Dockerfiles based on Ubuntu 20.04 (Focal).
+Dockerfiles based on Ubuntu 22.04 (Jammy).
 
 ## Features
 

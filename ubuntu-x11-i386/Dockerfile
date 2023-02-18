@@ -36,7 +36,7 @@ RUN dpkg --add-architecture i386 \
 
 # install nvidia i386 driver
 RUN apt-get update -qq \
- && apt-get install -qqy --no-install-recommends libnvidia-gl-515:i386 \
+ && apt-get install -qqy --no-install-recommends libnvidia-gl-525:i386 \
  && rm -rf /var/lib/apt/lists/*
 
 # copy files to the container

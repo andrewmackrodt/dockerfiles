@@ -37,9 +37,9 @@ RUN apt-get update -qq \
 # install nvidia driver from proprietary gpu drivers repository
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends software-properties-common \
- && add-apt-repository -y ppa:graphics-drivers/ppa \
+ && (add-apt-repository -y ppa:graphics-drivers/ppa || true) \
  && apt-get purge -qqy --auto-remove software-properties-common \
- && apt-get install -qqy --no-install-recommends libnvidia-gl-515 \
+ && apt-get install -qqy --no-install-recommends libnvidia-gl-525 \
  && rm -rf /var/lib/apt/lists/*
 
 # copy files to the container

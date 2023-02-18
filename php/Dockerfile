@@ -7,11 +7,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # add ondrej/php repository
 RUN apt-get update -qq \
- && apt-get install -qqy --no-install-recommends \
-      software-properties-common \
- && add-apt-repository -y ppa:ondrej/php \
- && apt-get purge -qqy --auto-remove \
-      software-properties-common \
+ && apt-get install -qqy --no-install-recommends software-properties-common \
+ && (add-apt-repository -y ppa:ondrej/php || true) \
+ && apt-get purge -qqy --auto-remove software-properties-common \
  && rm -rf /var/lib/apt/lists/*
 
 ARG PHP_VERSION

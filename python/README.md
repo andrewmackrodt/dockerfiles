@@ -20,11 +20,10 @@ or glue language to connect existing components together.
 
 ## Versions
 
-Python `3.9` is tagged as `latest`. Images for versions `2.7` and`3.8` are also provided:
+Python `3.10 is tagged as `latest`. Other versions are also provided:
 
-- <strike>`andrewmackrodt/python:2.7` security (end-of-life: 2020-01-01)</strike>
-- `andrewmackrodt/python:3.8` bugfix (end-of-life: 2024-10-14)
-- `andrewmackrodt/python:3.9` bugfix (end-of-life: 2025-10-05)
+- <strike>`andrewmackrodt/python:2.7` (end-of-life: 2020-01-01)</strike>
+- `andrewmackrodt/python:3.10` (end-of-life: 2025-10-05)
 
 **Update Schedule**
 

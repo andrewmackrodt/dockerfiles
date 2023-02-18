@@ -7,11 +7,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # add smplayer repository
 RUN apt-get update -qq \
- && apt-get install -qqy --no-install-recommends \
-      software-properties-common \
- && add-apt-repository -y ppa:rvm/smplayer \
- && apt-get purge -qqy --auto-remove \
-      software-properties-common \
+ && apt-get install -qqy --no-install-recommends software-properties-common \
+ && (add-apt-repository -y ppa:rvm/smplayer || true) \
+ && apt-get purge -qqy --auto-remove software-properties-common \
  && rm -rf /var/lib/apt/lists/*
 
 # install dependencies

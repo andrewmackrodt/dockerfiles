@@ -10,6 +10,8 @@ build:
 	cd nodejs-chromium; make build
 	cd google-cloud-sdk; make build
 	cd firebase-tools; make build
+	cd fossilize; make build
+	cd objection; make build
 	cd ubuntu-x11; make build
 	cd ubuntu-x11-i386; make build
 	cd smplayer-x11; make build
@@ -33,6 +35,8 @@ push:
 	cd nodejs-chromium; make push
 	cd google-cloud-sdk; make push
 	cd firebase-tools; make push
+	cd fossilize; make push
+	cd objection; make push
 	cd ubuntu-x11; make push
 	cd ubuntu-x11-i386; make push
 	cd smplayer-x11; make push
@@ -56,6 +60,8 @@ release:
 	cd nodejs-chromium; make build && make push
 	cd google-cloud-sdk; make build && make push
 	cd firebase-tools; make build && make push
+	cd fossilize; make build && make push
+	cd objection; make build && make push
 	cd ubuntu-x11; make build && make push
 	cd ubuntu-x11-i386; make build && make push
 	cd smplayer-x11; make build && make push

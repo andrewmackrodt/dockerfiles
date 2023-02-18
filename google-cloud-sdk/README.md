@@ -12,7 +12,7 @@
 [size]: https://microbadger.com/images/andrewmackrodt/google-cloud-sdk
 [version]: https://hub.docker.com/r/andrewmackrodt/google-cloud-sdk/tags
 
-[google-cloud-sdk](https://cloud.google.com/sdk/) based on Ubuntu 20.04.
+[google-cloud-sdk](https://cloud.google.com/sdk/) based on Ubuntu 22.04.
 
 See [andrewmackrodt/ubuntu](https://github.com/andrewmackrodt/dockerfiles/tree/master/ubuntu)
 for more details.

@@ -5,12 +5,22 @@ WORKDIR /root
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# add mozillateam/ppa repository
+RUN apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends software-properties-common \
+ && (add-apt-repository -y ppa:mozillateam/ppa || true) \
+ && apt-get purge -qqy --auto-remove software-properties-common \
+ && rm -rf /var/lib/apt/lists/* \
+ && /bin/echo -e 'Package: firefox*\nPin: release o=Ubuntu*\nPin-Priority: -1' >/etc/apt/preferences.d/mozilla-firefox
+
 # install dependencies
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       $( \
           apt-cache show firefox \
             | sed -nE 's/Depends: //p' \
+            | grep -v debconf \
+            | tail -n1 \
             | tr ',' $'\n' \
             | awk '{ print $1 }' \
             | grep . \

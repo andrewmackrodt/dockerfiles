@@ -7,11 +7,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # add ondrej/apache2 repository
 RUN apt-get update -qq \
- && apt-get install -qqy --no-install-recommends \
-      software-properties-common \
- && add-apt-repository -y ppa:ondrej/apache2 \
- && apt-get purge -qqy --auto-remove \
-      software-properties-common \
+ && apt-get install -qqy --no-install-recommends software-properties-common \
+ && (add-apt-repository -y ppa:ondrej/apache2 || true) \
+ && apt-get purge -qqy --auto-remove software-properties-common \
  && rm -rf /var/lib/apt/lists/*
 
 ARG APACHE_VERSION

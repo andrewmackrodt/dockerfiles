@@ -1,11 +1,11 @@
 #!/bin/bash
 
-FROM=$(sed -n -E "s/^FROM ([^# ]+).*/\1/p" Dockerfile)
+FROM=andrewmackrodt/$(basename "$(pwd)")
 
 getLatestVersion() {
     docker run -i --rm --user root --entrypoint=/bin/sh "$FROM" <<'EOF'
         apt-get update -qq
-        apt-cache show firefox | grep Version | head -n1 | awk '{ print $2 }'
+        apt-cache show firefox | grep Version | grep -v snap | head -n1 | awk '{ print $2 }'
 EOF
 }
 

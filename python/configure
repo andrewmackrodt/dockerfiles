@@ -59,12 +59,14 @@ fi
 for v in $versions; do
     tag_version=$(echo "$v" | cut -f1 -d':')
     python_version=$(echo "$v" | cut -f2 -d':')
+    python_minor_version=$(echo "$python_version" | cut -f1-2 -d'.')
+    python_major_version=$(echo "$python_version" | cut -f1 -d'.')
     label_versions=$(echo "$v" | cut -f3 -d':' | sed -E "s/~.+//")
 
     {
       echo "PYTHON_VERSION=$python_version"
-      echo "PYTHON_MAJOR_MINOR_VERSION=${python_version:0:3}"
-      echo "PYTHON_MAJOR_VERSION=${python_version:0:1}"
+      echo "PYTHON_MINOR_VERSION=$python_minor_version"
+      echo "PYTHON_MAJOR_VERSION=$python_major_version"
       echo "LABEL_VERSION=$label_versions"
     } \
       > "build${tag_version}.properties"

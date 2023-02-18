@@ -18,7 +18,6 @@
 
 The `current` major Node.js (v18) is tagged as `latest`. `lts` and `maintenance` images are also provided:
 
-- <strike>`andrewmackrodt/nodejs:12` (end-of-life: 2022-04-30)</strike>
 - `andrewmackrodt/nodejs:14` maintenance (end-of-life: 2023-04-30)
 - `andrewmackrodt/nodejs:16` lts (end-of-life: 2023-09-11)
 - `andrewmackrodt/nodejs:18` current (end-of-life: 2025-04-30)

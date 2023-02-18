@@ -12,7 +12,7 @@
 [size]: https://microbadger.com/images/andrewmackrodt/ubuntu
 [version]: https://hub.docker.com/r/andrewmackrodt/ubuntu/tags
 
-[Ubuntu](https://www.ubuntu.com/) 20.04 (Focal) base image.
+[Ubuntu](https://www.ubuntu.com/) 22.04 (Jammy) base image.
 
 ## Features
 

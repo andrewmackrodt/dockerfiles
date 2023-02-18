@@ -12,7 +12,7 @@
 [size]: https://microbadger.com/images/andrewmackrodt/buildpack-dind
 [version]: https://hub.docker.com/r/andrewmackrodt/buildpack-dind/tags
 
-[Ubuntu](https://www.ubuntu.com/) 20.04 (Focal) base image with build dependencies
+[Ubuntu](https://www.ubuntu.com/) 22.04 (Jammy) base image with build dependencies
 and docker client. Includes packages from the [official](https://github.com/docker-library/buildpack-deps/blob/65d69325ad741cea6dee20781c1faaab2e003d87/ubuntu/focal/Dockerfile)
 ubuntu buildpack-deps image.
 
