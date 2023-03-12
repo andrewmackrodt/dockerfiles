@@ -3,12 +3,13 @@ FROM andrewmackrodt/ubuntu-x11
 USER root
 WORKDIR /root
 
-ARG DEBIAN_FRONTEND=noninteractive
+#ARG DEBIAN_FRONTEND=noninteractive
 
 # add phd/chromium-browser repository
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends software-properties-common \
- && (add-apt-repository -y ppa:phd/chromium-browser || true) \
+ && (add-apt-repository -y ppa:savoury1/ffmpeg4 || true) \
+ && (add-apt-repository -y ppa:savoury1/chromium || true) \
  && apt-get purge -qqy --auto-remove software-properties-common \
  && rm -rf /var/lib/apt/lists/*
 
