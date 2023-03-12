@@ -6,8 +6,10 @@ getLatestVersion() {
     docker run -i --rm --user root --entrypoint=/bin/bash "$FROM" -c "$(cat <<'EOF'
         set -euo pipefail
         apt-get update -qq
-        apt-get install -qqy --no-install-recommends software-properties-common
-        add-apt-repository -y ppa:phd/chromium-browser || true
+        apt-get install -qqy --no-install-recommends gnupg software-properties-common
+        add-apt-repository -y ppa:savoury1/chromium
+        apt-get purge -qqy --auto-remove gnupg software-properties-common
+        echo -e 'Package: chromium-browser*\nPin: release o=Ubuntu*\nPin-Priority: -1' >/etc/apt/preferences.d/chromium-browser
         apt-cache show chromium-browser | grep Version | head -n1 | awk '{ print $2 }'
 EOF
     )" | tail -n1

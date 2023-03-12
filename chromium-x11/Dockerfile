@@ -3,27 +3,28 @@ FROM andrewmackrodt/ubuntu-x11
 USER root
 WORKDIR /root
 
-#ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
-# add phd/chromium-browser repository
+# add savoury1/chromium repository
 RUN apt-get update -qq \
- && apt-get install -qqy --no-install-recommends software-properties-common \
- && (add-apt-repository -y ppa:savoury1/ffmpeg4 || true) \
- && (add-apt-repository -y ppa:savoury1/chromium || true) \
- && apt-get purge -qqy --auto-remove software-properties-common \
- && rm -rf /var/lib/apt/lists/*
+ && apt-get install -qqy --no-install-recommends gnupg software-properties-common \
+ && add-apt-repository -y ppa:savoury1/chromium \
+ && add-apt-repository -y ppa:savoury1/ffmpeg4 \
+ && apt-get purge -qqy --auto-remove gnupg software-properties-common \
+ && rm -rf /var/lib/apt/lists/* \
+ && /bin/echo -e 'Package: chromium-browser*\nPin: release o=Ubuntu*\nPin-Priority: -1' >/etc/apt/preferences.d/chromium-browser
 
 # install dependencies
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends \
       $( \
           apt-cache show chromium-browser \
-            | sed -nE 's/^Depends: //p' \
+            | sed -nE 's/Depends: //p' \
+            | grep -vE '^Pre-|^debconf' \
+            | tail -n1 \
             | tr ',' $'\n' \
             | awk '{ print $1 }' \
             | grep . \
-            | sort \
-            | uniq \
         ) \
       libdbusmenu-gtk3-4 \
       locales \
