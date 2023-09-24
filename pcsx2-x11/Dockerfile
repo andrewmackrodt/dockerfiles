@@ -38,7 +38,7 @@ RUN apt-get update -qq \
 RUN adduser ubuntu rtkit
 
 # create PCSX2 directories
-RUN for d in /games /data /bios /plugins; do \
+RUN for d in /games /data /bios; do \
       mkdir "$d"; \
       chgrp adm "$d"; \
       chmod 2775 "$d"; \
@@ -64,10 +64,9 @@ RUN mkdir -p /home/ubuntu/.local/share
 # export volumes
 VOLUME /data
 VOLUME /bios
-VOLUME /plugins
 
 # set directories to be chowned on container start
-ENV USER_DIRS /data:/bios:/plugins${USER_DIRS:+:$USER_DIRS}
+ENV USER_DIRS /data:/bios:${USER_DIRS:+:$USER_DIRS}
 
 # set the secondary entrypoint
 ENV ENTRYPOINT0 /usr/local/bin/pcsx2-bootstrap

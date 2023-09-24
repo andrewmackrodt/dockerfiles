@@ -89,7 +89,6 @@ docker create \
   -v $HOME/Games/PS2:/games:ro \
   -v $HOME/.pcsx2/data:/data \
   -v $HOME/.pcsx2/bios:/bios \
-  -v $HOME/.pcsx2/plugins:/plugins \
   -e BIOS_ZIP=${BIOS_ZIP:-} \
   -e BIOS_CHECKSUM=${BIOS_CHECKSUM:-} \
   -e PUID=$(id -u) \
@@ -119,4 +118,3 @@ docker create \
 | `-v /games` | PCSX2 games directory |
 | `-v /data` | PCSX2 data directory |
 | `-v /bios` | PCSX2 bios directory |
-| `-v /plugins` | PCSX2 plugins directory |
