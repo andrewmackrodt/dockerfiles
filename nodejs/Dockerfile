@@ -4,14 +4,6 @@ USER root
 WORKDIR /root
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG NODEJS_VERSION
-ARG NODEJS_MAJOR_VERSION
-
-# install nodejs packages
-RUN wget -qO- "https://deb.nodesource.com/setup_${NODEJS_MAJOR_VERSION}" | bash - \
- && apt-get install -qqy --no-install-recommends \
-      nodejs=$NODEJS_VERSION \
- && rm -rf /var/lib/apt/lists/*
 
 # install python packages
 RUN apt-get update -qq \
@@ -22,7 +14,23 @@ RUN apt-get update -qq \
  && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 \
- && update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 10 ;
+ && update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 10
+
+# add nodesource gpg key
+RUN apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends gnupg \
+ && wget -qO- https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | apt-key --keyring /usr/share/keyrings/nodesource-repo.gpg add - \
+ && apt-get purge -qqy --auto-remove gnupg \
+ && rm -rf /var/lib/apt/lists/* /root/.gnupg
+
+# install nodejs
+ARG NODEJS_MAJOR_VERSION
+ARG NODEJS_VERSION
+
+RUN echo "deb [signed-by=/usr/share/keyrings/nodesource-repo.gpg] https://deb.nodesource.com/node_$NODEJS_MAJOR_VERSION.x nodistro main" >/etc/apt/sources.list.d/nodesource.list \
+ && apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends nodejs=$NODEJS_VERSION \
+ && rm -rf /var/lib/apt/lists/*
 
 ENV ENTRYPOINT0 /usr/bin/node
 

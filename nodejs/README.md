@@ -16,11 +16,11 @@
 
 ## Versions
 
-The `current` major Node.js (v18) is tagged as `latest`. `lts` and `maintenance` images are also provided:
+The `current` major Node.js (v21) is tagged as `latest`. `lts` and `maintenance` images are also provided:
 
-- `andrewmackrodt/nodejs:14` maintenance (end-of-life: 2023-04-30)
-- `andrewmackrodt/nodejs:16` lts (end-of-life: 2023-09-11)
-- `andrewmackrodt/nodejs:18` current (end-of-life: 2025-04-30)
+- `andrewmackrodt/nodejs:18` maintenance (end-of-life: 2025-04-30)
+- `andrewmackrodt/nodejs:20` lts (end-of-life: 2026-04-30)
+- `andrewmackrodt/nodejs:21` current (end-of-life: 2023-30-11)
 
 All images are bundled with [npm](https://www.npmjs.com/) and [yarn](https://yarnpkg.com/).
 
@@ -67,8 +67,8 @@ docker run --rm -it \
 
 ## Parameters
 
-| Parameter | Function |
-| --- | --- |
-| `-e PUID=1000` | The user id, recommended: `$(id -u)` |
-| `-e PGID=1000` | The group id, recommended: `$(id -g)` |
+| Parameter            | Function                              |
+|----------------------|---------------------------------------|
+| `-e PUID=1000`       | The user id, recommended: `$(id -u)`  |
+| `-e PGID=1000`       | The group id, recommended: `$(id -g)` |
 | `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
