@@ -12,7 +12,7 @@
 [size]: https://microbadger.com/images/andrewmackrodt/nodejs-chromium
 [version]: https://hub.docker.com/r/andrewmackrodt/nodejs-chromium/tags
 
-[Node.js](https://nodejs.org/) 16.x image with [npm](https://www.npmjs.com/),
+[Node.js](https://nodejs.org/) 20.x image with [npm](https://www.npmjs.com/),
 [yarn](https://yarnpkg.com/) and [chromium](https://www.chromium.org/) for
 applications requiring a headless browser, e.g. to for SSR.
 
@@ -53,9 +53,9 @@ docker run --rm -it \
 
 ## Parameters
 
-| Parameter | Function |
-| --- | --- |
-| `-e PUID=1000` | The user id, recommended: `$(id -u)` |
-| `-e PGID=1000` | The group id, recommended: `$(id -g)` |
-| `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
+| Parameter                                  | Function                                                                               |
+|--------------------------------------------|----------------------------------------------------------------------------------------|
+| `-e PUID=1000`                             | The user id, recommended: `$(id -u)`                                                   |
+| `-e PGID=1000`                             | The group id, recommended: `$(id -g)`                                                  |
+| `-e SUDO_NOPASSWD=0`                       | Set to `1` to allow passwordless sudo                                                  |
 | `-e PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` | Set to false if using puppeteer and you don't want to use the bundled chromium browser |

@@ -12,7 +12,7 @@
 [size]: https://microbadger.com/images/andrewmackrodt/firebase-tools
 [version]: https://hub.docker.com/r/andrewmackrodt/firebase-tools/tags
 
-[Node.js](https://nodejs.org/) 14.x image with [npm](https://www.npmjs.com/),
+[Node.js](https://nodejs.org/) 20.x image with [npm](https://www.npmjs.com/),
 [firebase-tools](https://firebase.google.com/docs/cli/).
 
 See [andrewmackrodt/docker-nodejs](https://github.com/andrewmackrodt/dockerfiles/tree/master/nodejs)
@@ -54,9 +54,9 @@ docker run --rm \
 
 ## Parameters
 
-| Parameter | Function |
-| --- | --- |
-| `-e PUID=1000` | The user id, recommended: `$(id -u)` |
-| `-e PGID=1000` | The group id, recommended: `$(id -g)` |
+| Parameter            | Function                              |
+|----------------------|---------------------------------------|
+| `-e PUID=1000`       | The user id, recommended: `$(id -u)`  |
+| `-e PGID=1000`       | The group id, recommended: `$(id -g)` |
 | `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
-| `-v /config` | Firebase config directory |
+| `-v /config`         | Firebase config directory             |
