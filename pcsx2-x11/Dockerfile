@@ -25,6 +25,7 @@ RUN apt-get update -qq \
       libcap2-bin \
       locales \
       unzip \
+      libasound2-plugins \
  && rm -rf /var/lib/apt/lists/*
 
 ARG PCSX2_VERSION
