@@ -21,7 +21,6 @@ build:
 	cd redream-x11; make build
 	cd dolphin-emu-x11; make build
 	cd pcsx2-x11; make build
-	cd yabasanshiro-x11; make build
 
 push:
 	cd ubuntu; make push
@@ -71,7 +70,6 @@ release:
 	cd redream-x11; make build && make push
 	cd dolphin-emu-x11; make build && make push
 	cd pcsx2-x11; make build && make push
-	cd yabasanshiro-x11; make build && make push
 
 docs:
 	cd ubuntu; make docs
@@ -121,4 +119,3 @@ clean:
 	cd redream-x11; make clean
 	cd dolphin-emu-x11; make clean
 	cd pcsx2-x11; make clean
-	cd yabasanshiro-x11; make clean

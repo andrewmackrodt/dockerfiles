@@ -1,2 +1,0 @@
-#!/bin/sh
-cd /data && exec node /opt/nvidia-snatcher/index.js

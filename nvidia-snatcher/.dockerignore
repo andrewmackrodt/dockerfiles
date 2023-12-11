@@ -1,8 +1,0 @@
-Makefile
-README.md
-build*.log
-build.yml
-configure
-docker-compose*.yml
-*.env
-*.properties
