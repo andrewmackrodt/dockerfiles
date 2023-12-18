@@ -32,6 +32,8 @@ RUN echo "deb [signed-by=/usr/share/keyrings/nodesource-repo.gpg] https://deb.no
  && apt-get install -qqy --no-install-recommends nodejs=$NODEJS_VERSION \
  && rm -rf /var/lib/apt/lists/*
 
+RUN corepack enable
+
 ENV ENTRYPOINT0 /usr/bin/node
 
 USER ubuntu
@@ -39,8 +41,6 @@ WORKDIR /home/ubuntu
 
 RUN mkdir -p $HOME/.local/lib \
  && npm config set prefix $HOME/.local
-
-RUN npm install -g yarn
 
 ENV PATH /home/ubuntu/.local/bin:$PATH
 
