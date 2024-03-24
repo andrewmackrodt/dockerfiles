@@ -8,7 +8,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # add spotify repository
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends software-properties-common gnupg \
- && wget -qO- https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | apt-key add - \
+ && wget -qO- https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | apt-key add - \
  && add-apt-repository "deb http://repository.spotify.com stable non-free" \
  && apt-get purge -qqy --auto-remove software-properties-common gnupg \
  && rm -rf /var/lib/apt/lists/*
