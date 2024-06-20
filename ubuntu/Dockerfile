@@ -47,8 +47,11 @@ RUN ARCH="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
  && wget -q -O /tmp/release.json "https://api.github.com/repos/just-containers/s6-overlay/releases/38080409" \
  && grep -E '"browser_download_url":.+'$ARCH'\.tar\.gz' /tmp/release.json | grep -v -E ".(asc|sig)" | head -n1 | cut -d '"' -f4 > /tmp/release.txt \
  && wget -q -O s6-overlay.tar.gz "$(cat /tmp/release.txt)" \
- && tar zxfh s6-overlay.tar.gz -C / \
- && rm -f /tmp/release.* s6-overlay.tar.gz
+ && mkdir s6-overlay \
+ && tar zxfh s6-overlay.tar.gz -C s6-overlay/ \
+ && find s6-overlay -mindepth 1 -maxdepth 1 -exec sh -c 'cp -rl {}/* /$(basename {})' \; \
+ && mv s6-overlay/init /init \
+ && rm -rf /tmp/release.* s6-overlay*
 
 # allow passwordless sudo to entrypoint
 RUN /bin/echo -e "\
