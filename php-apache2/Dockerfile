@@ -43,12 +43,13 @@ RUN a2enmod rewrite \
  && a2enmod headers \
  && a2enmod ssl
 
-# trust proxies from default docker subnet
 RUN { \
-      echo '# trust proxies from default docker subnet' ; \
+      echo '# trust proxies from IANA private internets' ; \
       echo '<IfModule mod_remoteip.c>' ; \
       echo '    RemoteIPHeader X-Forwarded-For' ; \
-      echo '    RemoteIPTrustedProxy 172.17.0.0/12' ; \
+      echo '    RemoteIPTrustedProxy 10.0.0.0/8' ; \
+      echo '    RemoteIPTrustedProxy 172.16.0.0/12' ; \
+      echo '    RemoteIPTrustedProxy 192.168.0.0/16' ; \
       echo '</IfModule>' ; \
       echo '' ; \
     } \
