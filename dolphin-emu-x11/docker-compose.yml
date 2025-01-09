@@ -37,6 +37,8 @@ services:
       - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
       # timezone (optional)
       - /etc/localtime:/etc/localtime:ro
+      # inputs
+      - /dev/input:/dev/input
       # dolphin-emu
       - $HOME/.dolphin-emu/Config:/config
       - $HOME/.dolphin-emu:/data
