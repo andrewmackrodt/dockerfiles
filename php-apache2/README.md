@@ -32,7 +32,7 @@ configuration due to the way that Apache prefork functions.
 - `www-data` uses the same `UID` as the `ubuntu` account
 - Modules: `rewrite`, `headers`, `ssl`, `remoteip`
 
-**[PHP 8.2](https://www.php.net/releases/8_2_0.php)** and the latest version of
+**[PHP 8.4](https://www.php.net/releases/8.4/en.php)** and the latest version of
 **[composer](https://getcomposer.org/)** as of the image build date.
 
 **Extensions:**
@@ -73,16 +73,16 @@ docker create \
 
 ## Parameters
 
-| Parameter | Function |
-| --- | --- |
-| `-p 8080:80` | Expose port 80 on the host |
-| `-p 8443:443` | Expose port 443 on the host |
-| `-e PUID=1000` | The user id, recommended: `$(id -u)` |
-| `-e PGID=1000` | The group id, recommended: `$(id -g)` |
-| `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
-| `-e LETS_ENCRYPT_DOMAINS=` | Domain's to request certificates for, comma separated |
-| `-e LETS_ENCRYPT_EMAIL=` | E-mail address to receive Let's Encrypt Notifications |
-| `-e LETS_ENCRYPT_STAGING=0` | Set to "1" to use staging server |
-| `-e XDEBUG_ENABLE=0` | Set to "1" to enable xdebug |
-| `-v /var/www/html` | Apache DocumentRoot |
-| `-v /etc/letsencrypt/live` | Certbot Let's Encrypt directory |
+| Parameter                   | Function                                              |
+|-----------------------------|-------------------------------------------------------|
+| `-p 8080:80`                | Expose port 80 on the host                            |
+| `-p 8443:443`               | Expose port 443 on the host                           |
+| `-e PUID=1000`              | The user id, recommended: `$(id -u)`                  |
+| `-e PGID=1000`              | The group id, recommended: `$(id -g)`                 |
+| `-e SUDO_NOPASSWD=0`        | Set to `1` to allow passwordless sudo                 |
+| `-e LETS_ENCRYPT_DOMAINS=`  | Domain's to request certificates for, comma separated |
+| `-e LETS_ENCRYPT_EMAIL=`    | E-mail address to receive Let's Encrypt Notifications |
+| `-e LETS_ENCRYPT_STAGING=0` | Set to "1" to use staging server                      |
+| `-e XDEBUG_ENABLE=0`        | Set to "1" to enable xdebug                           |
+| `-v /var/www/html`          | Apache DocumentRoot                                   |
+| `-v /etc/letsencrypt/live`  | Certbot Let's Encrypt directory                       |

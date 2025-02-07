@@ -18,17 +18,19 @@ everything from your blog to the most popular websites in the world.
 
 ## Versions
 
-PHP `8.2` is tagged as `latest`. Images for versions `5.6`, `7.0`, `7.1`, `7.2`, `7.3`, `7.4`, `8.0` and `8.1` are also provided:
+PHP `8.4` is tagged as `latest`. Images for versions `5.6` -> `8.3` are also provided:
 
 - <strike>`andrewmackrodt/php:5.6` Legacy (end-of-life: 2018-12-31)</strike>
-- <strike>`andrewmackrodt/php:7.0` Legacy (end-of-life: 2018-12-03)</strike>
+- <strike>`andrewmackrodt/php:7.0` Legacy (end-of-life: 2019-01-10)</strike>
 - <strike>`andrewmackrodt/php:7.1` Legacy (end-of-life: 2019-12-01)</strike>
 - <strike>`andrewmackrodt/php:7.2` Legacy (end-of-life: 2020-11-30)</strike>
 - <strike>`andrewmackrodt/php:7.3` Legacy (end-of-life: 2021-12-06)</strike>
 - <strike>`andrewmackrodt/php:7.4` Legacy (end-of-life: 2022-11-28)</strike>
-- `andrewmackrodt/php:8.0` Supported (end-of-life: 2023-11-26)
-- `andrewmackrodt/php:8.1` Latest (end-of-life: 2024-11-25)
-- `andrewmackrodt/php:8.2` Latest (end-of-life: 2025-12-08)
+- <strike>`andrewmackrodt/php:8.0` Legacy (end-of-life: 2023-11-26)</strike>
+- `andrewmackrodt/php:8.1` Security Support (end-of-life: 2025-12-31)
+- `andrewmackrodt/php:8.2` Security Support (end-of-life: 2026-12-31)
+- `andrewmackrodt/php:8.3` Latest (end-of-life: 2027-12-31)
+- `andrewmackrodt/php:8.4` Latest (end-of-life: 2028-12-31)
 
 **Update Schedule**
 
@@ -91,9 +93,9 @@ docker run --rm -it \
 
 ## Parameters
 
-| Parameter | Function |
-| --- | --- |
-| `-e PUID=1000` | The user id, recommended: `$(id -u)` |
-| `-e PGID=1000` | The group id, recommended: `$(id -g)` |
+| Parameter            | Function                              |
+|----------------------|---------------------------------------|
+| `-e PUID=1000`       | The user id, recommended: `$(id -u)`  |
+| `-e PGID=1000`       | The group id, recommended: `$(id -g)` |
 | `-e SUDO_NOPASSWD=0` | Set to `1` to allow passwordless sudo |
-| `-e XDEBUG_ENABLE=0` | Set to "1" to enable xdebug |
+| `-e XDEBUG_ENABLE=0` | Set to "1" to enable xdebug           |
