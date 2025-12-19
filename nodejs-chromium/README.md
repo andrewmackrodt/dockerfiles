@@ -12,7 +12,7 @@
 [size]: https://microbadger.com/images/andrewmackrodt/nodejs-chromium
 [version]: https://hub.docker.com/r/andrewmackrodt/nodejs-chromium/tags
 
-[Node.js](https://nodejs.org/) 20.x image with [npm](https://www.npmjs.com/),
+[Node.js](https://nodejs.org/) 24.x image with [npm](https://www.npmjs.com/),
 [yarn](https://yarnpkg.com/) and [chromium](https://www.chromium.org/) for
 applications requiring a headless browser, e.g. to for SSR.
 

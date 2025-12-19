@@ -16,11 +16,12 @@
 
 ## Versions
 
-The `current` major Node.js (v21) is tagged as `latest`. `lts` and `maintenance` images are also provided:
+The `current` major Node.js (v25) is tagged as `latest`. `lts` and `maintenance` images are also provided:
 
-- `andrewmackrodt/nodejs:18` maintenance (end-of-life: 2025-04-30)
-- `andrewmackrodt/nodejs:20` lts (end-of-life: 2026-04-30)
-- `andrewmackrodt/nodejs:21` current (end-of-life: 2023-30-11)
+- `andrewmackrodt/nodejs:20` (end-of-life: 2026-04-30)
+- `andrewmackrodt/nodejs:22` maintenance (end-of-life: 2027-04-30)
+- `andrewmackrodt/nodejs:24` lts (end-of-life: 2028-04-30)
+- `andrewmackrodt/nodejs:25` current (end-of-life: 2026-06-01)
 
 All images are bundled with [npm](https://www.npmjs.com/) and [yarn](https://yarnpkg.com/).
 

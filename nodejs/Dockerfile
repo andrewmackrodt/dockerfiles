@@ -32,6 +32,11 @@ RUN echo "deb [signed-by=/usr/share/keyrings/nodesource-repo.gpg] https://deb.no
  && apt-get install -qqy --no-install-recommends nodejs=$NODEJS_VERSION \
  && rm -rf /var/lib/apt/lists/*
 
+RUN \
+  if [ "${NODEJS_MAJOR_VERSION}" = "$(/bin/echo -e "${NODEJS_MAJOR_VERSION}\n25" | sort -rV | head -n1)" ]; then \
+    npm i -g corepack ; \
+  fi
+
 RUN corepack enable
 
 ENV ENTRYPOINT0 /usr/bin/node
